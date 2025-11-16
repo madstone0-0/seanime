@@ -32,6 +32,7 @@ import { useAtom, useAtomValue } from "jotai/react"
 import React from "react"
 import { BiX } from "react-icons/bi"
 import { LuChevronLeft, LuChevronRight, LuInfo } from "react-icons/lu"
+import { ChapterPageDownload } from "./chapter-page-download"
 
 type MangaReaderBarProps = {
     children?: React.ReactNode
@@ -249,6 +250,8 @@ export function MangaReaderBar(props: MangaReaderBarProps) {
                 <div data-manga-reader-bar-spacer className="flex flex-1"></div>
 
                 <div data-manga-reader-bar-page-container className="flex items-center gap-2">
+
+                    {pageContainer && <ChapterPageDownload pageContainer={pageContainer} entry={entry} />}
 
                     {pageContainer && <Popover
                         trigger={
