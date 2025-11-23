@@ -380,7 +380,7 @@ func (wpm *WatchPartyManager) handleWatchPartyStateChangedEvent(payload *WatchPa
 		wpm.resetBufferingState()
 
 		// Fetch the media info
-		media, err := wpm.manager.platform.GetAnime(context.Background(), payload.Session.CurrentMediaInfo.MediaId)
+		media, err := wpm.manager.platformRef.Get().GetAnime(context.Background(), payload.Session.CurrentMediaInfo.MediaId)
 		if err != nil {
 			wpm.logger.Error().Err(err).Msg("nakama: Failed to fetch media info for watch party")
 			return
@@ -412,7 +412,7 @@ func (wpm *WatchPartyManager) handleWatchPartyStateChangedEvent(payload *WatchPa
 		case "debrid":
 			err = wpm.manager.PlayHostAnimeStream(payload.Session.CurrentMediaInfo.StreamType, "seanime/nakama", wpm.clientId, media, payload.Session.CurrentMediaInfo.AniDBEpisode)
 		case "file":
-			err = wpm.manager.PlayHostAnimeLibraryFile(payload.Session.CurrentMediaInfo.StreamPath, "seanime/nakama", wpm.clientId, media, payload.Session.CurrentMediaInfo.AniDBEpisode)
+			err = wpm.manager.PlayHostAnimeLibraryFile(payload.Session.CurrentMediaInfo.StreamPath, "seanime/nakama", wpm.clientId, media, payload.Session.CurrentMediaInfo.AniDBEpisode, "")
 		case "online":
 			wpm.sendCommandToOnlineStream(OnlineStreamCommandStart, payload.Session.CurrentMediaInfo.OnlineStreamParams)
 		}

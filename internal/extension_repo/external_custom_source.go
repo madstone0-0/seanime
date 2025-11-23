@@ -79,7 +79,7 @@ func (r *Repository) generateExtensionIdentifier(extId string) int {
 }
 
 func (r *Repository) loadExternalCustomSourceExtensionJS(ext *extension.Extension, language extension.Language) error {
-	provider, gojaExt, err := NewGojaCustomSource(ext, language, r.logger, r.gojaRuntimeManager)
+	provider, gojaExt, err := NewGojaCustomSource(ext, language, r.logger, r.gojaRuntimeManager, r.wsEventManager)
 	if err != nil {
 		return err
 	}
@@ -88,7 +88,7 @@ func (r *Repository) loadExternalCustomSourceExtensionJS(ext *extension.Extensio
 	retExt := extension.NewCustomSourceExtension(ext, provider)
 	retExt.SetExtensionIdentifier(r.generateExtensionIdentifier(ext.ID))
 	gojaExt.extensionIdentifier = retExt.GetExtensionIdentifier()
-	r.extensionBank.Set(ext.ID, retExt)
+	r.extensionBankRef.Get().Set(ext.ID, retExt)
 	r.gojaExtensions.Set(ext.ID, gojaExt)
 
 	r.logger.Trace().Str("id", ext.ID).Int("identifier", gojaExt.extensionIdentifier).Msg("extensions: Loaded external custom source extension")
