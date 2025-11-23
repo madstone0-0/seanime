@@ -32,7 +32,7 @@ type Manager struct {
 	logger                  *zerolog.Logger
 	settings                *models.NakamaSettings
 	wsEventManager          events.WSEventManagerInterface
-	platform                platform.Platform
+	platformRef             *util.Ref[platform.Platform]
 	playbackManager         *playbackmanager.PlaybackManager
 	torrentstreamRepository *torrentstream.Repository
 	debridClientRepository  *debrid_client.Repository
@@ -70,6 +70,8 @@ type Manager struct {
 	// Client settings
 	useDenshiPlayer bool         // Whether this client uses Denshi player
 	clientMu        sync.RWMutex // Mutex for client settings
+
+	isOfflineRef *util.Ref[bool]
 }
 
 type NewManagerOptions struct {
@@ -78,11 +80,12 @@ type NewManagerOptions struct {
 	PlaybackManager         *playbackmanager.PlaybackManager
 	TorrentstreamRepository *torrentstream.Repository
 	DebridClientRepository  *debrid_client.Repository
-	Platform                platform.Platform
+	PlatformRef             *util.Ref[platform.Platform]
 	ServerHost              string
 	ServerPort              int
 	NativePlayer            *nativeplayer.NativePlayer
 	DirectStreamManager     *directstream.Manager
+	IsOfflineRef            *util.Ref[bool]
 }
 
 type ConnectionType string
@@ -205,8 +208,8 @@ func NewManager(opts *NewManagerOptions) *Manager {
 		logger:                  opts.Logger,
 		wsEventManager:          opts.WSEventManager,
 		playbackManager:         opts.PlaybackManager,
-		peerConnections:         result.NewResultMap[string, *PeerConnection](),
-		platform:                opts.Platform,
+		peerConnections:         result.NewMap[string, *PeerConnection](),
+		platformRef:             opts.PlatformRef,
 		ctx:                     ctx,
 		cancel:                  cancel,
 		messageHandlers:         make(map[MessageType]func(*Message, string) error),
@@ -221,6 +224,7 @@ func NewManager(opts *NewManagerOptions) *Manager {
 		nativePlayer:            opts.NativePlayer,
 		useDenshiPlayer:         false,
 		directstreamManager:     opts.DirectStreamManager,
+		isOfflineRef:            opts.IsOfflineRef,
 	}
 
 	m.mediaController = NewMediaController(m)
@@ -362,6 +366,16 @@ func (m *Manager) GetHostBaseServerURL() string {
 	return url
 }
 
+func (m *Manager) Stop() {
+	if m.IsHost() {
+		m.stopHostServices()
+	}
+	if m.IsConnectedToHost() {
+		m.disconnectFromHost()
+	}
+	m.Cleanup()
+}
+
 func (m *Manager) IsHost() bool {
 	return m.settings.IsHost
 }
@@ -479,7 +493,7 @@ func (m *Manager) SendMessageToHost(msgType MessageType, payload interface{}) er
 	m.hostMu.RLock()
 	defer m.hostMu.RUnlock()
 
-	if m.hostConnection == nil || !m.hostConnection.Authenticated {
+	if m.isOfflineRef.Get() || m.hostConnection == nil || !m.hostConnection.Authenticated {
 		return errors.New("not connected to host")
 	}
 
@@ -528,7 +542,7 @@ func (m *Manager) GetUseDenshiPlayer() bool {
 func (m *Manager) IsConnectedToHost() bool {
 	m.hostMu.RLock()
 	defer m.hostMu.RUnlock()
-	return m.hostConnection != nil && m.hostConnection.Authenticated
+	return !m.isOfflineRef.Get() && m.hostConnection != nil && m.hostConnection.Authenticated
 }
 
 // GetHostConnectionStatus returns the status of the host connection

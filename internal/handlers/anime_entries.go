@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"seanime/internal/api/anilist"
+	"seanime/internal/customsource"
 	"seanime/internal/database/db_bridge"
 	"seanime/internal/hook"
 	"seanime/internal/library/anime"
@@ -28,9 +29,31 @@ import (
 
 func (h *Handler) getAnimeEntry(c echo.Context, lfs []*anime.LocalFile, mId int) (*anime.Entry, error) {
 	// Get the host anime library files
-	nakamaLfs, hydratedFromNakama := h.App.NakamaManager.GetHostAnimeLibraryFiles(c.Request().Context(), mId)
+	nakamaLfs, customSourceMap, hydratedFromNakama := h.App.NakamaManager.GetHostAnimeLibraryFiles(c.Request().Context(), mId)
 	if hydratedFromNakama && nakamaLfs != nil {
 		lfs = nakamaLfs
+		// for each local file, if it's matched to a custom source, convert the ID using the local extension identifier
+		// this is needed because the custom source media ID returned by the host will not match the local one
+		for _, lf := range lfs {
+			if !customsource.IsExtensionId(lf.MediaId) {
+				continue
+			}
+			_, localId := customsource.ExtractExtensionData(lf.MediaId)
+			extensionId, ok := customSourceMap[lf.MediaId]
+			if !ok {
+				continue // custom source not found
+			}
+
+			// Find the same extension, if it's not installed, skip it
+			customSource, ok := h.App.ExtensionRepository.GetCustomSourceExtensionByID(extensionId)
+			if !ok {
+				continue
+			}
+
+			// Generate a new ID for the custom source media
+			newId := customsource.GenerateMediaId(customSource.GetExtensionIdentifier(), localId)
+			lf.MediaId = newId
+		}
 	}
 
 	// Get the user's anilist collection
@@ -45,12 +68,12 @@ func (h *Handler) getAnimeEntry(c echo.Context, lfs []*anime.LocalFile, mId int)
 
 	// Create a new media entry
 	entry, err := anime.NewEntry(c.Request().Context(), &anime.NewEntryOptions{
-		MediaId:          mId,
-		LocalFiles:       lfs,
-		AnimeCollection:  animeCollection,
-		Platform:         h.App.AnilistPlatform,
-		MetadataProvider: h.App.MetadataProvider,
-		IsSimulated:      h.App.GetUser().IsSimulated,
+		MediaId:             mId,
+		LocalFiles:          lfs,
+		AnimeCollection:     animeCollection,
+		PlatformRef:         h.App.AnilistPlatformRef,
+		MetadataProviderRef: h.App.MetadataProviderRef,
+		IsSimulated:         h.App.GetUser().IsSimulated,
 	})
 	if err != nil {
 		return nil, err
@@ -290,7 +313,7 @@ func (h *Handler) HandleFetchAnimeEntrySuggestions(c echo.Context) error {
 	h.App.Logger.Info().Str("title", title).Msg("handlers: Fetching anime suggestions")
 
 	res, err := anilist.ListAnimeM(
-		shared_platform.NewCacheLayer(h.App.AnilistClient),
+		shared_platform.NewCacheLayer(h.App.AnilistClientRef),
 		lo.ToPtr(1),
 		&title,
 		lo.ToPtr(8),
@@ -339,7 +362,7 @@ func (h *Handler) HandleAnimeEntryManualMatch(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
-	animeCollectionWithRelations, err := h.App.AnilistPlatform.GetAnimeCollectionWithRelations(c.Request().Context())
+	animeCollectionWithRelations, err := h.App.AnilistPlatformRef.Get().GetAnimeCollectionWithRelations(c.Request().Context())
 	if err != nil {
 		return h.RespondWithError(c, err)
 	}
@@ -370,7 +393,7 @@ func (h *Handler) HandleAnimeEntryManualMatch(c echo.Context) error {
 	})
 
 	// Get the media
-	media, err := h.App.AnilistPlatform.GetAnime(c.Request().Context(), b.MediaId)
+	media, err := h.App.AnilistPlatformRef.Get().GetAnime(c.Request().Context(), b.MediaId)
 	if err != nil {
 		return h.RespondWithError(c, err)
 	}
@@ -389,16 +412,16 @@ func (h *Handler) HandleAnimeEntryManualMatch(c echo.Context) error {
 	scanSummaryLogger := summary.NewScanSummaryLogger()
 
 	fh := scanner.FileHydrator{
-		LocalFiles:         selectedLfs,
-		CompleteAnimeCache: anilist.NewCompleteAnimeCache(),
-		Platform:           h.App.AnilistPlatform,
-		MetadataProvider:   h.App.MetadataProvider,
-		AnilistRateLimiter: limiter.NewAnilistLimiter(),
-		Logger:             h.App.Logger,
-		ScanLogger:         scanLogger,
-		ScanSummaryLogger:  scanSummaryLogger,
-		AllMedia:           normalizedMedia,
-		ForceMediaId:       media.GetID(),
+		LocalFiles:          selectedLfs,
+		CompleteAnimeCache:  anilist.NewCompleteAnimeCache(),
+		PlatformRef:         h.App.AnilistPlatformRef,
+		MetadataProviderRef: h.App.MetadataProviderRef,
+		AnilistRateLimiter:  limiter.NewAnilistLimiter(),
+		Logger:              h.App.Logger,
+		ScanLogger:          scanLogger,
+		ScanSummaryLogger:   scanSummaryLogger,
+		AllMedia:            normalizedMedia,
+		ForceMediaId:        media.GetID(),
 	}
 
 	fh.HydrateMetadata()
@@ -484,10 +507,10 @@ func (h *Handler) HandleGetMissingEpisodes(c echo.Context) error {
 	silencedMediaIds, _ := h.App.Database.GetSilencedMediaEntryIds()
 
 	missingEps := anime.NewMissingEpisodes(&anime.NewMissingEpisodesOptions{
-		AnimeCollection:  animeCollection,
-		LocalFiles:       lfs,
-		SilencedMediaIds: silencedMediaIds,
-		MetadataProvider: h.App.MetadataProvider,
+		AnimeCollection:     animeCollection,
+		LocalFiles:          lfs,
+		SilencedMediaIds:    silencedMediaIds,
+		MetadataProviderRef: h.App.MetadataProviderRef,
 	})
 
 	event := new(anime.MissingEpisodesEvent)
@@ -591,7 +614,7 @@ func (h *Handler) HandleUpdateAnimeEntryProgress(c echo.Context) error {
 	}
 
 	// Update the progress on AniList
-	err := h.App.AnilistPlatform.UpdateEntryProgress(
+	err := h.App.AnilistPlatformRef.Get().UpdateEntryProgress(
 		c.Request().Context(),
 		b.MediaId,
 		b.EpisodeNumber,
@@ -627,7 +650,7 @@ func (h *Handler) HandleUpdateAnimeEntryRepeat(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
-	err := h.App.AnilistPlatform.UpdateEntryRepeat(
+	err := h.App.AnilistPlatformRef.Get().UpdateEntryRepeat(
 		c.Request().Context(),
 		b.MediaId,
 		b.Repeat,

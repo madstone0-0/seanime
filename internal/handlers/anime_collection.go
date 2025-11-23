@@ -3,6 +3,7 @@ package handlers
 import (
 	"errors"
 	"seanime/internal/api/anilist"
+	"seanime/internal/customsource"
 	"seanime/internal/database/db_bridge"
 	"seanime/internal/library/anime"
 	"seanime/internal/torrentstream"
@@ -36,38 +37,68 @@ func (h *Handler) HandleGetLibraryCollection(c echo.Context) error {
 	originalAnimeCollection := animeCollection
 
 	var lfs []*anime.LocalFile
+	// If using Nakama's library, fetch it
 	nakamaLibrary, fromNakama := h.App.NakamaManager.GetHostAnimeLibrary(c.Request().Context())
 	if fromNakama {
 		// Save the original anime collection to restore it later
 		originalAnimeCollection = animeCollection.Copy()
 		lfs = nakamaLibrary.LocalFiles
-		// Merge missing media entries into the collection
-		currentMediaIds := make(map[int]struct{})
+
+		// Store all media from the user's collection
+		userMediaIds := make(map[int]struct{})
+		userCustomSourceMedia := make(map[string]map[int]struct{})
 		for _, list := range animeCollection.MediaListCollection.GetLists() {
 			for _, entry := range list.GetEntries() {
-				currentMediaIds[entry.GetMedia().GetID()] = struct{}{}
-			}
-		}
+				mId := entry.GetMedia().GetID()
+				userMediaIds[mId] = struct{}{}
 
-		nakamaMediaIds := make(map[int]struct{})
-		for _, lf := range lfs {
-			if lf.MediaId > 0 {
-				nakamaMediaIds[lf.MediaId] = struct{}{}
-			}
-		}
-
-		missingMediaIds := make(map[int]struct{})
-		for _, lf := range lfs {
-			if lf.MediaId > 0 {
-				if _, ok := currentMediaIds[lf.MediaId]; !ok {
-					missingMediaIds[lf.MediaId] = struct{}{}
+				// Add all user custom source media to a map
+				// This will be used to avoid duplicates
+				if customsource.IsExtensionId(mId) {
+					_, localId := customsource.ExtractExtensionData(mId)
+					extensionId, ok := customsource.GetCustomSourceExtensionIdFromSiteUrl(entry.GetMedia().GetSiteURL())
+					if !ok {
+						// couldn't figure out the extension, skip it
+						continue
+					}
+					if _, ok := userCustomSourceMedia[extensionId]; !ok {
+						userCustomSourceMedia[extensionId] = make(map[int]struct{})
+					}
+					userCustomSourceMedia[extensionId][localId] = struct{}{}
 				}
 			}
 		}
 
+		// Store all custom source media from the Nakama host
+		nakamaCustomSourceMediaIds := make(map[int]struct{})
+		for _, lf := range lfs {
+			if lf.MediaId > 0 {
+				if customsource.IsExtensionId(lf.MediaId) {
+					nakamaCustomSourceMediaIds[lf.MediaId] = struct{}{}
+				}
+			}
+		}
+
+		// Find media entries that are missing from the user's collection
+		userMissingAnilistMediaIds := make(map[int]struct{})
+		for _, lf := range lfs {
+			if lf.MediaId > 0 {
+				if customsource.IsExtensionId(lf.MediaId) {
+					continue
+				}
+				if _, ok := userMediaIds[lf.MediaId]; !ok {
+					userMissingAnilistMediaIds[lf.MediaId] = struct{}{}
+				}
+			}
+		}
+
+		nakamaCustomSourceMedia := make(map[int]*anilist.AnimeListEntry)
+
+		// Add missing AniList entries to the user's collection as "Planning"
 		for _, list := range nakamaLibrary.AnimeCollection.MediaListCollection.GetLists() {
 			for _, entry := range list.GetEntries() {
-				if _, ok := missingMediaIds[entry.GetMedia().GetID()]; ok {
+				mId := entry.GetMedia().GetID()
+				if _, ok := userMissingAnilistMediaIds[mId]; ok {
 					// create a new entry with blank list data
 					newEntry := &anilist.AnimeListEntry{
 						ID:     entry.GetID(),
@@ -75,6 +106,55 @@ func (h *Handler) HandleGetLibraryCollection(c echo.Context) error {
 						Status: &[]anilist.MediaListStatus{anilist.MediaListStatusPlanning}[0],
 					}
 					animeCollection.MediaListCollection.AddEntryToList(newEntry, anilist.MediaListStatusPlanning)
+				}
+				// Check if the media from a custom source
+				if _, ok := nakamaCustomSourceMediaIds[mId]; ok {
+					nakamaCustomSourceMedia[mId] = entry
+				}
+			}
+		}
+
+		// Add missing custom source entries to the user's collection as "Planning"
+		// We'll find the equivalent
+		if len(nakamaCustomSourceMedia) > 0 {
+			// Go through all custom source media,
+			// For each one, find the extension and replace the generated ID
+			for mId, entry := range nakamaCustomSourceMedia {
+				//extensionIdentifier, localId := customsource.ExtractExtensionData(mId)
+				extensionId, ok := customsource.GetCustomSourceExtensionIdFromSiteUrl(entry.GetMedia().GetSiteURL())
+				if !ok {
+					// couldn't figure out the extension, skip it
+					continue
+				}
+
+				_, localId := customsource.ExtractExtensionData(mId)
+
+				// Find the same extension, if it's not installed, skip it
+				customSource, ok := h.App.ExtensionRepository.GetCustomSourceExtensionByID(extensionId)
+				if !ok {
+					continue
+				}
+
+				// Generate a new ID for the custom source media
+				newId := customsource.GenerateMediaId(customSource.GetExtensionIdentifier(), localId)
+				entry.GetMedia().ID = newId
+
+				// Add the entry if the user doesn't already have it
+				if _, ok := userCustomSourceMedia[extensionId][localId]; !ok {
+					newEntry := &anilist.AnimeListEntry{
+						ID:     entry.GetID(),
+						Media:  entry.GetMedia(),
+						Status: &[]anilist.MediaListStatus{anilist.MediaListStatusPlanning}[0],
+					}
+					animeCollection.MediaListCollection.AddEntryToList(newEntry, anilist.MediaListStatusPlanning)
+				}
+
+				// Update the local files
+				for _, lf := range lfs {
+					if lf.MediaId == mId {
+						lf.MediaId = newId
+						break
+					}
 				}
 			}
 		}
@@ -87,10 +167,10 @@ func (h *Handler) HandleGetLibraryCollection(c echo.Context) error {
 	}
 
 	libraryCollection, err := anime.NewLibraryCollection(c.Request().Context(), &anime.NewLibraryCollectionOptions{
-		AnimeCollection:  animeCollection,
-		Platform:         h.App.AnilistPlatform,
-		LocalFiles:       lfs,
-		MetadataProvider: h.App.MetadataProvider,
+		AnimeCollection:     animeCollection,
+		PlatformRef:         h.App.AnilistPlatformRef,
+		LocalFiles:          lfs,
+		MetadataProviderRef: h.App.MetadataProviderRef,
 	})
 	if err != nil {
 		return h.RespondWithError(c, err)
@@ -106,9 +186,9 @@ func (h *Handler) HandleGetLibraryCollection(c echo.Context) error {
 			(h.App.Settings.GetLibrary() != nil && h.App.Settings.GetLibrary().EnableOnlinestream && h.App.Settings.GetLibrary().IncludeOnlineStreamingInLibrary) ||
 			(h.App.SecondarySettings.Debrid != nil && h.App.SecondarySettings.Debrid.Enabled && h.App.SecondarySettings.Debrid.IncludeDebridStreamInLibrary) {
 			h.App.TorrentstreamRepository.HydrateStreamCollection(&torrentstream.HydrateStreamCollectionOptions{
-				AnimeCollection:   animeCollection,
-				LibraryCollection: libraryCollection,
-				MetadataProvider:  h.App.MetadataProvider,
+				AnimeCollection:     animeCollection,
+				LibraryCollection:   libraryCollection,
+				MetadataProviderRef: h.App.MetadataProviderRef,
 			})
 		}
 	}
@@ -161,7 +241,7 @@ func (h *Handler) HandleGetAnimeCollectionSchedule(c echo.Context) error {
 		return h.RespondWithData(c, ret)
 	}
 
-	animeSchedule, err := h.App.AnilistPlatform.GetAnimeAiringSchedule(c.Request().Context())
+	animeSchedule, err := h.App.AnilistPlatformRef.Get().GetAnimeAiringSchedule(c.Request().Context())
 	if err != nil {
 		return h.RespondWithError(c, err)
 	}
@@ -197,7 +277,7 @@ func (h *Handler) HandleAddUnknownMedia(c echo.Context) error {
 	}
 
 	// Add non-added media entries to AniList collection
-	if err := h.App.AnilistPlatform.AddMediaToCollection(c.Request().Context(), b.MediaIds); err != nil {
+	if err := h.App.AnilistPlatformRef.Get().AddMediaToCollection(c.Request().Context(), b.MediaIds); err != nil {
 		return h.RespondWithError(c, errors.New("error: Anilist responded with an error, this is most likely a rate limit issue"))
 	}
 
