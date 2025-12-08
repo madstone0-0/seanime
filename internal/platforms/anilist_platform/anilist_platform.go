@@ -10,6 +10,7 @@ import (
 	"seanime/internal/hook"
 	"seanime/internal/platforms/platform"
 	"seanime/internal/platforms/shared_platform"
+	"seanime/internal/util"
 	"seanime/internal/util/limiter"
 	"sync"
 	"time"
@@ -32,19 +33,21 @@ type (
 		offlinePlatformEnabled bool
 		helper                 *shared_platform.PlatformHelper
 		db                     *db.Database
+		extensionBankRef       *util.Ref[*extension.UnifiedBank]
 	}
 )
 
-func NewAnilistPlatform(anilistClient anilist.AnilistClient, logger *zerolog.Logger, db *db.Database) platform.Platform {
+func NewAnilistPlatform(anilistClientRef *util.Ref[anilist.AnilistClient], extensionBankRef *util.Ref[*extension.UnifiedBank], logger *zerolog.Logger, db *db.Database) platform.Platform {
 	ap := &AnilistPlatform{
-		anilistClient:      shared_platform.NewCacheLayer(anilistClient),
+		anilistClient:      shared_platform.NewCacheLayer(anilistClientRef),
 		logger:             logger,
 		username:           mo.None[string](),
 		animeCollection:    mo.None[*anilist.AnimeCollection](),
 		rawAnimeCollection: mo.None[*anilist.AnimeCollection](),
 		mangaCollection:    mo.None[*anilist.MangaCollection](),
 		rawMangaCollection: mo.None[*anilist.MangaCollection](),
-		helper:             shared_platform.NewPlatformHelper(logger),
+		extensionBankRef:   extensionBankRef,
+		helper:             shared_platform.NewPlatformHelper(extensionBankRef, db, logger),
 		db:                 db,
 	}
 
@@ -53,10 +56,6 @@ func NewAnilistPlatform(anilistClient anilist.AnilistClient, logger *zerolog.Log
 
 func (ap *AnilistPlatform) ClearCache() {
 	ap.helper.ClearCache()
-}
-
-func (ap *AnilistPlatform) InitExtensionBank(bank *extension.UnifiedBank) {
-	ap.helper.InitExtensionBank(bank, ap.db)
 }
 
 func (ap *AnilistPlatform) Close() {
@@ -160,16 +159,17 @@ func (ap *AnilistPlatform) UpdateEntryRepeat(ctx context.Context, mediaID int, r
 func (ap *AnilistPlatform) DeleteEntry(ctx context.Context, mediaID, entryId int) error {
 	ap.logger.Trace().Msg("anilist platform: Deleting entry")
 
-	// Check if this is a custom source entry
-	if handled, err := ap.helper.HandleCustomSourceDeleteEntry(ctx, mediaID, entryId); handled {
-		return err
-	}
+	return ap.helper.TriggerDeleteEntryHooks(ctx, mediaID, entryId, func(event *platform.PreDeleteEntryEvent) error {
+		if handled, err := ap.helper.HandleCustomSourceDeleteEntry(ctx, *event.MediaID, *event.EntryID); handled {
+			return err
+		}
 
-	_, err := ap.anilistClient.DeleteEntry(ctx, &entryId)
-	if err != nil {
-		return err
-	}
-	return nil
+		_, err := ap.anilistClient.DeleteEntry(ctx, event.EntryID)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
 }
 
 func (ap *AnilistPlatform) GetAnime(ctx context.Context, mediaID int) (*anilist.BaseAnime, error) {

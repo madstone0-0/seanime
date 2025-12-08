@@ -8,8 +8,10 @@ import (
 	"seanime/internal/api/metadata_provider"
 	"seanime/internal/database/db"
 	"seanime/internal/extension"
+	hibikeonlinestream "seanime/internal/extension/hibike/onlinestream"
 	"seanime/internal/library/anime"
 	"seanime/internal/platforms/platform"
+	"seanime/internal/util"
 	"seanime/internal/util/filecache"
 	"strconv"
 	"strings"
@@ -22,10 +24,10 @@ import (
 type (
 	Repository struct {
 		logger                *zerolog.Logger
-		providerExtensionBank *extension.UnifiedBank
+		extensionBankRef      *util.Ref[*extension.UnifiedBank]
 		fileCacher            *filecache.Cacher
-		metadataProvider      metadata_provider.Provider
-		platform              platform.Platform
+		metadataProviderRef   *util.Ref[metadata_provider.Provider]
+		platformRef           *util.Ref[platform.Platform]
 		anilistBaseAnimeCache *anilist.BaseAnimeCache
 		db                    *db.Database
 	}
@@ -37,11 +39,12 @@ var (
 
 type (
 	Episode struct {
-		Number      int    `json:"number"`
-		Title       string `json:"title,omitempty"`
-		Image       string `json:"image,omitempty"`
-		Description string `json:"description,omitempty"`
-		IsFiller    bool   `json:"isFiller,omitempty"`
+		Number      int            `json:"number"`
+		Title       string         `json:"title,omitempty"`
+		Image       string         `json:"image,omitempty"`
+		Description string         `json:"description,omitempty"`
+		IsFiller    bool           `json:"isFiller,omitempty"`
+		Metadata    *anime.Episode `json:"metadata"`
 	}
 
 	EpisodeSource struct {
@@ -51,10 +54,12 @@ type (
 	}
 
 	VideoSource struct {
-		Server  string            `json:"server"`
-		Headers map[string]string `json:"headers,omitempty"`
-		URL     string            `json:"url"`
-		Quality string            `json:"quality"`
+		Server  string                             `json:"server"`
+		Headers map[string]string                  `json:"headers,omitempty"`
+		URL     string                             `json:"url"`
+		Label   string                             `json:"label,omitempty"`
+		Quality string                             `json:"quality"`
+		Type    hibikeonlinestream.VideoSourceType `json:"type"`
 	}
 
 	EpisodeListResponse struct {
@@ -70,30 +75,25 @@ type (
 
 type (
 	NewRepositoryOptions struct {
-		Logger           *zerolog.Logger
-		FileCacher       *filecache.Cacher
-		MetadataProvider metadata_provider.Provider
-		Platform         platform.Platform
-		Database         *db.Database
+		Logger              *zerolog.Logger
+		FileCacher          *filecache.Cacher
+		MetadataProviderRef *util.Ref[metadata_provider.Provider]
+		PlatformRef         *util.Ref[platform.Platform]
+		Database            *db.Database
+		ExtensionBankRef    *util.Ref[*extension.UnifiedBank]
 	}
 )
 
 func NewRepository(opts *NewRepositoryOptions) *Repository {
 	return &Repository{
 		logger:                opts.Logger,
-		metadataProvider:      opts.MetadataProvider,
+		metadataProviderRef:   opts.MetadataProviderRef,
 		fileCacher:            opts.FileCacher,
-		providerExtensionBank: extension.NewUnifiedBank(),
+		extensionBankRef:      opts.ExtensionBankRef,
 		anilistBaseAnimeCache: anilist.NewBaseAnimeCache(),
-		platform:              opts.Platform,
+		platformRef:           opts.PlatformRef,
 		db:                    opts.Database,
 	}
-}
-
-func (r *Repository) InitExtensionBank(bank *extension.UnifiedBank) {
-	r.providerExtensionBank = bank
-
-	r.logger.Debug().Msg("onlinestream: Initialized provider extension bank")
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ func (r *Repository) getFcEpisodeListBucket(provider string, mediaId int) fileca
 
 func (r *Repository) getMedia(ctx context.Context, mId int) (*anilist.BaseAnime, error) {
 	media, err := r.anilistBaseAnimeCache.GetOrSet(mId, func() (*anilist.BaseAnime, error) {
-		media, err := r.platform.GetAnime(ctx, mId)
+		media, err := r.platformRef.Get().GetAnime(ctx, mId)
 		if err != nil {
 			return nil, err
 		}
@@ -138,6 +138,8 @@ func (r *Repository) EmptyCache(mediaId int) error {
 	_ = r.fileCacher.RemoveAllBy(func(filename string) bool {
 		return strings.HasPrefix(filename, "onlinestream_") && strings.Contains(filename, strconv.Itoa(mediaId))
 	})
+	// clear all stores
+	_ = r.fileCacher.Clear()
 	return nil
 }
 
@@ -157,10 +159,10 @@ func (r *Repository) GetMediaEpisodes(provider string, media *anilist.BaseAnime,
 	//aw := r.metadataProvider.GetAnimeMetadataWrapper(media, animeMetadata)
 
 	episodeCollection, err := anime.NewEpisodeCollection(anime.NewEpisodeCollectionOptions{
-		AnimeMetadata:    nil,
-		Media:            media,
-		MetadataProvider: r.metadataProvider,
-		Logger:           r.logger,
+		AnimeMetadata:       nil,
+		Media:               media,
+		MetadataProviderRef: r.metadataProviderRef,
+		Logger:              r.logger,
 	})
 	foundEpisodeCollection := err == nil && episodeCollection != nil
 
@@ -200,6 +202,7 @@ func (r *Repository) GetMediaEpisodes(provider string, media *anilist.BaseAnime,
 						Image:       episode.EpisodeMetadata.Image,
 						Description: episode.EpisodeMetadata.Summary,
 						IsFiller:    episode.EpisodeMetadata.IsFiller,
+						Metadata:    episode,
 					})
 				} else {
 					episodes = append(episodes, &Episode{
@@ -260,7 +263,9 @@ func (r *Repository) GetEpisodeSources(ctx context.Context, provider string, mId
 						Server:  es.Server,
 						Headers: es.Headers,
 						URL:     vs.URL,
+						Label:   vs.Label,
 						Quality: vs.Quality,
+						Type:    vs.Type,
 					})
 					// Add subtitles if available
 					// Subtitles are stored in each video source, but they are the same, so only add them once.

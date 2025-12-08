@@ -26526,12 +26526,10 @@
         "comments": []
       },
       {
-        "name": "extensionBank",
-        "jsonName": "extensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -26554,6 +26552,17 @@
         "typescriptType": "DB_Database",
         "usedTypescriptType": "DB_Database",
         "usedStructName": "db.Database",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "useFallbackProvider",
+        "jsonName": "useFallbackProvider",
+        "goType": "atomic.Bool",
+        "typescriptType": "Bool",
+        "usedTypescriptType": "Bool",
+        "usedStructName": "atomic.Bool",
         "required": false,
         "public": false,
         "comments": []
@@ -26597,6 +26606,15 @@
         "typescriptType": "DB_Database",
         "usedTypescriptType": "DB_Database",
         "usedStructName": "db.Database",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -27236,45 +27254,37 @@
         "comments": []
       },
       {
-        "name": "AnilistClient",
-        "jsonName": "AnilistClient",
-        "goType": "anilist.AnilistClient",
-        "typescriptType": "AL_AnilistClient",
-        "usedTypescriptType": "AL_AnilistClient",
-        "usedStructName": "anilist.AnilistClient",
+        "name": "AnilistClientRef",
+        "jsonName": "AnilistClientRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "AnilistPlatform",
-        "jsonName": "AnilistPlatform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "AnilistPlatformRef",
+        "jsonName": "AnilistPlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "OfflinePlatform",
-        "jsonName": "OfflinePlatform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "OfflinePlatformRef",
+        "jsonName": "OfflinePlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "LocalManager",
-        "jsonName": "LocalManager",
-        "goType": "local.Manager",
-        "typescriptType": "Local_Manager",
-        "usedTypescriptType": "Local_Manager",
-        "usedStructName": "local.Manager",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -27291,17 +27301,6 @@
         "comments": []
       },
       {
-        "name": "WSEventManager",
-        "jsonName": "WSEventManager",
-        "goType": "events.WSEventManager",
-        "typescriptType": "Events_WSEventManager",
-        "usedTypescriptType": "Events_WSEventManager",
-        "usedStructName": "events.WSEventManager",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
         "name": "AutoDownloader",
         "jsonName": "AutoDownloader",
         "goType": "autodownloader.AutoDownloader",
@@ -27313,12 +27312,54 @@
         "comments": []
       },
       {
+        "name": "AutoScanner",
+        "jsonName": "AutoScanner",
+        "goType": "autoscanner.AutoScanner",
+        "typescriptType": "AutoScanner_AutoScanner",
+        "usedTypescriptType": "AutoScanner_AutoScanner",
+        "usedStructName": "autoscanner.AutoScanner",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PlaybackManager",
+        "jsonName": "PlaybackManager",
+        "goType": "playbackmanager.PlaybackManager",
+        "typescriptType": "PlaybackManager_PlaybackManager",
+        "usedTypescriptType": "PlaybackManager_PlaybackManager",
+        "usedStructName": "playbackmanager.PlaybackManager",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "WSEventManager",
+        "jsonName": "WSEventManager",
+        "goType": "events.WSEventManager",
+        "typescriptType": "Events_WSEventManager",
+        "usedTypescriptType": "Events_WSEventManager",
+        "usedStructName": "events.WSEventManager",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
         "name": "ExtensionRepository",
         "jsonName": "ExtensionRepository",
         "goType": "extension_repo.Repository",
         "typescriptType": "ExtensionRepo_Repository",
         "usedTypescriptType": "ExtensionRepo_Repository",
         "usedStructName": "extension_repo.Repository",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -27341,6 +27382,39 @@
         "typescriptType": "Directstream_Manager",
         "usedTypescriptType": "Directstream_Manager",
         "usedStructName": "directstream.Manager",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "OnlinestreamRepository",
+        "jsonName": "OnlinestreamRepository",
+        "goType": "onlinestream.Repository",
+        "typescriptType": "Onlinestream_Repository",
+        "usedTypescriptType": "Onlinestream_Repository",
+        "usedStructName": "onlinestream.Repository",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MediastreamRepository",
+        "jsonName": "MediastreamRepository",
+        "goType": "mediastream.Repository",
+        "typescriptType": "Mediastream_Repository",
+        "usedTypescriptType": "Mediastream_Repository",
+        "usedStructName": "mediastream.Repository",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "TorrentstreamRepository",
+        "jsonName": "TorrentstreamRepository",
+        "goType": "torrentstream.Repository",
+        "typescriptType": "Torrentstream_Repository",
+        "usedTypescriptType": "Torrentstream_Repository",
+        "usedStructName": "torrentstream.Repository",
         "required": false,
         "public": true,
         "comments": []
@@ -27380,43 +27454,34 @@
         "comments": []
       },
       {
-        "name": "Version",
-        "jsonName": "Version",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Updater",
-        "jsonName": "Updater",
-        "goType": "updater.Updater",
-        "typescriptType": "Updater_Updater",
-        "usedTypescriptType": "Updater_Updater",
-        "usedStructName": "updater.Updater",
+        "name": "MangaRepository",
+        "jsonName": "MangaRepository",
+        "goType": "manga.Repository",
+        "typescriptType": "Manga_Repository",
+        "usedTypescriptType": "Manga_Repository",
+        "usedStructName": "manga.Repository",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "AutoScanner",
-        "jsonName": "AutoScanner",
-        "goType": "autoscanner.AutoScanner",
-        "typescriptType": "AutoScanner_AutoScanner",
-        "usedTypescriptType": "AutoScanner_AutoScanner",
-        "usedStructName": "autoscanner.AutoScanner",
+        "name": "MangaDownloader",
+        "jsonName": "MangaDownloader",
+        "goType": "manga.Downloader",
+        "typescriptType": "Manga_Downloader",
+        "usedTypescriptType": "Manga_Downloader",
+        "usedStructName": "manga.Downloader",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "PlaybackManager",
-        "jsonName": "PlaybackManager",
-        "goType": "playbackmanager.PlaybackManager",
-        "typescriptType": "PlaybackManager_PlaybackManager",
-        "usedTypescriptType": "PlaybackManager_PlaybackManager",
-        "usedStructName": "playbackmanager.PlaybackManager",
+        "name": "LocalManager",
+        "jsonName": "LocalManager",
+        "goType": "local.Manager",
+        "typescriptType": "Local_Manager",
+        "usedTypescriptType": "Local_Manager",
+        "usedStructName": "local.Manager",
         "required": false,
         "public": true,
         "comments": []
@@ -27433,34 +27498,34 @@
         "comments": []
       },
       {
-        "name": "OnlinestreamRepository",
-        "jsonName": "OnlinestreamRepository",
-        "goType": "onlinestream.Repository",
-        "typescriptType": "Onlinestream_Repository",
-        "usedTypescriptType": "Onlinestream_Repository",
-        "usedStructName": "onlinestream.Repository",
+        "name": "Updater",
+        "jsonName": "Updater",
+        "goType": "updater.Updater",
+        "typescriptType": "Updater_Updater",
+        "usedTypescriptType": "Updater_Updater",
+        "usedStructName": "updater.Updater",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MangaRepository",
-        "jsonName": "MangaRepository",
-        "goType": "manga.Repository",
-        "typescriptType": "Manga_Repository",
-        "usedTypescriptType": "Manga_Repository",
-        "usedStructName": "manga.Repository",
+        "name": "SelfUpdater",
+        "jsonName": "SelfUpdater",
+        "goType": "updater.SelfUpdater",
+        "typescriptType": "Updater_SelfUpdater",
+        "usedTypescriptType": "Updater_SelfUpdater",
+        "usedStructName": "updater.SelfUpdater",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "ReportRepository",
+        "jsonName": "ReportRepository",
+        "goType": "report.Repository",
+        "typescriptType": "Report_Repository",
+        "usedTypescriptType": "Report_Repository",
+        "usedStructName": "report.Repository",
         "required": false,
         "public": true,
         "comments": []
@@ -27472,17 +27537,6 @@
         "typescriptType": "DiscordRPC_Presence",
         "usedTypescriptType": "DiscordRPC_Presence",
         "usedStructName": "discordrpc_presence.Presence",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "MangaDownloader",
-        "jsonName": "MangaDownloader",
-        "goType": "manga.Downloader",
-        "typescriptType": "Manga_Downloader",
-        "usedTypescriptType": "Manga_Downloader",
-        "usedStructName": "manga.Downloader",
         "required": false,
         "public": true,
         "comments": []
@@ -27526,28 +27580,6 @@
         "comments": []
       },
       {
-        "name": "MediastreamRepository",
-        "jsonName": "MediastreamRepository",
-        "goType": "mediastream.Repository",
-        "typescriptType": "Mediastream_Repository",
-        "usedTypescriptType": "Mediastream_Repository",
-        "usedStructName": "mediastream.Repository",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "TorrentstreamRepository",
-        "jsonName": "TorrentstreamRepository",
-        "goType": "torrentstream.Repository",
-        "typescriptType": "Torrentstream_Repository",
-        "usedTypescriptType": "Torrentstream_Repository",
-        "usedStructName": "torrentstream.Repository",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
         "name": "FeatureFlags",
         "jsonName": "FeatureFlags",
         "goType": "FeatureFlags",
@@ -27555,6 +27587,17 @@
         "usedTypescriptType": "INTERNAL_FeatureFlags",
         "usedStructName": "core.FeatureFlags",
         "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "FeatureManager",
+        "jsonName": "FeatureManager",
+        "goType": "FeatureManager",
+        "typescriptType": "INTERNAL_FeatureManager",
+        "usedTypescriptType": "INTERNAL_FeatureManager",
+        "usedStructName": "core.FeatureManager",
+        "required": false,
         "public": true,
         "comments": []
       },
@@ -27579,29 +27622,14 @@
         "usedStructName": "core.App_SecondarySettings",
         "required": true,
         "public": true,
-        "comments": [
-          " Struct for other settings sent to clientN"
-        ]
-      },
-      {
-        "name": "SelfUpdater",
-        "jsonName": "SelfUpdater",
-        "goType": "updater.SelfUpdater",
-        "typescriptType": "Updater_SelfUpdater",
-        "usedTypescriptType": "Updater_SelfUpdater",
-        "usedStructName": "updater.SelfUpdater",
-        "required": false,
-        "public": true,
         "comments": []
       },
       {
-        "name": "ReportRepository",
-        "jsonName": "ReportRepository",
-        "goType": "report.Repository",
-        "typescriptType": "Report_Repository",
-        "usedTypescriptType": "Report_Repository",
-        "usedStructName": "report.Repository",
-        "required": false,
+        "name": "Version",
+        "jsonName": "Version",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
         "public": true,
         "comments": []
       },
@@ -27612,9 +27640,7 @@
         "typescriptType": "number",
         "required": true,
         "public": true,
-        "comments": [
-          " Initialized in modules.go"
-        ]
+        "comments": []
       },
       {
         "name": "LibraryDir",
@@ -27644,52 +27670,15 @@
         "comments": []
       },
       {
-        "name": "animeCollection",
-        "jsonName": "animeCollection",
-        "goType": "anilist.AnimeCollection",
-        "typescriptType": "AL_AnimeCollection",
-        "usedTypescriptType": "AL_AnimeCollection",
-        "usedStructName": "anilist.AnimeCollection",
-        "required": false,
-        "public": false,
+        "name": "Flags",
+        "jsonName": "Flags",
+        "goType": "SeanimeFlags",
+        "typescriptType": "INTERNAL_SeanimeFlags",
+        "usedTypescriptType": "INTERNAL_SeanimeFlags",
+        "usedStructName": "core.SeanimeFlags",
+        "required": true,
+        "public": true,
         "comments": []
-      },
-      {
-        "name": "rawAnimeCollection",
-        "jsonName": "rawAnimeCollection",
-        "goType": "anilist.AnimeCollection",
-        "typescriptType": "AL_AnimeCollection",
-        "usedTypescriptType": "AL_AnimeCollection",
-        "usedStructName": "anilist.AnimeCollection",
-        "required": false,
-        "public": false,
-        "comments": [
-          " (retains custom lists)"
-        ]
-      },
-      {
-        "name": "mangaCollection",
-        "jsonName": "mangaCollection",
-        "goType": "anilist.MangaCollection",
-        "typescriptType": "AL_MangaCollection",
-        "usedTypescriptType": "AL_MangaCollection",
-        "usedStructName": "anilist.MangaCollection",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "rawMangaCollection",
-        "jsonName": "rawMangaCollection",
-        "goType": "anilist.MangaCollection",
-        "typescriptType": "AL_MangaCollection",
-        "usedTypescriptType": "AL_MangaCollection",
-        "usedStructName": "anilist.MangaCollection",
-        "required": false,
-        "public": false,
-        "comments": [
-          " (retains custom lists)"
-        ]
       },
       {
         "name": "user",
@@ -27723,45 +27712,21 @@
         "comments": []
       },
       {
-        "name": "HookManager",
-        "jsonName": "HookManager",
-        "goType": "hook.Manager",
-        "typescriptType": "Manager",
-        "usedTypescriptType": "Manager",
-        "usedStructName": "hook.Manager",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
         "name": "ServerReady",
         "jsonName": "ServerReady",
         "goType": "bool",
         "typescriptType": "boolean",
         "required": true,
         "public": true,
-        "comments": [
-          " Whether the Anilist data from the first request has been fetched"
-        ]
-      },
-      {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
-        "required": false,
-        "public": false,
         "comments": []
       },
       {
-        "name": "NakamaManager",
-        "jsonName": "NakamaManager",
-        "goType": "nakama.Manager",
-        "typescriptType": "Nakama_Manager",
-        "usedTypescriptType": "Nakama_Manager",
-        "usedStructName": "nakama.Manager",
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
-        "public": true,
+        "public": false,
         "comments": []
       },
       {
@@ -27771,9 +27736,18 @@
         "typescriptType": "string",
         "required": true,
         "public": true,
-        "comments": [
-          " SHA-256 hash of the server password"
-        ]
+        "comments": []
+      },
+      {
+        "name": "HookManager",
+        "jsonName": "HookManager",
+        "goType": "hook.Manager",
+        "typescriptType": "Manager",
+        "usedTypescriptType": "Manager",
+        "usedStructName": "hook.Manager",
+        "required": false,
+        "public": true,
+        "comments": []
       },
       {
         "name": "PlaylistManager",
@@ -27793,6 +27767,17 @@
         "typescriptType": "LibraryExplorer_LibraryExplorer",
         "usedTypescriptType": "LibraryExplorer_LibraryExplorer",
         "usedStructName": "library_explorer.LibraryExplorer",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "NakamaManager",
+        "jsonName": "NakamaManager",
+        "goType": "nakama.Manager",
+        "typescriptType": "Nakama_Manager",
+        "usedTypescriptType": "Nakama_Manager",
+        "usedStructName": "nakama.Manager",
         "required": false,
         "public": true,
         "comments": []
@@ -27917,9 +27902,9 @@
         "name": "Server",
         "jsonName": "Server",
         "goType": "INTERNAL_Config_Server",
-        "inlineStructType": "struct{\nHost string\nPort int\nOffline bool\nUseBinaryPath bool\nSystray bool\nDoHUrl string\nPassword string}",
+        "inlineStructType": "struct{\nHost string\nPort int\nOffline bool\nUseBinaryPath bool\nSystray bool\nDoHUrl string\nPassword string\nTls __STRUCT__}",
         "typescriptType": "INTERNAL_Config_Server",
-        "usedTypescriptType": "{ Host: string; Port: number; Offline: boolean; UseBinaryPath: boolean; Systray: boolean; DoHUrl: string; Password: string; }",
+        "usedTypescriptType": "{ Host: string; Port: number; Offline: boolean; UseBinaryPath: boolean; Systray: boolean; DoHUrl: string; Password: string; Tls: { Enabled: boolean; CertPath: string; KeyPath: string; }; }",
         "usedStructName": "core.Config_Server",
         "required": true,
         "public": true,
@@ -28116,6 +28101,17 @@
         "jsonName": "Password",
         "goType": "string",
         "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Tls",
+        "jsonName": "Tls",
+        "goType": "__STRUCT__",
+        "inlineStructType": "struct{\nEnabled bool\nCertPath string\nKeyPath string}",
+        "typescriptType": "{ Enabled: boolean; CertPath: string; KeyPath: string; }",
+        "usedTypescriptType": "{ Enabled: boolean; CertPath: string; KeyPath: string; }",
         "required": true,
         "public": true,
         "comments": []
@@ -28357,15 +28353,15 @@
     "package": "core",
     "fields": [
       {
-        "name": "DataDir",
-        "jsonName": "DataDir",
-        "goType": "string",
-        "typescriptType": "string",
+        "name": "Flags",
+        "jsonName": "Flags",
+        "goType": "SeanimeFlags",
+        "typescriptType": "INTERNAL_SeanimeFlags",
+        "usedTypescriptType": "INTERNAL_SeanimeFlags",
+        "usedStructName": "core.SeanimeFlags",
         "required": true,
         "public": true,
-        "comments": [
-          " The path to the Seanime data directory, if any"
-        ]
+        "comments": []
       },
       {
         "name": "OnVersionChange",
@@ -28386,17 +28382,6 @@
         "comments": [
           " The embedded logo"
         ]
-      },
-      {
-        "name": "IsDesktopSidecar",
-        "jsonName": "IsDesktopSidecar",
-        "goType": "bool",
-        "typescriptType": "boolean",
-        "required": true,
-        "public": true,
-        "comments": [
-          " Run as the desktop sidecar"
-        ]
       }
     ],
     "comments": []
@@ -28408,6 +28393,92 @@
     "formattedName": "INTERNAL_CustomJSONSerializer",
     "package": "core",
     "fields": [],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/core/feature_flags.go",
+    "filename": "feature_flags.go",
+    "name": "FeatureKey",
+    "formattedName": "INTERNAL_FeatureKey",
+    "package": "core",
+    "fields": [],
+    "aliasOf": {
+      "goType": "string",
+      "typescriptType": "string",
+      "declaredValues": [
+        "\"ManageOfflineMode\"",
+        "\"ViewSettings\"",
+        "\"ViewLogs\"",
+        "\"UpdateSettings\"",
+        "\"ManagePlaylist\"",
+        "\"ManageLocalAnimeLibrary\"",
+        "\"ManageAccount\"",
+        "\"ViewAccount\"",
+        "\"ManageLists\"",
+        "\"RefreshMetadata\"",
+        "\"ManageMangaDownloads\"",
+        "\"WatchingLocalAnime\"",
+        "\"TorrentStreaming\"",
+        "\"DebridStreaming\"",
+        "\"OnlineStreaming\"",
+        "\"Transcode\"",
+        "\"Reading\"",
+        "\"ViewAutoDownloader\"",
+        "\"ManageAutoDownloader\"",
+        "\"ViewScanSummaries\"",
+        "\"ViewExtensions\"",
+        "\"ManageExtensions\"",
+        "\"ManageHomeScreen\"",
+        "\"OpenInExplorer\"",
+        "\"PluginTray\"",
+        "\"ManageNakama\"",
+        "\"ManageDebrid\"",
+        "\"Proxy\"",
+        "\"ManageMangaSource\"",
+        "\"PushRequests\""
+      ]
+    },
+    "comments": []
+  },
+  {
+    "filepath": "../internal/core/feature_flags.go",
+    "filename": "feature_flags.go",
+    "name": "FeatureManager",
+    "formattedName": "INTERNAL_FeatureManager",
+    "package": "core",
+    "fields": [
+      {
+        "name": "disabledFeatures",
+        "jsonName": "disabledFeatures",
+        "goType": "map[FeatureKey]bool",
+        "typescriptType": "Record\u003cFeatureKey, boolean\u003e",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "DisabledFeatures",
+        "jsonName": "DisabledFeatures",
+        "goType": "[]FeatureKey",
+        "typescriptType": "Array\u003cINTERNAL_FeatureKey\u003e",
+        "usedTypescriptType": "INTERNAL_FeatureKey",
+        "usedStructName": "core.FeatureKey",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "logger",
+        "jsonName": "logger",
+        "goType": "zerolog.Logger",
+        "typescriptType": "Logger",
+        "usedTypescriptType": "Logger",
+        "usedStructName": "zerolog.Logger",
+        "required": false,
+        "public": false,
+        "comments": []
+      }
+    ],
     "comments": []
   },
   {
@@ -28455,6 +28526,24 @@
         "comments": []
       },
       {
+        "name": "Host",
+        "jsonName": "Host",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Port",
+        "jsonName": "Port",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
         "name": "Update",
         "jsonName": "Update",
         "goType": "bool",
@@ -28466,6 +28555,44 @@
       {
         "name": "IsDesktopSidecar",
         "jsonName": "IsDesktopSidecar",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DisableFeatures",
+        "jsonName": "DisableFeatures",
+        "goType": "[]FeatureKey",
+        "typescriptType": "Array\u003cINTERNAL_FeatureKey\u003e",
+        "usedTypescriptType": "INTERNAL_FeatureKey",
+        "usedStructName": "core.FeatureKey",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Password",
+        "jsonName": "Password",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DisablePassword",
+        "jsonName": "DisablePassword",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "LockDown",
+        "jsonName": "LockDown",
         "goType": "bool",
         "typescriptType": "boolean",
         "required": true,
@@ -28504,12 +28631,10 @@
     "package": "customsource",
     "fields": [
       {
-        "name": "extensionBank",
-        "jsonName": "extensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -29236,6 +29361,15 @@
       {
         "name": "AutoSaveCurrentMediaOffline",
         "jsonName": "autoSaveCurrentMediaOffline",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "UseFallbackMetadataProvider",
+        "jsonName": "useFallbackMetadataProvider",
         "goType": "bool",
         "typescriptType": "boolean",
         "required": true,
@@ -31289,6 +31423,37 @@
   {
     "filepath": "../internal/database/models/models.go",
     "filename": "models.go",
+    "name": "CustomSourceIdentifier",
+    "formattedName": "Models_CustomSourceIdentifier",
+    "package": "models",
+    "fields": [
+      {
+        "name": "ExtensionId",
+        "jsonName": "extensionId",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Value",
+        "jsonName": "value",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [],
+    "embeddedStructNames": [
+      "models.BaseModel"
+    ]
+  },
+  {
+    "filepath": "../internal/database/models/models.go",
+    "filename": "models.go",
     "name": "StringSlice",
     "formattedName": "Models_StringSlice",
     "package": "models",
@@ -31756,23 +31921,19 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -31863,23 +32024,19 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -33934,12 +34091,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -33956,12 +34111,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -34064,10 +34217,10 @@
         "comments": []
       },
       {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -34166,12 +34319,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -34199,12 +34350,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -34219,10 +34368,10 @@
         "comments": []
       },
       {
-        "name": "IsOffline",
-        "jsonName": "IsOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -38117,7 +38266,8 @@
       "typescriptType": "string",
       "declaredValues": [
         "\"mp4\"",
-        "\"m3u8\""
+        "\"m3u8\"",
+        "\"unknown\""
       ]
     },
     "comments": []
@@ -38146,6 +38296,15 @@
         "usedTypescriptType": "HibikeOnlinestream_VideoSourceType",
         "usedStructName": "hibikeonlinestream.VideoSourceType",
         "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Label",
+        "jsonName": "label",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": false,
         "public": true,
         "comments": []
       },
@@ -38828,8 +38987,8 @@
     "filepath": "../internal/extension/hibike/tracker/types.go",
     "filename": "types.go",
     "name": "Settings",
-    "formattedName": "HibikeCustomSource_Settings",
-    "package": "hibikecustomsource",
+    "formattedName": "Settings",
+    "package": "hibiketracker",
     "fields": [
       {
         "name": "SupportsAnime",
@@ -38845,6 +39004,300 @@
         "jsonName": "supportsManga",
         "goType": "bool",
         "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "SupportsBidirectionalSync",
+        "jsonName": "supportsBidirectionalSync",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MaxRequestsPerSecond",
+        "jsonName": "maxRequestsPerSecond",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CacheVersion",
+        "jsonName": "cacheVersion",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/extension/hibike/tracker/types.go",
+    "filename": "types.go",
+    "name": "UserInfo",
+    "formattedName": "UserInfo",
+    "package": "hibiketracker",
+    "fields": [
+      {
+        "name": "Username",
+        "jsonName": "username",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "AvatarURL",
+        "jsonName": "avatarUrl",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/extension/hibike/tracker/types.go",
+    "filename": "types.go",
+    "name": "MediaEntry",
+    "formattedName": "MediaEntry",
+    "package": "hibiketracker",
+    "fields": [
+      {
+        "name": "Source",
+        "jsonName": "source",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MediaId",
+        "jsonName": "mediaId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MalId",
+        "jsonName": "malId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ExternalId",
+        "jsonName": "externalId",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MediaType",
+        "jsonName": "mediaType",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Status",
+        "jsonName": "status",
+        "goType": "anilist.MediaListStatus",
+        "typescriptType": "AL_MediaListStatus",
+        "usedTypescriptType": "AL_MediaListStatus",
+        "usedStructName": "anilist.MediaListStatus",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Score",
+        "jsonName": "score",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Progress",
+        "jsonName": "progress",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Repeat",
+        "jsonName": "repeat",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "StartedAt",
+        "jsonName": "startedAt",
+        "goType": "anilist.FuzzyDateInput",
+        "typescriptType": "AL_FuzzyDateInput",
+        "usedTypescriptType": "AL_FuzzyDateInput",
+        "usedStructName": "anilist.FuzzyDateInput",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompletedAt",
+        "jsonName": "completedAt",
+        "goType": "anilist.FuzzyDateInput",
+        "typescriptType": "AL_FuzzyDateInput",
+        "usedTypescriptType": "AL_FuzzyDateInput",
+        "usedStructName": "anilist.FuzzyDateInput",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "UpdatedAt",
+        "jsonName": "updatedAt",
+        "goType": "time.Time",
+        "typescriptType": "string",
+        "usedStructName": "time.Time",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/extension/hibike/tracker/types.go",
+    "filename": "types.go",
+    "name": "DiffType",
+    "formattedName": "DiffType",
+    "package": "hibiketracker",
+    "fields": [],
+    "aliasOf": {
+      "goType": "string",
+      "typescriptType": "string",
+      "declaredValues": [
+        "\"none\"",
+        "\"local-only\"",
+        "\"remote-only\"",
+        "\"divergent\"",
+        "\"mapping-error\""
+      ]
+    },
+    "comments": []
+  },
+  {
+    "filepath": "../internal/extension/hibike/tracker/types.go",
+    "filename": "types.go",
+    "name": "Action",
+    "formattedName": "Action",
+    "package": "hibiketracker",
+    "fields": [],
+    "aliasOf": {
+      "goType": "string",
+      "typescriptType": "string",
+      "declaredValues": [
+        "\"push\"",
+        "\"pull\"",
+        "\"ignore\""
+      ]
+    },
+    "comments": []
+  },
+  {
+    "filepath": "../internal/extension/hibike/tracker/types.go",
+    "filename": "types.go",
+    "name": "SyncDiff",
+    "formattedName": "SyncDiff",
+    "package": "hibiketracker",
+    "fields": [
+      {
+        "name": "MediaID",
+        "jsonName": "MediaID",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " Seanime ID"
+        ]
+      },
+      {
+        "name": "ExternalID",
+        "jsonName": "ExternalID",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": [
+          " Tracker ID"
+        ]
+      },
+      {
+        "name": "Type",
+        "jsonName": "Type",
+        "goType": "DiffType",
+        "typescriptType": "DiffType",
+        "usedTypescriptType": "DiffType",
+        "usedStructName": "hibiketracker.DiffType",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Local",
+        "jsonName": "Local",
+        "goType": "MediaEntry",
+        "typescriptType": "MediaEntry",
+        "usedTypescriptType": "MediaEntry",
+        "usedStructName": "hibiketracker.MediaEntry",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Remote",
+        "jsonName": "Remote",
+        "goType": "MediaEntry",
+        "typescriptType": "MediaEntry",
+        "usedTypescriptType": "MediaEntry",
+        "usedStructName": "hibiketracker.MediaEntry",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ProposedAction",
+        "jsonName": "ProposedAction",
+        "goType": "Action",
+        "typescriptType": "Action",
+        "usedTypescriptType": "Action",
+        "usedStructName": "hibiketracker.Action",
         "required": true,
         "public": true,
         "comments": []
@@ -39193,12 +39646,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -39222,12 +39673,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -39239,6 +39688,17 @@
         "typescriptType": "Manager",
         "usedTypescriptType": "Manager",
         "usedStructName": "goja_runtime.Manager",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "wsEventManager",
+        "jsonName": "wsEventManager",
+        "goType": "events.WSEventManagerInterface",
+        "typescriptType": "Events_WSEventManagerInterface",
+        "usedTypescriptType": "Events_WSEventManagerInterface",
+        "usedStructName": "events.WSEventManagerInterface",
         "required": false,
         "public": false,
         "comments": []
@@ -39802,12 +40262,10 @@
         "comments": []
       },
       {
-        "name": "extensionBank",
-        "jsonName": "extensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -40254,283 +40712,14 @@
         "required": false,
         "public": true,
         "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_gogoanime_external.go",
-    "filename": "_gogoanime_external.go",
-    "name": "Gogoanime",
-    "formattedName": "Gogoanime",
-    "package": "main",
-    "fields": [
-      {
-        "name": "BaseURL",
-        "jsonName": "BaseURL",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
       },
       {
-        "name": "AjaxURL",
-        "jsonName": "AjaxURL",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Client",
-        "jsonName": "Client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
-        "comments": []
-      },
-      {
-        "name": "UserAgent",
-        "jsonName": "UserAgent",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "logger",
-        "jsonName": "logger",
-        "goType": "zerolog.Logger",
-        "typescriptType": "Logger",
-        "usedTypescriptType": "Logger",
-        "usedStructName": "zerolog.Logger",
-        "required": false,
-        "public": false,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_gogoanime_external.go",
-    "filename": "_gogoanime_external.go",
-    "name": "GogoCDN",
-    "formattedName": "GogoCDN",
-    "package": "main",
-    "fields": [
-      {
-        "name": "client",
-        "jsonName": "client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "serverName",
-        "jsonName": "serverName",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "keys",
-        "jsonName": "keys",
-        "goType": "cdnKeys",
-        "typescriptType": "cdnKeys",
-        "usedTypescriptType": "cdnKeys",
-        "usedStructName": "main.cdnKeys",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "referrer",
-        "jsonName": "referrer",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_gogoanime_external.go",
-    "filename": "_gogoanime_external.go",
-    "name": "StreamSB",
-    "formattedName": "StreamSB",
-    "package": "main",
-    "fields": [
-      {
-        "name": "Host",
-        "jsonName": "Host",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Host2",
-        "jsonName": "Host2",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "UserAgent",
-        "jsonName": "UserAgent",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_mangapill_external.go",
-    "filename": "_mangapill_external.go",
-    "name": "Mangapill",
-    "formattedName": "Mangapill",
-    "package": "main",
-    "fields": [
-      {
-        "name": "Url",
-        "jsonName": "Url",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Client",
-        "jsonName": "Client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
-        "required": false,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "UserAgent",
-        "jsonName": "UserAgent",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "logger",
-        "jsonName": "logger",
-        "goType": "zerolog.Logger",
-        "typescriptType": "Logger",
-        "usedTypescriptType": "Logger",
-        "usedStructName": "zerolog.Logger",
-        "required": false,
-        "public": false,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_my_anime_torrent_provider.go",
-    "filename": "_my_anime_torrent_provider.go",
-    "name": "MyAnimeTorrentProvider",
-    "formattedName": "MyAnimeTorrentProvider",
-    "package": "main",
-    "fields": [
-      {
-        "name": "url",
-        "jsonName": "url",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "client",
-        "jsonName": "client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "logger",
-        "jsonName": "logger",
-        "goType": "zerolog.Logger",
-        "typescriptType": "Logger",
-        "usedTypescriptType": "Logger",
-        "usedStructName": "zerolog.Logger",
-        "required": false,
-        "public": false,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/extension_repo/testdir/_my_online_streaming_provider.go",
-    "filename": "_my_online_streaming_provider.go",
-    "name": "Provider",
-    "formattedName": "Provider",
-    "package": "main",
-    "fields": [
-      {
-        "name": "url",
-        "jsonName": "url",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "client",
-        "jsonName": "client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "logger",
-        "jsonName": "logger",
-        "goType": "zerolog.Logger",
-        "typescriptType": "Logger",
-        "usedTypescriptType": "Logger",
-        "usedStructName": "zerolog.Logger",
-        "required": false,
-        "public": false,
         "comments": []
       }
     ],
@@ -40567,6 +40756,165 @@
       }
     ],
     "comments": []
+  },
+  {
+    "filepath": "../internal/goja/goja_bindings/chromedp.go",
+    "filename": "chromedp.go",
+    "name": "ChromeDP",
+    "formattedName": "ChromeDP",
+    "package": "goja_bindings",
+    "fields": [
+      {
+        "name": "vm",
+        "jsonName": "vm",
+        "goType": "goja.Runtime",
+        "typescriptType": "Runtime",
+        "usedTypescriptType": "Runtime",
+        "usedStructName": "goja.Runtime",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "chromeSem",
+        "jsonName": "chromeSem",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "responseCh",
+        "jsonName": "responseCh",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "browsers",
+        "jsonName": "browsers",
+        "goType": "map[string]Browser",
+        "typescriptType": "Record\u003cstring, Browser\u003e",
+        "usedTypescriptType": "Browser",
+        "usedStructName": "goja_bindings.Browser",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "browserMu",
+        "jsonName": "browserMu",
+        "goType": "sync.RWMutex",
+        "typescriptType": "RWMutex",
+        "usedTypescriptType": "RWMutex",
+        "usedStructName": "sync.RWMutex",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "closeOnce",
+        "jsonName": "closeOnce",
+        "goType": "sync.Once",
+        "typescriptType": "Once",
+        "usedTypescriptType": "Once",
+        "usedStructName": "sync.Once",
+        "required": false,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/goja/goja_bindings/chromedp.go",
+    "filename": "chromedp.go",
+    "name": "Browser",
+    "formattedName": "Browser",
+    "package": "goja_bindings",
+    "fields": [
+      {
+        "name": "id",
+        "jsonName": "id",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "chromedp",
+        "jsonName": "chromedp",
+        "goType": "ChromeDP",
+        "typescriptType": "ChromeDP",
+        "usedTypescriptType": "ChromeDP",
+        "usedStructName": "goja_bindings.ChromeDP",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "allocCtx",
+        "jsonName": "allocCtx",
+        "goType": "context.Context",
+        "typescriptType": "Context",
+        "usedTypescriptType": "Context",
+        "usedStructName": "context.Context",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "ctx",
+        "jsonName": "ctx",
+        "goType": "context.Context",
+        "typescriptType": "Context",
+        "usedTypescriptType": "Context",
+        "usedStructName": "context.Context",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "cancel",
+        "jsonName": "cancel",
+        "goType": "context.CancelFunc",
+        "typescriptType": "CancelFunc",
+        "usedTypescriptType": "CancelFunc",
+        "usedStructName": "context.CancelFunc",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "allocCancel",
+        "jsonName": "allocCancel",
+        "goType": "context.CancelFunc",
+        "typescriptType": "CancelFunc",
+        "usedTypescriptType": "CancelFunc",
+        "usedStructName": "context.CancelFunc",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "timeout",
+        "jsonName": "timeout",
+        "goType": "time.Duration",
+        "typescriptType": "Duration",
+        "usedTypescriptType": "Duration",
+        "usedStructName": "time.Duration",
+        "required": false,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Browser represents a browser instance"
+    ]
   },
   {
     "filepath": "../internal/goja/goja_bindings/fetch.go",
@@ -41435,6 +41783,17 @@
         "comments": []
       },
       {
+        "name": "DisabledFeatures",
+        "jsonName": "disabledFeatures",
+        "goType": "[]core.FeatureKey",
+        "typescriptType": "Array\u003cINTERNAL_FeatureKey\u003e",
+        "usedTypescriptType": "INTERNAL_FeatureKey",
+        "usedStructName": "core.FeatureKey",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
         "name": "ServerReady",
         "jsonName": "serverReady",
         "goType": "bool",
@@ -41810,6 +42169,63 @@
     "comments": []
   },
   {
+    "filepath": "../internal/hook/helper.go",
+    "filename": "helper.go",
+    "name": "HookTriggerOptions",
+    "formattedName": "HookTriggerOptions",
+    "package": "hook",
+    "fields": [
+      {
+        "name": "Event",
+        "jsonName": "Event",
+        "goType": "T",
+        "typescriptType": "T",
+        "usedTypescriptType": "T",
+        "usedStructName": "hook.T",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Hook",
+        "jsonName": "Hook",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "OnError",
+        "jsonName": "OnError",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "OnDefaultPrevented",
+        "jsonName": "OnDefaultPrevented",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "OnSuccess",
+        "jsonName": "OnSuccess",
+        "goType": "",
+        "typescriptType": "any",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
     "filepath": "../internal/hook/hook.go",
     "filename": "hook.go",
     "name": "Handler",
@@ -42083,6 +42499,24 @@
       {
         "name": "onPostUpdateEntryRepeat",
         "jsonName": "onPostUpdateEntryRepeat",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "onPreDeleteEntry",
+        "jsonName": "onPreDeleteEntry",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "onPostDeleteEntry",
+        "jsonName": "onPostDeleteEntry",
         "goType": "",
         "typescriptType": "any",
         "required": false,
@@ -43455,23 +43889,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -43720,23 +44150,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -43935,12 +44361,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -44253,12 +44677,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -44720,12 +45142,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -44785,23 +45205,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -45939,12 +46355,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -46371,12 +46785,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -46429,10 +46841,10 @@
         "comments": []
       },
       {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -46503,12 +46915,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -46525,10 +46935,10 @@
         "comments": []
       },
       {
-        "name": "IsOffline",
-        "jsonName": "IsOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -46908,12 +47318,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -46967,12 +47375,10 @@
         ]
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -47008,12 +47414,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -47072,12 +47476,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -47745,23 +48147,19 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -47981,10 +48379,10 @@
         "comments": []
       },
       {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -48466,23 +48864,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -48521,10 +48915,10 @@
         "comments": []
       },
       {
-        "name": "IsOffline",
-        "jsonName": "IsOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -49318,23 +49712,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -49684,23 +50074,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -49791,12 +50177,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -49957,12 +50341,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -50041,12 +50423,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -50547,12 +50927,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -50621,12 +50999,10 @@
     "package": "library_explorer",
     "fields": [
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -51661,12 +52037,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -51705,12 +52079,10 @@
         "comments": []
       },
       {
-        "name": "anilistPlatform",
-        "jsonName": "anilistPlatform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "anilistPlatformRef",
+        "jsonName": "anilistPlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -51883,12 +52255,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -51927,12 +52297,10 @@
         "comments": []
       },
       {
-        "name": "AnilistPlatform",
-        "jsonName": "AnilistPlatform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "AnilistPlatformRef",
+        "jsonName": "AnilistPlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -52664,12 +53032,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -52802,10 +53168,10 @@
         "comments": []
       },
       {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -52964,10 +53330,10 @@
         "comments": []
       },
       {
-        "name": "IsOffline",
-        "jsonName": "IsOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -54060,12 +54426,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -54186,10 +54550,8 @@
       {
         "name": "currentPages",
         "jsonName": "currentPages",
-        "goType": "map[string]loadedPage",
-        "typescriptType": "Record\u003cstring, Manga_loadedPage\u003e",
-        "usedTypescriptType": "Manga_loadedPage",
-        "usedStructName": "manga_providers.loadedPage",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -54493,12 +54855,10 @@
         "comments": []
       },
       {
-        "name": "providerExtensionBank",
-        "jsonName": "providerExtensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -54645,9 +55005,1704 @@
         "required": false,
         "public": true,
         "comments": []
+      },
+      {
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": true,
+        "comments": []
       }
     ],
     "comments": []
+  },
+  {
+    "filepath": "../internal/matroska/ebml.go",
+    "filename": "ebml.go",
+    "name": "EBMLElement",
+    "formattedName": "EBMLElement",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "ID",
+        "jsonName": "ID",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The element ID that identifies the type of element"
+        ]
+      },
+      {
+        "name": "Size",
+        "jsonName": "Size",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The size of the element's data in bytes"
+        ]
+      },
+      {
+        "name": "Data",
+        "jsonName": "Data",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": [
+          " The raw data contained within the element"
+        ]
+      }
+    ],
+    "comments": [
+      " EBMLElement represents an EBML element with its ID, size, and data.",
+      "",
+      " An EBML element is the basic building block of EBML files. Each element consists of:",
+      "   - ID: A variable-length integer that identifies the type of element",
+      "   - Size: A variable-length integer that specifies the size of the element's data",
+      "   - Data: The actual data contained within the element",
+      "",
+      " The EBMLElement struct provides methods to extract different types of data from the element,",
+      " such as integers, floats, strings, and raw bytes."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/ebml.go",
+    "filename": "ebml.go",
+    "name": "EBMLReader",
+    "formattedName": "EBMLReader",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "r",
+        "jsonName": "r",
+        "goType": "io.ReadSeeker",
+        "typescriptType": "ReadSeeker",
+        "usedTypescriptType": "ReadSeeker",
+        "usedStructName": "io.ReadSeeker",
+        "required": false,
+        "public": false,
+        "comments": [
+          " The underlying reader for the EBML data"
+        ]
+      },
+      {
+        "name": "pos",
+        "jsonName": "pos",
+        "goType": "int64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": [
+          " The current position in the stream"
+        ]
+      }
+    ],
+    "comments": [
+      " EBMLReader provides methods for reading EBML data from a stream.",
+      "",
+      " EBMLReader is the main type used for parsing EBML data. It wraps an io.ReadSeeker",
+      " and provides methods to read EBML elements, variable-length integers, and other",
+      " EBML-specific data structures.",
+      "",
+      " Example usage:",
+      "",
+      "\tfile, err := os.Open(\"video.mkv\")",
+      "\tif err != nil {",
+      "\t    log.Fatal(err)",
+      "\t}",
+      "\tdefer file.Close()",
+      "",
+      "\treader := NewEBMLReader(file)",
+      "\telement, err := reader.ReadElement()",
+      "\tif err != nil {",
+      "\t    log.Fatal(err)",
+      "\t}",
+      "",
+      "\tfmt.Printf(\"Element ID: 0x%X, Size: %d\\n\", element.ID, element.Size)"
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/ebml.go",
+    "filename": "ebml.go",
+    "name": "EBMLHeader",
+    "formattedName": "EBMLHeader",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Version",
+        "jsonName": "Version",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The version of EBML parser used to create the file"
+        ]
+      },
+      {
+        "name": "ReadVersion",
+        "jsonName": "ReadVersion",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The minimum EBML version needed to parse this file"
+        ]
+      },
+      {
+        "name": "MaxIDLength",
+        "jsonName": "MaxIDLength",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The maximum length of an EBML ID in bytes"
+        ]
+      },
+      {
+        "name": "MaxSizeLength",
+        "jsonName": "MaxSizeLength",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The maximum length of an EBML size in bytes"
+        ]
+      },
+      {
+        "name": "DocType",
+        "jsonName": "DocType",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": [
+          " A string that describes the type of document (e.g., \"matroska\")"
+        ]
+      },
+      {
+        "name": "DocTypeVersion",
+        "jsonName": "DocTypeVersion",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The version of the document type"
+        ]
+      },
+      {
+        "name": "DocTypeReadVersion",
+        "jsonName": "DocTypeReadVersion",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " The minimum version of the document type parser needed to read this file"
+        ]
+      }
+    ],
+    "comments": [
+      " EBMLHeader represents the EBML header containing metadata about the file.",
+      "",
+      " The EBML header is the first element in an EBML file and contains information",
+      " about how to parse the rest of the file. It includes the EBML version, document type,",
+      " and other metadata that helps parsers understand the structure of the file.",
+      "",
+      " Example usage:",
+      "",
+      "\treader := NewEBMLReader(file)",
+      "\theader, err := reader.ReadEBMLHeader()",
+      "\tif err != nil {",
+      "\t    log.Fatal(err)",
+      "\t}",
+      "",
+      "\tfmt.Printf(\"DocType: %s, Version: %d\\n\", header.DocType, header.DocTypeVersion)"
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/matroska.go",
+    "filename": "matroska.go",
+    "name": "Demuxer",
+    "formattedName": "Demuxer",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "parser",
+        "jsonName": "parser",
+        "goType": "MatroskaParser",
+        "typescriptType": "MatroskaParser",
+        "usedTypescriptType": "MatroskaParser",
+        "usedStructName": "matroska.MatroskaParser",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "reader",
+        "jsonName": "reader",
+        "goType": "io.ReadSeeker",
+        "typescriptType": "ReadSeeker",
+        "usedTypescriptType": "ReadSeeker",
+        "usedStructName": "io.ReadSeeker",
+        "required": false,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Demuxer is a Matroska demuxer using pure Go implementation.",
+      "",
+      " The Demuxer struct provides the main interface for parsing and reading Matroska files.",
+      " It encapsulates the underlying parser and provides methods for accessing track information,",
+      " file metadata, and reading media packets. The Demuxer can work with both seekable and",
+      " non-seekable input streams.",
+      "",
+      " For seekable inputs, use NewDemuxer. For non-seekable streams (like network streams),",
+      " use NewStreamingDemuxer."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/parser.go",
+    "filename": "parser.go",
+    "name": "MatroskaParser",
+    "formattedName": "MatroskaParser",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "reader",
+        "jsonName": "reader",
+        "goType": "EBMLReader",
+        "typescriptType": "EBMLReader",
+        "usedTypescriptType": "EBMLReader",
+        "usedStructName": "matroska.EBMLReader",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "header",
+        "jsonName": "header",
+        "goType": "EBMLHeader",
+        "typescriptType": "EBMLHeader",
+        "usedTypescriptType": "EBMLHeader",
+        "usedStructName": "matroska.EBMLHeader",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "segment",
+        "jsonName": "segment",
+        "goType": "SegmentElement",
+        "typescriptType": "SegmentElement",
+        "usedTypescriptType": "SegmentElement",
+        "usedStructName": "matroska.SegmentElement",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "tracks",
+        "jsonName": "tracks",
+        "goType": "[]TrackInfo",
+        "typescriptType": "Array\u003cTrackInfo\u003e",
+        "usedTypescriptType": "TrackInfo",
+        "usedStructName": "matroska.TrackInfo",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "fileInfo",
+        "jsonName": "fileInfo",
+        "goType": "SegmentInfo",
+        "typescriptType": "SegmentInfo",
+        "usedTypescriptType": "SegmentInfo",
+        "usedStructName": "matroska.SegmentInfo",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "chapters",
+        "jsonName": "chapters",
+        "goType": "[]Chapter",
+        "typescriptType": "Array\u003cChapter\u003e",
+        "usedTypescriptType": "Chapter",
+        "usedStructName": "matroska.Chapter",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "tags",
+        "jsonName": "tags",
+        "goType": "[]Tag",
+        "typescriptType": "Array\u003cTag\u003e",
+        "usedTypescriptType": "Tag",
+        "usedStructName": "matroska.Tag",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "cues",
+        "jsonName": "cues",
+        "goType": "[]Cue",
+        "typescriptType": "Array\u003cCue\u003e",
+        "usedTypescriptType": "Cue",
+        "usedStructName": "matroska.Cue",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "attachments",
+        "jsonName": "attachments",
+        "goType": "[]Attachment",
+        "typescriptType": "Array\u003cAttachment\u003e",
+        "usedTypescriptType": "Attachment",
+        "usedStructName": "matroska.Attachment",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "elementsToParse",
+        "jsonName": "elementsToParse",
+        "goType": "map[uint32]__STRUCT__",
+        "inlineStructType": "map[uint32]struct{\n}",
+        "typescriptType": "Record\u003cnumber, { }\u003e",
+        "usedTypescriptType": "{ }",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "clusterTimestamp",
+        "jsonName": "clusterTimestamp",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "currentTrackMask",
+        "jsonName": "currentTrackMask",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "segmentPos",
+        "jsonName": "segmentPos",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "segmentTopPos",
+        "jsonName": "segmentTopPos",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "cuesPos",
+        "jsonName": "cuesPos",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "cuesTopPos",
+        "jsonName": "cuesTopPos",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "noSeeking",
+        "jsonName": "noSeeking",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " MatroskaParser represents a parser for Matroska and WebM files.",
+      "",
+      " It provides functionality to parse Matroska container files, extract metadata,",
+      " and read media packets. The parser maintains state information about the file",
+      " structure, including the EBML header, segment information, tracks, and other",
+      " metadata elements.",
+      "",
+      " The parser can operate in two modes:",
+      "   - With seeking enabled (noSeeking=false): Allows for more efficient parsing",
+      "     by seeking to specific positions in the file when needed.",
+      "   - With seeking disabled (noSeeking=true): Parses the file sequentially,",
+      "     which is useful for streaming or non-seekable input sources.",
+      "",
+      " After creating a parser with NewMatroskaParser, you can access file information,",
+      " track information, and read media packets using the provided methods."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/parser.go",
+    "filename": "parser.go",
+    "name": "SegmentElement",
+    "formattedName": "SegmentElement",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Position",
+        "jsonName": "Position",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Size",
+        "jsonName": "Size",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " SegmentElement represents the main segment element in a Matroska file.",
+      "",
+      " The segment is the top-level element in a Matroska file that contains all",
+      " the actual data, including metadata, tracks, clusters, and other elements.",
+      " It is the largest element in the file and contains all other elements except",
+      " for the EBML header.",
+      "",
+      " The Position field indicates the byte offset from the beginning of the file",
+      " where the segment element starts, and the Size field indicates the total size",
+      " of the segment element in bytes."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Packet",
+    "formattedName": "Packet",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Track",
+        "jsonName": "Track",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "StartTime",
+        "jsonName": "StartTime",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "EndTime",
+        "jsonName": "EndTime",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "FilePos",
+        "jsonName": "FilePos",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Data",
+        "jsonName": "Data",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Flags",
+        "jsonName": "Flags",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Discard",
+        "jsonName": "Discard",
+        "goType": "int64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Packet contains a demuxed packet from a Matroska file.",
+      "",
+      " A Packet represents a single unit of media data that has been extracted (demuxed) from",
+      " a Matroska container. It contains all the necessary information to process the media data,",
+      " including timing information, track association, and the actual data payload."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "TrackInfo",
+    "formattedName": "TrackInfo",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Number",
+        "jsonName": "Number",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Type",
+        "jsonName": "Type",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "TrackOverlay",
+        "jsonName": "TrackOverlay",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "UID",
+        "jsonName": "UID",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MinCache",
+        "jsonName": "MinCache",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MaxCache",
+        "jsonName": "MaxCache",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DefaultDuration",
+        "jsonName": "DefaultDuration",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CodecDelay",
+        "jsonName": "CodecDelay",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "SeekPreRoll",
+        "jsonName": "SeekPreRoll",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "TimecodeScale",
+        "jsonName": "TimecodeScale",
+        "goType": "float64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CodecPrivate",
+        "jsonName": "CodecPrivate",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompMethod",
+        "jsonName": "CompMethod",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompMethodPrivate",
+        "jsonName": "CompMethodPrivate",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MaxBlockAdditionID",
+        "jsonName": "MaxBlockAdditionID",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Enabled",
+        "jsonName": "Enabled",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Default",
+        "jsonName": "Default",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Forced",
+        "jsonName": "Forced",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Lacing",
+        "jsonName": "Lacing",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DecodeAll",
+        "jsonName": "DecodeAll",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompEnabled",
+        "jsonName": "CompEnabled",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Video",
+        "jsonName": "Video",
+        "goType": "TrackInfo_Video",
+        "inlineStructType": "struct{\nStereoMode uint8\nDisplayUnit uint8\nAspectRatioType uint8\nPixelWidth uint32\nPixelHeight uint32\nDisplayWidth uint32\nDisplayHeight uint32\nCropL uint32\nCropT uint32\nCropR uint32\nCropB uint32\nColourSpace uint32\nGammaValue float64\nColour __STRUCT__\nInterlaced bool}",
+        "typescriptType": "TrackInfo_Video",
+        "usedTypescriptType": "{ StereoMode: number; DisplayUnit: number; AspectRatioType: number; PixelWidth: number; PixelHeight: number; DisplayWidth: number; DisplayHeight: number; CropL: number; CropT: number; CropR: number; CropB: number; ColourSpace: number; GammaValue: number; Colour: { MatrixCoefficients: number; BitsPerChannel: number; ChromaSubsamplingHorz: number; ChromaSubsamplingVert: number; CbSubsamplingHorz: number; CbSubsamplingVert: number; ChromaSitingHorz: number; ChromaSitingVert: number; Range: number; TransferCharacteristics: number; Primaries: number; MaxCLL: number; MaxFALL: number; MasteringMetadata: { PrimaryRChromaticityX: number; PrimaryRChromaticityY: number; PrimaryGChromaticityX: number; PrimaryGChromaticityY: number; PrimaryBChromaticityX: number; PrimaryBChromaticityY: number; WhitePointChromaticityX: number; WhitePointChromaticityY: number; LuminanceMax: number; LuminanceMin: number; }; }; Interlaced: boolean; }",
+        "usedStructName": "matroska.TrackInfo_Video",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Audio",
+        "jsonName": "Audio",
+        "goType": "TrackInfo_Audio",
+        "inlineStructType": "struct{\nSamplingFreq float64\nOutputSamplingFreq float64\nChannels uint8\nBitDepth uint8}",
+        "typescriptType": "TrackInfo_Audio",
+        "usedTypescriptType": "{ SamplingFreq: number; OutputSamplingFreq: number; Channels: number; BitDepth: number; }",
+        "usedStructName": "matroska.TrackInfo_Audio",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Name",
+        "jsonName": "Name",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Language",
+        "jsonName": "Language",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "LanguageIETF",
+        "jsonName": "LanguageIETF",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CodecID",
+        "jsonName": "CodecID",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " TrackInfo contains information about a track in a Matroska file.",
+      "",
+      " A TrackInfo structure holds all metadata and configuration information for a single",
+      " track within a Matroska file. This includes general track properties, codec information,",
+      " and type-specific settings for video, audio, or subtitle tracks."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "TrackInfo_Video",
+    "formattedName": "TrackInfo_Video",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "StereoMode",
+        "jsonName": "StereoMode",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DisplayUnit",
+        "jsonName": "DisplayUnit",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "AspectRatioType",
+        "jsonName": "AspectRatioType",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PixelWidth",
+        "jsonName": "PixelWidth",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PixelHeight",
+        "jsonName": "PixelHeight",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DisplayWidth",
+        "jsonName": "DisplayWidth",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DisplayHeight",
+        "jsonName": "DisplayHeight",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropL",
+        "jsonName": "CropL",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropT",
+        "jsonName": "CropT",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropR",
+        "jsonName": "CropR",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropB",
+        "jsonName": "CropB",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ColourSpace",
+        "jsonName": "ColourSpace",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "GammaValue",
+        "jsonName": "GammaValue",
+        "goType": "float64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Colour",
+        "jsonName": "Colour",
+        "goType": "__STRUCT__",
+        "inlineStructType": "struct{\nMatrixCoefficients uint32\nBitsPerChannel uint32\nChromaSubsamplingHorz uint32\nChromaSubsamplingVert uint32\nCbSubsamplingHorz uint32\nCbSubsamplingVert uint32\nChromaSitingHorz uint32\nChromaSitingVert uint32\nRange uint32\nTransferCharacteristics uint32\nPrimaries uint32\nMaxCLL uint32\nMaxFALL uint32\nMasteringMetadata __STRUCT__}",
+        "typescriptType": "{ MatrixCoefficients: number; BitsPerChannel: number; ChromaSubsamplingHorz: number; ChromaSubsamplingVert: number; CbSubsamplingHorz: number; CbSubsamplingVert: number; ChromaSitingHorz: number; ChromaSitingVert: number; Range: number; TransferCharacteristics: number; Primaries: number; MaxCLL: number; MaxFALL: number; MasteringMetadata: { PrimaryRChromaticityX: number; PrimaryRChromaticityY: number; PrimaryGChromaticityX: number; PrimaryGChromaticityY: number; PrimaryBChromaticityX: number; PrimaryBChromaticityY: number; WhitePointChromaticityX: number; WhitePointChromaticityY: number; LuminanceMax: number; LuminanceMin: number; }; }",
+        "usedTypescriptType": "{ MatrixCoefficients: number; BitsPerChannel: number; ChromaSubsamplingHorz: number; ChromaSubsamplingVert: number; CbSubsamplingHorz: number; CbSubsamplingVert: number; ChromaSitingHorz: number; ChromaSitingVert: number; Range: number; TransferCharacteristics: number; Primaries: number; MaxCLL: number; MaxFALL: number; MasteringMetadata: { PrimaryRChromaticityX: number; PrimaryRChromaticityY: number; PrimaryGChromaticityX: number; PrimaryGChromaticityY: number; PrimaryBChromaticityX: number; PrimaryBChromaticityY: number; WhitePointChromaticityX: number; WhitePointChromaticityY: number; LuminanceMax: number; LuminanceMin: number; }; }",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Interlaced",
+        "jsonName": "Interlaced",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " TrackInfo contains information about a track in a Matroska file.",
+      "",
+      " A TrackInfo structure holds all metadata and configuration information for a single",
+      " track within a Matroska file. This includes general track properties, codec information,",
+      " and type-specific settings for video, audio, or subtitle tracks."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "TrackInfo_Audio",
+    "formattedName": "TrackInfo_Audio",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "SamplingFreq",
+        "jsonName": "SamplingFreq",
+        "goType": "float64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "OutputSamplingFreq",
+        "jsonName": "OutputSamplingFreq",
+        "goType": "float64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Channels",
+        "jsonName": "Channels",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "BitDepth",
+        "jsonName": "BitDepth",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " TrackInfo contains information about a track in a Matroska file.",
+      "",
+      " A TrackInfo structure holds all metadata and configuration information for a single",
+      " track within a Matroska file. This includes general track properties, codec information,",
+      " and type-specific settings for video, audio, or subtitle tracks."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "SegmentInfo",
+    "formattedName": "SegmentInfo",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "UID",
+        "jsonName": "UID",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PrevUID",
+        "jsonName": "PrevUID",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "NextUID",
+        "jsonName": "NextUID",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Filename",
+        "jsonName": "Filename",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PrevFilename",
+        "jsonName": "PrevFilename",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "NextFilename",
+        "jsonName": "NextFilename",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Title",
+        "jsonName": "Title",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MuxingApp",
+        "jsonName": "MuxingApp",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "WritingApp",
+        "jsonName": "WritingApp",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "TimecodeScale",
+        "jsonName": "TimecodeScale",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Duration",
+        "jsonName": "Duration",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DateUTC",
+        "jsonName": "DateUTC",
+        "goType": "int64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "DateUTCValid",
+        "jsonName": "DateUTCValid",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " SegmentInfo contains file-level (segment) information about a Matroska stream.",
+      "",
+      " A SegmentInfo structure holds metadata about the entire Matroska file or segment.",
+      " This includes general information like title, duration, creation date, and",
+      " relationships to other files in a sequence."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Attachment",
+    "formattedName": "Attachment",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Position",
+        "jsonName": "Position",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Length",
+        "jsonName": "Length",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "UID",
+        "jsonName": "UID",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Name",
+        "jsonName": "Name",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Description",
+        "jsonName": "Description",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "MimeType",
+        "jsonName": "MimeType",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Data",
+        "jsonName": "Data",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Attachment contains information about a Matroska attachment.",
+      "",
+      " Matroska files can contain attached files, such as fonts, images, or other metadata.",
+      " The Attachment structure holds information about these attached files, including",
+      " their location, size, and metadata."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "ChapterDisplay",
+    "formattedName": "ChapterDisplay",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "String",
+        "jsonName": "String",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Language",
+        "jsonName": "Language",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Country",
+        "jsonName": "Country",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " ChapterDisplay contains display information for a given Chapter.",
+      "",
+      " A ChapterDisplay structure holds the human-readable information for a chapter,",
+      " including its name, language, and country association. This allows chapters",
+      " to be displayed in multiple languages and with country-specific variations."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "ChapterCommand",
+    "formattedName": "ChapterCommand",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Time",
+        "jsonName": "Time",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Command",
+        "jsonName": "Command",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " ChapterCommand represents a command associated with a chapter.",
+      "",
+      " Chapter commands are used to execute specific actions at certain times during",
+      " chapter playback. This can be used for interactive content or special effects."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "ChapterProcess",
+    "formattedName": "ChapterProcess",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "CodecID",
+        "jsonName": "CodecID",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CodecPrivate",
+        "jsonName": "CodecPrivate",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Commands",
+        "jsonName": "Commands",
+        "goType": "[]ChapterCommand",
+        "typescriptType": "Array\u003cChapterCommand\u003e",
+        "usedTypescriptType": "ChapterCommand",
+        "usedStructName": "matroska.ChapterCommand",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " ChapterProcess contains processing information for a chapter.",
+      "",
+      " Chapter processes are used to apply special processing to chapters,",
+      " such as codec-specific processing or command execution."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Chapter",
+    "formattedName": "Chapter",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "UID",
+        "jsonName": "UID",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Start",
+        "jsonName": "Start",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "End",
+        "jsonName": "End",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Tracks",
+        "jsonName": "Tracks",
+        "goType": "[]uint64",
+        "typescriptType": "Array\u003cnumber\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Display",
+        "jsonName": "Display",
+        "goType": "[]ChapterDisplay",
+        "typescriptType": "Array\u003cChapterDisplay\u003e",
+        "usedTypescriptType": "ChapterDisplay",
+        "usedStructName": "matroska.ChapterDisplay",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Children",
+        "jsonName": "Children",
+        "goType": "[]Chapter",
+        "typescriptType": "Array\u003cChapter\u003e",
+        "usedTypescriptType": "Chapter",
+        "usedStructName": "matroska.Chapter",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Process",
+        "jsonName": "Process",
+        "goType": "[]ChapterProcess",
+        "typescriptType": "Array\u003cChapterProcess\u003e",
+        "usedTypescriptType": "ChapterProcess",
+        "usedStructName": "matroska.ChapterProcess",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "SegmentUID",
+        "jsonName": "SegmentUID",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Hidden",
+        "jsonName": "Hidden",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Enabled",
+        "jsonName": "Enabled",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Default",
+        "jsonName": "Default",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Ordered",
+        "jsonName": "Ordered",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Chapter contains all information about a Matroska chapter.",
+      "",
+      " A Chapter structure represents a chapter or section within a Matroska file.",
+      " Chapters can be nested to create a hierarchical structure, and can contain",
+      " display information, processing commands, and timing information."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Cue",
+    "formattedName": "Cue",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Time",
+        "jsonName": "Time",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Duration",
+        "jsonName": "Duration",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Position",
+        "jsonName": "Position",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "RelativePosition",
+        "jsonName": "RelativePosition",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Block",
+        "jsonName": "Block",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Track",
+        "jsonName": "Track",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Cue contains all information about a Matroska cue.",
+      "",
+      " Cues are indexing points in a Matroska file that allow for efficient seeking.",
+      " A Cue structure contains the timing and position information needed to locate",
+      " specific points in the media stream."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Target",
+    "formattedName": "Target",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "UID",
+        "jsonName": "UID",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Type",
+        "jsonName": "Type",
+        "goType": "uint32",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Target contains information about a tag's target.",
+      "",
+      " A Target structure identifies what a Matroska tag applies to.",
+      " Tags can be applied to tracks, chapters, attachments, or editions."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "SimpleTag",
+    "formattedName": "SimpleTag",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Name",
+        "jsonName": "Name",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Value",
+        "jsonName": "Value",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Language",
+        "jsonName": "Language",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Default",
+        "jsonName": "Default",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " SimpleTag contains a simple Matroska tag.",
+      "",
+      " A SimpleTag structure represents a single key-value metadata tag.",
+      " These tags can be used to store information like title, artist, album, etc."
+    ]
+  },
+  {
+    "filepath": "../internal/matroska/types.go",
+    "filename": "types.go",
+    "name": "Tag",
+    "formattedName": "Tag",
+    "package": "matroska",
+    "fields": [
+      {
+        "name": "Targets",
+        "jsonName": "Targets",
+        "goType": "[]Target",
+        "typescriptType": "Array\u003cTarget\u003e",
+        "usedTypescriptType": "Target",
+        "usedStructName": "matroska.Target",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "SimpleTags",
+        "jsonName": "SimpleTags",
+        "goType": "[]SimpleTag",
+        "typescriptType": "Array\u003cSimpleTag\u003e",
+        "usedTypescriptType": "SimpleTag",
+        "usedStructName": "matroska.SimpleTag",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Tag contains all information relating to a Matroska tag.",
+      "",
+      " A Tag structure represents a collection of metadata tags that can be applied",
+      " to various targets within a Matroska file. Tags are used to store metadata",
+      " like titles, descriptions, and other information about the content."
+    ]
   },
   {
     "filepath": "../internal/mediaplayers/iina/iina.go",
@@ -59045,7 +61100,7 @@
       {
         "name": "UID",
         "jsonName": "uid",
-        "goType": "int64",
+        "goType": "uint64",
         "typescriptType": "number",
         "required": true,
         "public": true,
@@ -59672,65 +61727,12 @@
         "comments": []
       },
       {
-        "name": "timecodeScale",
-        "jsonName": "timecodeScale",
-        "goType": "uint64",
-        "typescriptType": "number",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "currentTrack",
-        "jsonName": "currentTrack",
-        "goType": "TrackInfo",
-        "typescriptType": "MKVParser_TrackInfo",
-        "usedTypescriptType": "MKVParser_TrackInfo",
-        "usedStructName": "mkvparser.TrackInfo",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "tracks",
-        "jsonName": "tracks",
-        "goType": "[]TrackInfo",
-        "typescriptType": "Array\u003cMKVParser_TrackInfo\u003e",
-        "usedTypescriptType": "MKVParser_TrackInfo",
-        "usedStructName": "mkvparser.TrackInfo",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "info",
-        "jsonName": "info",
-        "goType": "Info",
-        "typescriptType": "MKVParser_Info",
-        "usedTypescriptType": "MKVParser_Info",
-        "usedStructName": "mkvparser.Info",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "chapters",
-        "jsonName": "chapters",
-        "goType": "[]ChapterInfo",
-        "typescriptType": "Array\u003cMKVParser_ChapterInfo\u003e",
-        "usedTypescriptType": "MKVParser_ChapterInfo",
-        "usedStructName": "mkvparser.ChapterInfo",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "attachments",
-        "jsonName": "attachments",
-        "goType": "[]AttachmentInfo",
-        "typescriptType": "Array\u003cMKVParser_AttachmentInfo\u003e",
-        "usedTypescriptType": "MKVParser_AttachmentInfo",
-        "usedStructName": "mkvparser.AttachmentInfo",
+        "name": "demuxer",
+        "jsonName": "demuxer",
+        "goType": "matroska.Demuxer",
+        "typescriptType": "Demuxer",
+        "usedTypescriptType": "Demuxer",
+        "usedStructName": "matroska.Demuxer",
         "required": false,
         "public": false,
         "comments": []
@@ -60607,12 +62609,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -60863,6 +62863,15 @@
         "comments": [
           " Mutex for client settings"
         ]
+      },
+      {
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": false,
+        "comments": []
       }
     ],
     "comments": []
@@ -60930,12 +62939,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -60976,6 +62983,15 @@
         "typescriptType": "Directstream_Manager",
         "usedTypescriptType": "Directstream_Manager",
         "usedStructName": "directstream.Manager",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -61641,12 +63657,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -61680,6 +63694,52 @@
         "usedTypescriptType": "AL_AnimeCollection",
         "usedStructName": "anilist.AnimeCollection",
         "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/nakama/share.go",
+    "filename": "share.go",
+    "name": "NakamaCustomSourceMap",
+    "formattedName": "Nakama_NakamaCustomSourceMap",
+    "package": "nakama",
+    "fields": [],
+    "aliasOf": {
+      "goType": "map[int]string",
+      "typescriptType": "Record\u003cnumber, string\u003e",
+      "declaredValues": null
+    },
+    "comments": null
+  },
+  {
+    "filepath": "../internal/nakama/share.go",
+    "filename": "share.go",
+    "name": "NakamaLocalFiles",
+    "formattedName": "Nakama_NakamaLocalFiles",
+    "package": "nakama",
+    "fields": [
+      {
+        "name": "LocalFiles",
+        "jsonName": "localFiles",
+        "goType": "[]anime.LocalFile",
+        "typescriptType": "Array\u003cAnime_LocalFile\u003e",
+        "usedTypescriptType": "Anime_LocalFile",
+        "usedStructName": "anime.LocalFile",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CustomSourceMap",
+        "jsonName": "customSourceMap",
+        "goType": "NakamaCustomSourceMap",
+        "typescriptType": "Nakama_NakamaCustomSourceMap",
+        "usedTypescriptType": "Nakama_NakamaCustomSourceMap",
+        "usedStructName": "nakama.NakamaCustomSourceMap",
+        "required": true,
         "public": true,
         "comments": []
       }
@@ -63865,12 +65925,10 @@
         "comments": []
       },
       {
-        "name": "providerExtensionBank",
-        "jsonName": "providerExtensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -63887,23 +65945,19 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -63981,6 +66035,17 @@
         "jsonName": "isFiller",
         "goType": "bool",
         "typescriptType": "boolean",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Metadata",
+        "jsonName": "metadata",
+        "goType": "anime.Episode",
+        "typescriptType": "Anime_Episode",
+        "usedTypescriptType": "Anime_Episode",
+        "usedStructName": "anime.Episode",
         "required": false,
         "public": true,
         "comments": []
@@ -64064,11 +66129,31 @@
         "comments": []
       },
       {
+        "name": "Label",
+        "jsonName": "label",
+        "goType": "string",
+        "typescriptType": "string",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
         "name": "Quality",
         "jsonName": "quality",
         "goType": "string",
         "typescriptType": "string",
         "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Type",
+        "jsonName": "type",
+        "goType": "hibikeonlinestream.VideoSourceType",
+        "typescriptType": "HibikeOnlinestream_VideoSourceType",
+        "usedTypescriptType": "HibikeOnlinestream_VideoSourceType",
+        "usedStructName": "hibikeonlinestream.VideoSourceType",
+        "required": false,
         "public": true,
         "comments": []
       }
@@ -64165,23 +66250,19 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -64196,149 +66277,398 @@
         "required": false,
         "public": true,
         "comments": []
+      },
+      {
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": true,
+        "comments": []
       }
     ],
     "comments": []
   },
   {
-    "filepath": "../internal/onlinestream/sources/gogocdn.go",
-    "filename": "gogocdn.go",
-    "name": "GogoCDN",
-    "formattedName": "Onlinestream_GogoCDN",
-    "package": "onlinestream_sources",
+    "filepath": "../internal/pgs/pgs.go",
+    "filename": "pgs.go",
+    "name": "PgsDecoder",
+    "formattedName": "PgsDecoder",
+    "package": "pgs",
     "fields": [
       {
-        "name": "client",
-        "jsonName": "client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
+        "name": "Palette",
+        "jsonName": "Palette",
+        "goType": "color.Palette",
+        "typescriptType": "Palette",
+        "usedTypescriptType": "Palette",
+        "usedStructName": "color.Palette",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "currentObject",
+        "jsonName": "currentObject",
+        "goType": "PgsObject",
+        "typescriptType": "PgsObject",
+        "usedTypescriptType": "PgsObject",
+        "usedStructName": "pgs.PgsObject",
         "required": false,
         "public": false,
         "comments": []
       },
       {
-        "name": "serverName",
-        "jsonName": "serverName",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "keys",
-        "jsonName": "keys",
-        "goType": "cdnKeys",
-        "typescriptType": "Onlinestream_cdnKeys",
-        "usedTypescriptType": "Onlinestream_cdnKeys",
-        "usedStructName": "onlinestream_sources.cdnKeys",
-        "required": true,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "referrer",
-        "jsonName": "referrer",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": false,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/onlinestream/sources/megacloud.go",
-    "filename": "megacloud.go",
-    "name": "MegaCloud",
-    "formattedName": "Onlinestream_MegaCloud",
-    "package": "onlinestream_sources",
-    "fields": [
-      {
-        "name": "Script",
-        "jsonName": "Script",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Sources",
-        "jsonName": "Sources",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "UserAgent",
-        "jsonName": "UserAgent",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/onlinestream/sources/streamsb.go",
-    "filename": "streamsb.go",
-    "name": "StreamSB",
-    "formattedName": "Onlinestream_StreamSB",
-    "package": "onlinestream_sources",
-    "fields": [
-      {
-        "name": "Host",
-        "jsonName": "Host",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "Host2",
-        "jsonName": "Host2",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      },
-      {
-        "name": "UserAgent",
-        "jsonName": "UserAgent",
-        "goType": "string",
-        "typescriptType": "string",
-        "required": true,
-        "public": true,
-        "comments": []
-      }
-    ],
-    "comments": []
-  },
-  {
-    "filepath": "../internal/onlinestream/sources/streamtape.go",
-    "filename": "streamtape.go",
-    "name": "Streamtape",
-    "formattedName": "Onlinestream_Streamtape",
-    "package": "onlinestream_sources",
-    "fields": [
-      {
-        "name": "Client",
-        "jsonName": "Client",
-        "goType": "http.Client",
-        "typescriptType": "Client",
-        "usedTypescriptType": "Client",
-        "usedStructName": "http.Client",
+        "name": "currentComposition",
+        "jsonName": "currentComposition",
+        "goType": "PgsComposition",
+        "typescriptType": "PgsComposition",
+        "usedTypescriptType": "PgsComposition",
+        "usedStructName": "pgs.PgsComposition",
         "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "objects",
+        "jsonName": "objects",
+        "goType": "map[uint16]PgsObject",
+        "typescriptType": "Record\u003cnumber, PgsObject\u003e",
+        "usedTypescriptType": "PgsObject",
+        "usedStructName": "pgs.PgsObject",
+        "required": false,
+        "public": false,
+        "comments": [
+          " Store completed objects by ID"
+        ]
+      },
+      {
+        "name": "windows",
+        "jsonName": "windows",
+        "goType": "map[uint8]WindowDefinition",
+        "typescriptType": "Record\u003cnumber, WindowDefinition\u003e",
+        "usedTypescriptType": "WindowDefinition",
+        "usedStructName": "pgs.WindowDefinition",
+        "required": false,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " PgsDecoder decodes PGS packets into images"
+    ]
+  },
+  {
+    "filepath": "../internal/pgs/pgs.go",
+    "filename": "pgs.go",
+    "name": "PgsObject",
+    "formattedName": "PgsObject",
+    "package": "pgs",
+    "fields": [
+      {
+        "name": "ID",
+        "jsonName": "ID",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Version",
+        "jsonName": "Version",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Width",
+        "jsonName": "Width",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Height",
+        "jsonName": "Height",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Data",
+        "jsonName": "Data",
+        "goType": "string",
+        "typescriptType": "Array\u003cstring\u003e",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Complete",
+        "jsonName": "Complete",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/pgs/pgs.go",
+    "filename": "pgs.go",
+    "name": "PgsComposition",
+    "formattedName": "PgsComposition",
+    "package": "pgs",
+    "fields": [
+      {
+        "name": "PTS",
+        "jsonName": "PTS",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " Presentation timestamp"
+        ]
+      },
+      {
+        "name": "DTS",
+        "jsonName": "DTS",
+        "goType": "uint64",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": [
+          " Decode timestamp"
+        ]
+      },
+      {
+        "name": "Width",
+        "jsonName": "Width",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Height",
+        "jsonName": "Height",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "FrameRate",
+        "jsonName": "FrameRate",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompositionNum",
+        "jsonName": "CompositionNum",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CompositionState",
+        "jsonName": "CompositionState",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PaletteUpdate",
+        "jsonName": "PaletteUpdate",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "PaletteID",
+        "jsonName": "PaletteID",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Objects",
+        "jsonName": "Objects",
+        "goType": "[]CompositionObject",
+        "typescriptType": "Array\u003cCompositionObject\u003e",
+        "usedTypescriptType": "CompositionObject",
+        "usedStructName": "pgs.CompositionObject",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/pgs/pgs.go",
+    "filename": "pgs.go",
+    "name": "CompositionObject",
+    "formattedName": "CompositionObject",
+    "package": "pgs",
+    "fields": [
+      {
+        "name": "ObjectID",
+        "jsonName": "ObjectID",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "WindowID",
+        "jsonName": "WindowID",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "X",
+        "jsonName": "X",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Y",
+        "jsonName": "Y",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Cropped",
+        "jsonName": "Cropped",
+        "goType": "bool",
+        "typescriptType": "boolean",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropX",
+        "jsonName": "CropX",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropY",
+        "jsonName": "CropY",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropWidth",
+        "jsonName": "CropWidth",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "CropHeight",
+        "jsonName": "CropHeight",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": []
+  },
+  {
+    "filepath": "../internal/pgs/pgs.go",
+    "filename": "pgs.go",
+    "name": "WindowDefinition",
+    "formattedName": "WindowDefinition",
+    "package": "pgs",
+    "fields": [
+      {
+        "name": "WindowID",
+        "jsonName": "WindowID",
+        "goType": "uint8",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "X",
+        "jsonName": "X",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Y",
+        "jsonName": "Y",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Width",
+        "jsonName": "Width",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "Height",
+        "jsonName": "Height",
+        "goType": "uint16",
+        "typescriptType": "number",
+        "required": true,
         "public": true,
         "comments": []
       }
@@ -64458,6 +66788,15 @@
         "required": false,
         "public": false,
         "comments": []
+      },
+      {
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": false,
+        "comments": []
       }
     ],
     "comments": []
@@ -64492,23 +66831,10 @@
         "comments": []
       },
       {
-        "name": "client",
-        "jsonName": "client",
-        "goType": "anilist.AnilistClient",
-        "typescriptType": "AL_AnilistClient",
-        "usedTypescriptType": "AL_AnilistClient",
-        "usedStructName": "anilist.AnilistClient",
-        "required": false,
-        "public": false,
-        "comments": []
-      },
-      {
-        "name": "extensionBank",
-        "jsonName": "extensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "clientRef",
+        "jsonName": "clientRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -65062,6 +67388,71 @@
     ]
   },
   {
+    "filepath": "../internal/platforms/platform/hook_events.go",
+    "filename": "hook_events.go",
+    "name": "PreDeleteEntryEvent",
+    "formattedName": "PreDeleteEntryEvent",
+    "package": "platform",
+    "fields": [
+      {
+        "name": "MediaID",
+        "jsonName": "mediaId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "EntryID",
+        "jsonName": "entryId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " PreDeleteEntryEvent is triggered when an entry is about to be deleted.",
+      " Prevent default to skip the default deletion and override the deletion."
+    ],
+    "embeddedStructNames": [
+      "hook_resolver.Event"
+    ]
+  },
+  {
+    "filepath": "../internal/platforms/platform/hook_events.go",
+    "filename": "hook_events.go",
+    "name": "PostDeleteEntryEvent",
+    "formattedName": "PostDeleteEntryEvent",
+    "package": "platform",
+    "fields": [
+      {
+        "name": "MediaID",
+        "jsonName": "mediaId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "EntryID",
+        "jsonName": "entryId",
+        "goType": "int",
+        "typescriptType": "number",
+        "required": false,
+        "public": true,
+        "comments": []
+      }
+    ],
+    "comments": [],
+    "embeddedStructNames": [
+      "hook_resolver.Event"
+    ]
+  },
+  {
     "filepath": "../internal/platforms/shared_platform/cachelayer.go",
     "filename": "cachelayer.go",
     "name": "CacheLayer",
@@ -65069,12 +67460,10 @@
     "package": "shared_platform",
     "fields": [
       {
-        "name": "anilistClient",
-        "jsonName": "anilistClient",
-        "goType": "anilist.AnilistClient",
-        "typescriptType": "AL_AnilistClient",
-        "usedTypescriptType": "AL_AnilistClient",
-        "usedStructName": "anilist.AnilistClient",
+        "name": "anilistClientRef",
+        "jsonName": "anilistClientRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -65188,6 +67577,15 @@
       {
         "name": "completeAnimeCache",
         "jsonName": "completeAnimeCache",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
         "goType": "",
         "typescriptType": "any",
         "required": false,
@@ -65575,12 +67973,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -65858,12 +68254,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -66009,10 +68403,10 @@
     "package": "plugin",
     "fields": [
       {
-        "name": "IsOffline",
-        "jsonName": "IsOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
+        "name": "IsOfflineRef",
+        "jsonName": "IsOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -66039,12 +68433,10 @@
         "comments": []
       },
       {
-        "name": "AnilistPlatform",
-        "jsonName": "AnilistPlatform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "AnilistPlatformRef",
+        "jsonName": "AnilistPlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -66083,12 +68475,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -66308,8 +68698,8 @@
         "comments": []
       },
       {
-        "name": "anilistPlatform",
-        "jsonName": "anilistPlatform",
+        "name": "anilistPlatformRef",
+        "jsonName": "anilistPlatformRef",
         "goType": "",
         "typescriptType": "any",
         "required": true,
@@ -66326,8 +68716,8 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
         "goType": "",
         "typescriptType": "any",
         "required": true,
@@ -66434,11 +68824,11 @@
         "comments": []
       },
       {
-        "name": "isOffline",
-        "jsonName": "isOffline",
-        "goType": "bool",
-        "typescriptType": "boolean",
-        "required": true,
+        "name": "isOfflineRef",
+        "jsonName": "isOfflineRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
         "public": false,
         "comments": []
       }
@@ -76360,12 +78750,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -76456,12 +78844,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -76613,12 +78999,10 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -76887,12 +79271,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -76909,12 +79291,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -77060,23 +79440,19 @@
         ]
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -77112,12 +79488,10 @@
         "comments": []
       },
       {
-        "name": "extensionBank",
-        "jsonName": "extensionBank",
-        "goType": "extension.UnifiedBank",
-        "typescriptType": "Extension_UnifiedBank",
-        "usedTypescriptType": "Extension_UnifiedBank",
-        "usedStructName": "extension.UnifiedBank",
+        "name": "extensionBankRef",
+        "jsonName": "extensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -77152,12 +79526,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -77225,12 +79597,19 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
+        "required": false,
+        "public": true,
+        "comments": []
+      },
+      {
+        "name": "ExtensionBankRef",
+        "jsonName": "ExtensionBankRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -77794,12 +80173,10 @@
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -78210,12 +80587,10 @@
         "comments": []
       },
       {
-        "name": "platform",
-        "jsonName": "platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "platformRef",
+        "jsonName": "platformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -78232,12 +80607,10 @@
         "comments": []
       },
       {
-        "name": "metadataProvider",
-        "jsonName": "metadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "metadataProviderRef",
+        "jsonName": "metadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": false,
         "comments": []
@@ -78434,23 +80807,19 @@
         "comments": []
       },
       {
-        "name": "Platform",
-        "jsonName": "Platform",
-        "goType": "platform.Platform",
-        "typescriptType": "Platform",
-        "usedTypescriptType": "Platform",
-        "usedStructName": "platform.Platform",
+        "name": "PlatformRef",
+        "jsonName": "PlatformRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
       },
       {
-        "name": "MetadataProvider",
-        "jsonName": "MetadataProvider",
-        "goType": "metadata_provider.Provider",
-        "typescriptType": "Provider",
-        "usedTypescriptType": "Provider",
-        "usedStructName": "metadata_provider.Provider",
+        "name": "MetadataProviderRef",
+        "jsonName": "MetadataProviderRef",
+        "goType": "",
+        "typescriptType": "any",
         "required": false,
         "public": true,
         "comments": []
@@ -81544,6 +83913,41 @@
     "package": "util",
     "fields": [],
     "comments": []
+  },
+  {
+    "filepath": "../internal/util/ref.go",
+    "filename": "ref.go",
+    "name": "Ref",
+    "formattedName": "Util_Ref",
+    "package": "util",
+    "fields": [
+      {
+        "name": "mu",
+        "jsonName": "mu",
+        "goType": "sync.RWMutex",
+        "typescriptType": "RWMutex",
+        "usedTypescriptType": "RWMutex",
+        "usedStructName": "sync.RWMutex",
+        "required": false,
+        "public": false,
+        "comments": []
+      },
+      {
+        "name": "current",
+        "jsonName": "current",
+        "goType": "T",
+        "typescriptType": "Util_T",
+        "usedTypescriptType": "Util_T",
+        "usedStructName": "util.T",
+        "required": true,
+        "public": false,
+        "comments": []
+      }
+    ],
+    "comments": [
+      " Ref allows swapping the underlying value at runtime.",
+      " Used for interfaces and other values that need to be updated dynamically."
+    ]
   },
   {
     "filepath": "../internal/util/result/boundedcache.go",

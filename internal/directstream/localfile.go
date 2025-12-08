@@ -147,11 +147,11 @@ func (s *LocalFileStream) GetAttachmentByName(filename string) (*mkvparser.Attac
 
 func (s *LocalFileStream) GetStreamHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		s.logger.Trace().Str("method", r.Method).Msg("directstream: Received request")
-
-		defer func() {
-			s.logger.Trace().Msg("directstream: Request finished")
-		}()
+		//s.logger.Trace().Str("method", r.Method).Msg("directstream: Received request")
+		//
+		//defer func() {
+		//	s.logger.Trace().Msg("directstream: Request finished")
+		//}()
 
 		if r.Method == http.MethodHead {
 			// Get the file size
@@ -275,12 +275,12 @@ func (m *Manager) PlayLocalFile(ctx context.Context, opts PlayLocalFileOptions) 
 	}
 
 	episodeCollection, err := anime.NewEpisodeCollectionFromLocalFiles(ctx, anime.NewEpisodeCollectionFromLocalFilesOptions{
-		LocalFiles:       opts.LocalFiles,
-		Media:            media,
-		AnimeCollection:  animeCollection,
-		Platform:         m.platform,
-		MetadataProvider: m.metadataProvider,
-		Logger:           m.Logger,
+		LocalFiles:          opts.LocalFiles,
+		Media:               media,
+		AnimeCollection:     animeCollection,
+		PlatformRef:         m.platformRef,
+		MetadataProviderRef: m.metadataProviderRef,
+		Logger:              m.Logger,
 	})
 	if err != nil {
 		return fmt.Errorf("cannot play local file, could not create episode collection: %w", err)
@@ -308,8 +308,8 @@ func (m *Manager) PlayLocalFile(ctx context.Context, opts PlayLocalFileOptions) 
 			media:                 media,
 			episode:               episode,
 			episodeCollection:     episodeCollection,
-			subtitleEventCache:    result.NewResultMap[string, *mkvparser.SubtitleEvent](),
-			activeSubtitleStreams: result.NewResultMap[string, *SubtitleStream](),
+			subtitleEventCache:    result.NewMap[string, *mkvparser.SubtitleEvent](),
+			activeSubtitleStreams: result.NewMap[string, *SubtitleStream](),
 		},
 	}
 

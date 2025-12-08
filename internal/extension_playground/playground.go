@@ -8,6 +8,7 @@ import (
 	"seanime/internal/api/anilist"
 	"seanime/internal/api/metadata"
 	"seanime/internal/api/metadata_provider"
+	"seanime/internal/events"
 	"seanime/internal/extension"
 	hibikemanga "seanime/internal/extension/hibike/manga"
 	hibikeonlinestream "seanime/internal/extension/hibike/onlinestream"
@@ -30,12 +31,13 @@ import (
 
 type (
 	PlaygroundRepository struct {
-		logger             *zerolog.Logger
-		platform           platform.Platform
-		baseAnimeCache     *result.Cache[int, *anilist.BaseAnime]
-		baseMangaCache     *result.Cache[int, *anilist.BaseManga]
-		metadataProvider   metadata_provider.Provider
-		gojaRuntimeManager *goja_runtime.Manager
+		logger              *zerolog.Logger
+		platformRef         *util.Ref[platform.Platform]
+		baseAnimeCache      *result.Cache[int, *anilist.BaseAnime]
+		baseMangaCache      *result.Cache[int, *anilist.BaseManga]
+		metadataProviderRef *util.Ref[metadata_provider.Provider]
+		gojaRuntimeManager  *goja_runtime.Manager
+		wsEventManager      events.WSEventManagerInterface
 	}
 
 	RunPlaygroundCodeResponse struct {
@@ -52,14 +54,15 @@ type (
 	}
 )
 
-func NewPlaygroundRepository(logger *zerolog.Logger, platform platform.Platform, metadataProvider metadata_provider.Provider) *PlaygroundRepository {
+func NewPlaygroundRepository(logger *zerolog.Logger, platformRef *util.Ref[platform.Platform], metadataProviderRef *util.Ref[metadata_provider.Provider]) *PlaygroundRepository {
 	return &PlaygroundRepository{
-		logger:             logger,
-		platform:           platform,
-		metadataProvider:   metadataProvider,
-		baseAnimeCache:     result.NewCache[int, *anilist.BaseAnime](),
-		baseMangaCache:     result.NewCache[int, *anilist.BaseManga](),
-		gojaRuntimeManager: goja_runtime.NewManager(logger),
+		logger:              logger,
+		platformRef:         platformRef,
+		metadataProviderRef: metadataProviderRef,
+		baseAnimeCache:      result.NewCache[int, *anilist.BaseAnime](),
+		baseMangaCache:      result.NewCache[int, *anilist.BaseManga](),
+		gojaRuntimeManager:  goja_runtime.NewManager(logger),
+		wsEventManager:      events.NewMockWSEventManager(logger),
 	}
 }
 
@@ -158,14 +161,14 @@ func (r *PlaygroundRepository) getAnime(mediaId int) (anime *anilist.BaseAnime, 
 	var ok bool
 	anime, ok = r.baseAnimeCache.Get(mediaId)
 	if !ok {
-		anime, err = r.platform.GetAnime(context.Background(), mediaId)
+		anime, err = r.platformRef.Get().GetAnime(context.Background(), mediaId)
 		if err != nil {
 			return nil, nil, err
 		}
 		r.baseAnimeCache.SetT(mediaId, anime, 24*time.Hour)
 	}
 
-	am, _ = r.metadataProvider.GetAnimeMetadata(metadata.AnilistPlatform, mediaId)
+	am, _ = r.metadataProviderRef.Get().GetAnimeMetadata(metadata.AnilistPlatform, mediaId)
 	return anime, am, nil
 }
 
@@ -173,7 +176,7 @@ func (r *PlaygroundRepository) getManga(mediaId int) (manga *anilist.BaseManga, 
 	var ok bool
 	manga, ok = r.baseMangaCache.Get(mediaId)
 	if !ok {
-		manga, err = r.platform.GetManga(context.Background(), mediaId)
+		manga, err = r.platformRef.Get().GetManga(context.Background(), mediaId)
 		if err != nil {
 			return nil, err
 		}
@@ -225,7 +228,7 @@ func (r *PlaygroundRepository) runPlaygroundCodeAnimeTorrentProvider(ext *extens
 	case extension.LanguageGo:
 	//...
 	case extension.LanguageJavascript, extension.LanguageTypescript:
-		_, provider, err := extension_repo.NewGojaAnimeTorrentProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager)
+		_, provider, err := extension_repo.NewGojaAnimeTorrentProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager, r.wsEventManager)
 		if err != nil {
 			return newPlaygroundResponse(playgroundLogger, err), nil
 		}
@@ -340,7 +343,7 @@ func (r *PlaygroundRepository) runPlaygroundCodeMangaProvider(ext *extension.Ext
 	case extension.LanguageGo:
 	//...
 	case extension.LanguageJavascript, extension.LanguageTypescript:
-		_, provider, err := extension_repo.NewGojaMangaProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager)
+		_, provider, err := extension_repo.NewGojaMangaProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager, r.wsEventManager)
 		if err != nil {
 			return newPlaygroundResponse(playgroundLogger, err), nil
 		}
@@ -432,7 +435,7 @@ func (r *PlaygroundRepository) runPlaygroundCodeOnlinestreamProvider(ext *extens
 	case extension.LanguageGo:
 	//...
 	case extension.LanguageJavascript, extension.LanguageTypescript:
-		_, provider, err := extension_repo.NewGojaOnlinestreamProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager)
+		_, provider, err := extension_repo.NewGojaOnlinestreamProvider(ext, params.Language, playgroundLogger.logger, r.gojaRuntimeManager, r.wsEventManager)
 		if err != nil {
 			return newPlaygroundResponse(playgroundLogger, err), nil
 		}

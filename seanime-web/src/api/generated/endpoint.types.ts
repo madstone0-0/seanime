@@ -605,6 +605,17 @@ export type DirectstreamPlayLocalFile_Variables = {
     clientId: string
 }
 
+/**
+ * - Filepath: internal/handlers/directstream.go
+ * - Filename: directstream.go
+ * - Endpoint: /api/v1/directstream/subs/convert-to-ass
+ * @description
+ * Route converts subtitles to ASS.
+ */
+export type DirectstreamFetchAndConvertToASS_Variables = {
+    url: string
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // discord
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1412,6 +1423,7 @@ export type NakamaPlayVideo_Variables = {
     mediaId: number
     anidbEpisode: string
     clientId: string
+    forcePlaybackMethod?: string
 }
 
 /**

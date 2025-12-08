@@ -37,7 +37,7 @@ func (r *Repository) loadPluginExtension(ext *extension.Extension) (err error) {
 
 	// Add the extension to the map
 	retExt := extension.NewPluginExtension(ext)
-	r.extensionBank.Set(ext.ID, retExt)
+	r.extensionBankRef.Get().Set(ext.ID, retExt)
 	r.gojaExtensions.Set(ext.ID, gojaExt)
 
 	return
@@ -141,7 +141,7 @@ func NewGojaPlugin(
 
 	// 2. Create a new loader for the plugin
 	// Bind shared APIs to the loader
-	ShareBinds(p.loader, logger)
+	ShareBinds(p.loader, logger, ext, wsEventManager)
 	BindUserConfig(p.loader, ext, logger)
 	// Bind hooks to the loader
 	p.bindHooks()
@@ -161,7 +161,7 @@ func NewGojaPlugin(
 	var err error
 	p.pool, err = runtimeManager.GetOrCreatePrivatePool(ext.ID, func() *goja.Runtime {
 		runtime := goja.New()
-		ShareBinds(runtime, logger)
+		ShareBinds(runtime, logger, ext, wsEventManager)
 		BindUserConfig(runtime, ext, logger)
 		p.BindPluginAPIs(runtime, logger)
 		return runtime
@@ -177,7 +177,7 @@ func NewGojaPlugin(
 	uiVM := goja.New()
 	uiVM.SetParserOptions(parser.WithDisableSourceMaps)
 	// Bind shared APIs
-	ShareBinds(uiVM, logger)
+	ShareBinds(uiVM, logger, ext, wsEventManager)
 	BindUserConfig(uiVM, ext, logger)
 	// Bind the store to the UI VM
 	p.BindPluginAPIs(uiVM, logger)

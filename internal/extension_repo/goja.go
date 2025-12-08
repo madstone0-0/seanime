@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"reflect"
+	"seanime/internal/events"
 	"seanime/internal/extension"
 	goja_bindings "seanime/internal/goja/goja_bindings"
 	"seanime/internal/library/anime"
@@ -59,7 +60,7 @@ func BindUserConfig(vm *goja.Runtime, ext *extension.Extension, logger *zerolog.
 
 // ShareBinds binds the shared bindings to the VM
 // This is called once per VM
-func ShareBinds(vm *goja.Runtime, logger *zerolog.Logger) {
+func ShareBinds(vm *goja.Runtime, logger *zerolog.Logger, ext *extension.Extension, wsEventManager events.WSEventManagerInterface) {
 	registry := new(gojarequire.Registry)
 	registry.Enable(vm)
 
@@ -74,7 +75,11 @@ func ShareBinds(vm *goja.Runtime, logger *zerolog.Logger) {
 		{"url", func(vm *goja.Runtime) error { gojaurl.Enable(vm); return nil }},
 		{"buffer", func(vm *goja.Runtime) error { gojabuffer.Enable(vm); return nil }},
 		{"fetch", func(vm *goja.Runtime) error { goja_bindings.BindFetch(vm); return nil }},
-		{"console", func(vm *goja.Runtime) error { goja_bindings.BindConsole(vm, logger); return nil }},
+		{"ChromeDP", func(vm *goja.Runtime) error { goja_bindings.BindChromeDP(vm); return nil }},
+		{"console", func(vm *goja.Runtime) error {
+			goja_bindings.BindConsoleWithWS(ext, vm, logger, wsEventManager)
+			return nil
+		}},
 		{"formData", func(vm *goja.Runtime) error { goja_bindings.BindFormData(vm); return nil }},
 		{"document", func(vm *goja.Runtime) error { goja_bindings.BindDocument(vm); return nil }},
 		{"crypto", func(vm *goja.Runtime) error { goja_bindings.BindCrypto(vm); return nil }},
@@ -87,7 +92,9 @@ func ShareBinds(vm *goja.Runtime, logger *zerolog.Logger) {
 		}
 	}
 
-	vm.Set("__isOffline__", plugin.GlobalAppContext.IsOffline())
+	vm.Set("$isOffline", func() bool {
+		return plugin.GlobalAppContext.IsOffline()
+	})
 
 	vm.Set("$toString", func(raw any, maxReaderBytes int) (string, error) {
 		switch v := raw.(type) {

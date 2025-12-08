@@ -1820,6 +1820,42 @@ export type INTERNAL_FeatureFlags = {
     MainServerTorrentStreaming: boolean
 }
 
+/**
+ * - Filepath: internal/core/feature_flags.go
+ * - Filename: feature_flags.go
+ * - Package: core
+ */
+export type INTERNAL_FeatureKey = "ManageOfflineMode" |
+    "ViewSettings" |
+    "ViewLogs" |
+    "UpdateSettings" |
+    "ManagePlaylist" |
+    "ManageLocalAnimeLibrary" |
+    "ManageAccount" |
+    "ViewAccount" |
+    "ManageLists" |
+    "RefreshMetadata" |
+    "ManageMangaDownloads" |
+    "WatchingLocalAnime" |
+    "TorrentStreaming" |
+    "DebridStreaming" |
+    "OnlineStreaming" |
+    "Transcode" |
+    "Reading" |
+    "ViewAutoDownloader" |
+    "ManageAutoDownloader" |
+    "ViewScanSummaries" |
+    "ViewExtensions" |
+    "ManageExtensions" |
+    "ManageHomeScreen" |
+    "OpenInExplorer" |
+    "PluginTray" |
+    "ManageNakama" |
+    "ManageDebrid" |
+    "Proxy" |
+    "ManageMangaSource" |
+    "PushRequests"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Debrid
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2657,6 +2693,7 @@ export type Status = {
      */
     isDesktopSidecar: boolean
     featureFlags?: INTERNAL_FeatureFlags
+    disabledFeatures?: Array<INTERNAL_FeatureKey>
     serverReady: boolean
     serverHasPassword: boolean
 }
@@ -2690,7 +2727,7 @@ export type HibikeCustomSource_ListMangaResponse = {
 }
 
 /**
- * - Filepath: internal/extension/hibike/tracker/types.go
+ * - Filepath: internal/extension/hibike/customsource/types.go
  * - Filename: types.go
  * - Package: hibikecustomsource
  */
@@ -2781,6 +2818,13 @@ export type HibikeOnlinestream_SearchResult = {
  * - Package: hibikeonlinestream
  */
 export type HibikeOnlinestream_SubOrDub = "sub" | "dub" | "both"
+
+/**
+ * - Filepath: internal/extension/hibike/onlinestream/types.go
+ * - Filename: types.go
+ * - Package: hibikeonlinestream
+ */
+export type HibikeOnlinestream_VideoSourceType = "mp4" | "m3u8" | "unknown"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Hibiketorrent
@@ -3632,6 +3676,7 @@ export type Models_LibrarySettings = {
     scannerMatchingAlgorithm: string
     autoSyncToLocalAccount: boolean
     autoSaveCurrentMediaOffline: boolean
+    useFallbackMetadataProvider: boolean
 }
 
 /**
@@ -3915,6 +3960,23 @@ export type Nakama_NakamaAnimeLibrary = {
 }
 
 /**
+ * - Filepath: internal/nakama/share.go
+ * - Filename: share.go
+ * - Package: nakama
+ */
+export type Nakama_NakamaCustomSourceMap = Record<number, string>
+
+/**
+ * - Filepath: internal/nakama/share.go
+ * - Filename: share.go
+ * - Package: nakama
+ */
+export type Nakama_NakamaLocalFiles = {
+    localFiles?: Array<Anime_LocalFile>
+    customSourceMap: Nakama_NakamaCustomSourceMap
+}
+
+/**
  * - Filepath: internal/nakama/nakama.go
  * - Filename: nakama.go
  * - Package: nakama
@@ -4137,6 +4199,7 @@ export type Onlinestream_Episode = {
     image?: string
     description?: string
     isFiller?: boolean
+    metadata?: Anime_Episode
 }
 
 /**
@@ -4188,7 +4251,9 @@ export type Onlinestream_VideoSource = {
     server: string
     headers?: Record<string, string>
     url: string
+    label?: string
     quality: string
+    type?: HibikeOnlinestream_VideoSourceType
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

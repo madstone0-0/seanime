@@ -9,6 +9,7 @@ import (
 	"seanime/internal/extension"
 	"seanime/internal/hook"
 	"seanime/internal/platforms/platform"
+	"seanime/internal/util"
 	"seanime/internal/util/result"
 	"time"
 
@@ -22,24 +23,20 @@ type PlatformHelper struct {
 	baseAnimeCache      *result.BoundedCache[int, *anilist.BaseAnime]
 	baseMangaCache      *result.BoundedCache[int, *anilist.BaseManga]
 	completeAnimeCache  *result.BoundedCache[int, *anilist.CompleteAnime]
+	extensionBankRef    *util.Ref[*extension.UnifiedBank]
 }
 
-func NewPlatformHelper(logger *zerolog.Logger) *PlatformHelper {
+func NewPlatformHelper(extensionBankRef *util.Ref[*extension.UnifiedBank], db *db.Database, logger *zerolog.Logger) *PlatformHelper {
 	helper := &PlatformHelper{
-		logger:             logger,
-		baseAnimeCache:     result.NewBoundedCache[int, *anilist.BaseAnime](50),
-		baseMangaCache:     result.NewBoundedCache[int, *anilist.BaseManga](50),
-		completeAnimeCache: result.NewBoundedCache[int, *anilist.CompleteAnime](10),
+		logger:              logger,
+		baseAnimeCache:      result.NewBoundedCache[int, *anilist.BaseAnime](50),
+		baseMangaCache:      result.NewBoundedCache[int, *anilist.BaseManga](50),
+		completeAnimeCache:  result.NewBoundedCache[int, *anilist.CompleteAnime](10),
+		extensionBankRef:    extensionBankRef,
+		customSourceManager: customsource.NewManager(extensionBankRef, db, logger),
 	}
 
 	return helper
-}
-
-func (h *PlatformHelper) InitExtensionBank(bank *extension.UnifiedBank, db *db.Database) {
-	if h.customSourceManager != nil {
-		h.customSourceManager.Close()
-	}
-	h.customSourceManager = customsource.NewManager(bank, db, h.logger)
 }
 
 func (h *PlatformHelper) Close() {
@@ -308,6 +305,9 @@ func (h *PlatformHelper) BuildAnimeAiringSchedule(ctx context.Context, collectio
 	missingIds := make([]*int, 0)
 	for _, list := range collection.MediaListCollection.Lists {
 		for _, entry := range list.Entries {
+			if customsource.IsExtensionId(entry.Media.GetID()) {
+				continue
+			}
 			if _, found := foundIds[entry.GetMedia().GetID()]; found {
 				continue
 			}
@@ -475,6 +475,35 @@ func (h *PlatformHelper) TriggerUpdateEntryRepeatHooks(ctx context.Context, medi
 	postEvent := new(platform.PostUpdateEntryRepeatEvent)
 	postEvent.MediaID = &mediaID
 	err = hook.GlobalHookManager.OnPostUpdateEntryRepeat().Trigger(postEvent)
+	return err
+}
+
+func (h *PlatformHelper) TriggerDeleteEntryHooks(ctx context.Context, mediaID int, entryId int, deleteFunc func(event *platform.PreDeleteEntryEvent) error) error {
+	// Trigger pre-delete hook
+	event := new(platform.PreDeleteEntryEvent)
+	event.MediaID = &mediaID
+	event.EntryID = &entryId
+
+	err := hook.GlobalHookManager.OnPreDeleteEntry().Trigger(event)
+	if err != nil {
+		return err
+	}
+
+	if event.DefaultPrevented {
+		return nil
+	}
+
+	// Execute the deletion
+	err = deleteFunc(event)
+	if err != nil {
+		return err
+	}
+
+	// Trigger post-delete hook
+	postEvent := new(platform.PostDeleteEntryEvent)
+	postEvent.MediaID = &mediaID
+	postEvent.EntryID = &entryId
+	err = hook.GlobalHookManager.OnPostDeleteEntry().Trigger(postEvent)
 	return err
 }
 

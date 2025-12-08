@@ -2,9 +2,13 @@ import { AL_BaseManga, Manga_PageContainer } from "@/api/generated/types"
 import { ___manga_scrollSignalAtom } from "@/app/(main)/manga/_containers/chapter-reader/_components/chapter-vertical-reader"
 import {
     ChapterReaderSettings,
+    MANGA_PAGE_FIT_ICONS,
     MANGA_PAGE_FIT_OPTIONS,
+    MANGA_PAGE_STRETCH_ICONS,
     MANGA_PAGE_STRETCH_OPTIONS,
+    MANGA_READING_DIRECTION_ICONS,
     MANGA_READING_DIRECTION_OPTIONS,
+    MANGA_READING_MODE_ICONS,
     MANGA_READING_MODE_OPTIONS,
 } from "@/app/(main)/manga/_containers/chapter-reader/chapter-reader-settings"
 import { __manga_selectedChapterAtom, MangaReader_SelectedChapter, useHandleChapterPageStatus } from "@/app/(main)/manga/_lib/handle-chapter-reader"
@@ -283,11 +287,17 @@ export function MangaReaderBar(props: MangaReaderBarProps) {
                     <div data-manga-reader-bar-info-container className="hidden lg:flex">
                         <Popover
                             modal={true}
+                            tabIndex={-1}
                             trigger={
                                 <IconButton
-                                    icon={<LuInfo />}
+                                    icon={<span className="flex items-center gap-1">
+                                        {MANGA_READING_MODE_ICONS[readingMode]}
+                                        {MANGA_PAGE_FIT_ICONS[pageFit]}
+                                        {pageStretch !== MangaPageStretch.NONE && MANGA_PAGE_STRETCH_ICONS[pageStretch]}
+                                        {readingMode !== MangaReadingMode.LONG_STRIP && MANGA_READING_DIRECTION_ICONS[readingDirection]}
+                                    </span>}
                                     intent="gray-basic"
-                                    className="opacity-50 outline-0"
+                                    className="opacity-50 outline-0 w-fit px-2 focus-visible:outline-0 focus-visible:ring-0 ml-2"
                                     tabIndex={-1}
                                 />
                             }

@@ -157,6 +157,7 @@ export function PluginTray(props: TrayPluginProps) {
                         fill
                         className="p-1 w-full h-full object-contain"
                         data-plugin-tray-icon-image
+                        isExternal
                     /> : <div className="w-8 h-8 rounded-full flex items-center justify-center" data-plugin-tray-icon-image-fallback>
                         <LuCircleDashed className="text-2xl" />
                     </div>}
@@ -250,7 +251,7 @@ export function PluginTray(props: TrayPluginProps) {
                         }}
                         data-plugin-tray-popover-content={props.trayIcon.extensionId}
                     >
-                        <div className="absolute inset-0 top-[-2.5rem]">
+                        <div className="absolute w-full top-[-2.5rem]">
                             <div className="flex items-center justify-between">
                                 <p
                                     className="text-sm border font-medium text-gray-300 px-1.5 py-0.5 rounded-lg bg-black/60"

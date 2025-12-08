@@ -1,4 +1,4 @@
-import { MKVParser_ChapterInfo, NativePlayer_PlaybackInfo } from "@/api/generated/types"
+import { MKVParser_ChapterInfo } from "@/api/generated/types"
 import {
     vc_buffering,
     vc_currentTime,
@@ -15,11 +15,11 @@ import {
     VideoCoreChapterCue,
 } from "@/app/(main)/_features/video-core/video-core"
 import { VideoCoreTimeRangeChapter } from "@/app/(main)/_features/video-core/video-core-time-range"
-import { useAtomValue } from "jotai"
-import { useSetAtom } from "jotai/react"
+import { VideoCorePlaybackInfo } from "@/app/(main)/_features/video-core/video-core.atoms"
+import { useAtomValue, useSetAtom } from "jotai/react"
 import { useEffect } from "react"
 
-export function useVideoCoreBindings(playbackInfo: NativePlayer_PlaybackInfo | null | undefined) {
+export function useVideoCoreBindings(playbackInfo: VideoCorePlaybackInfo | null | undefined) {
 
     const v = useAtomValue(vc_videoElement)
     const setVideoSize = useSetAtom(vc_videoSize)
@@ -72,8 +72,8 @@ export const vc_createChapterCues = (chapters: Array<MKVParser_ChapterInfo> | un
     }
 
     return vc_fillChapterCues(chapters.map((chapter, index) => ({
-        startTime: chapter.start / 1e6,
-        endTime: chapter.end ? chapter.end / 1e6 : (chapters[index + 1]?.start ? chapters[index + 1].start / 1e6 : duration),
+        startTime: chapter.start,
+        endTime: chapter.end ? chapter.end : (chapters[index + 1]?.start ? chapters[index + 1].start : duration),
         text: chapter.text || ``,
     }))).filter(c => c.startTime !== undefined && c.endTime !== undefined && c.startTime <= duration && c.endTime <= duration)
 }
@@ -122,8 +122,8 @@ export const vc_createChapterVTT = (chapters: Array<MKVParser_ChapterInfo> | und
     let vttContent = "WEBVTT\n\n"
 
     chapters.forEach((chapter, index) => {
-        const startTime = chapter.start / 1e6
-        const endTime = chapter.end ? chapter.end / 1e6 : (chapters[index + 1]?.start ? chapters[index + 1].start / 1e6 : duration)
+        const startTime = chapter.start
+        const endTime = chapter.end ? chapter.end : (chapters[index + 1]?.start ? chapters[index + 1].start : duration)
 
         const formatTime = (seconds: number) => {
             const hours = Math.floor(seconds / 3600)
@@ -305,8 +305,8 @@ export function vc_createChaptersFromAniSkip(
 
     chapters = chapters.map((chapter, index) => ({
         ...chapter,
-        start: chapter.start * 1e6,
-        end: chapter.end ? index === chapters.length - 1 ? duration * 1e6 : chapter.end * 1e6 : undefined,
+        start: chapter.start,
+        end: chapter.end ? index === chapters.length - 1 ? duration : chapter.end : undefined,
     }))
 
     return chapters

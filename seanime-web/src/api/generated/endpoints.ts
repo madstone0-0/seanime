@@ -596,6 +596,16 @@ export const API_ENDPOINTS = {
             methods: ["POST"],
             endpoint: "/api/v1/directstream/play/localfile",
         },
+        /**
+         *  @description
+         *  Route converts subtitles to ASS.
+         *  Subtitles will be fetched and converted to ASS.
+         */
+        DirectstreamFetchAndConvertToASS: {
+            key: "DIRECTSTREAM-directstream-fetch-and-convert-to-a-s-s",
+            methods: ["POST"],
+            endpoint: "/api/v1/directstream/subs/convert-to-ass",
+        },
     },
     DISCORD: {
         SetDiscordMangaActivity: {
@@ -1429,18 +1439,17 @@ export const API_ENDPOINTS = {
         GetNakamaAnimeLibrary: {
             key: "NAKAMA-get-nakama-anime-library",
             methods: ["GET"],
-            endpoint: "/api/v1/nakama/host/anime/library/collection",
+            endpoint: "/api/v1/nakama/host/anime/library",
         },
         /**
          *  @description
-         *  Route shares the local anime collection with Nakama clients.
-         *  This creates a new LibraryCollection struct and returns it.
-         *  This is used to share the local anime collection with Nakama clients.
+         *  Route returns true if the library is being shared.
+         *  This is used by Nakama peers to check if the library is being shared.
          */
-        GetNakamaAnimeLibraryCollection: {
-            key: "NAKAMA-get-nakama-anime-library-collection",
+        GetNakamaAnimeLibraryShared: {
+            key: "NAKAMA-get-nakama-anime-library-shared",
             methods: ["GET"],
-            endpoint: "/api/v1/nakama/host/anime/library/collection",
+            endpoint: "/api/v1/nakama/host/anime/library/shared",
         },
         /**
          *  @description

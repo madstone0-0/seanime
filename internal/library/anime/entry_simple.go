@@ -6,6 +6,7 @@ import (
 	"seanime/internal/api/anilist"
 	"seanime/internal/api/metadata"
 	"seanime/internal/platforms/platform"
+	"seanime/internal/util"
 	"sort"
 	"strconv"
 
@@ -36,14 +37,14 @@ type (
 		MediaId         int
 		LocalFiles      []*LocalFile // All local files
 		AnimeCollection *anilist.AnimeCollection
-		Platform        platform.Platform
+		PlatformRef     *util.Ref[platform.Platform]
 	}
 )
 
 func NewSimpleEntry(ctx context.Context, opts *NewSimpleAnimeEntryOptions) (*SimpleEntry, error) {
 
 	if opts.AnimeCollection == nil ||
-		opts.Platform == nil {
+		opts.PlatformRef.IsAbsent() {
 		return nil, errors.New("missing arguments when creating simple media entry")
 	}
 	// Create new Entry
@@ -64,7 +65,7 @@ func NewSimpleEntry(ctx context.Context, opts *NewSimpleAnimeEntryOptions) (*Sim
 		anilistEntry = &anilist.AnimeListEntry{}
 
 		// Fetch the media
-		fetchedMedia, err := opts.Platform.GetAnime(ctx, opts.MediaId) // DEVNOTE: Maybe cache it?
+		fetchedMedia, err := opts.PlatformRef.Get().GetAnime(ctx, opts.MediaId)
 		if err != nil {
 			return nil, err
 		}
@@ -179,6 +180,43 @@ func NewAnimeMetadataFromEntry(media *anilist.BaseAnime, episodes []*Episode) *m
 			Episode:               strconv.Itoa(episode.EpisodeNumber),
 			SeasonNumber:          0,
 			AbsoluteEpisodeNumber: episode.EpisodeNumber,
+			AnidbEid:              0,
+			HasImage:              true,
+		}
+		animeMetadata.EpisodeCount++
+	}
+
+	return animeMetadata
+}
+
+func NewAnimeMetadataFromEpisodeCount(media *anilist.BaseAnime, episodes []int) *metadata.AnimeMetadata {
+	animeMetadata := &metadata.AnimeMetadata{
+		Titles:       make(map[string]string),
+		Episodes:     make(map[string]*metadata.EpisodeMetadata),
+		EpisodeCount: 0,
+		SpecialCount: 0,
+		Mappings: &metadata.AnimeMappings{
+			AnilistId: media.GetID(),
+		},
+	}
+	animeMetadata.Titles["en"] = media.GetTitleSafe()
+	animeMetadata.Titles["x-jat"] = media.GetRomajiTitleSafe()
+
+	// Hydrate episodes
+	for _, episode := range episodes {
+		animeMetadata.Episodes[strconv.Itoa(episode)] = &metadata.EpisodeMetadata{
+			AnidbId:               0,
+			TvdbId:                0,
+			Title:                 media.GetTitleSafe(),
+			Image:                 media.GetBannerImageSafe(),
+			AirDate:               "",
+			Length:                0,
+			Summary:               "",
+			Overview:              "",
+			EpisodeNumber:         episode,
+			Episode:               strconv.Itoa(episode),
+			SeasonNumber:          0,
+			AbsoluteEpisodeNumber: episode,
 			AnidbEid:              0,
 			HasImage:              true,
 		}

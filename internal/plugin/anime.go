@@ -34,6 +34,13 @@ func (a *AppContextImpl) BindAnimeToContextObj(vm *goja.Runtime, obj *goja.Objec
 
 	// Get downloaded chapter containers
 	_ = animeObj.Set("getAnimeEntry", m.getAnimeEntry)
+	_ = animeObj.Set("clearEpisodeMetadataCache", func(call goja.FunctionCall) goja.Value {
+		metadataProviderRef, ok := a.metadataProviderRef.Get()
+		if ok {
+			metadataProviderRef.Get().ClearCache()
+		}
+		return goja.Undefined()
+	})
 	_ = obj.Set("anime", animeObj)
 }
 
@@ -53,13 +60,13 @@ func (m *Anime) getAnimeEntry(call goja.FunctionCall) goja.Value {
 		return m.vm.ToValue(promise)
 	}
 
-	anilistPlatform, ok := m.ctx.anilistPlatform.Get()
+	anilistPlatformRef, ok := m.ctx.anilistPlatformRef.Get()
 	if !ok {
 		_ = reject(goja_bindings.NewErrorString(m.vm, "anilist platform not found"))
 		return m.vm.ToValue(promise)
 	}
 
-	metadataProvider, ok := m.ctx.metadataProvider.Get()
+	metadataProviderRef, ok := m.ctx.metadataProviderRef.Get()
 	if !ok {
 		_ = reject(goja_bindings.NewErrorString(m.vm, "metadata provider not found"))
 		return m.vm.ToValue(promise)
@@ -80,7 +87,7 @@ func (m *Anime) getAnimeEntry(call goja.FunctionCall) goja.Value {
 		}
 
 		// Get the user's anilist collection
-		animeCollection, err := anilistPlatform.GetAnimeCollection(context.Background(), false)
+		animeCollection, err := anilistPlatformRef.Get().GetAnimeCollection(context.Background(), false)
 		if err != nil {
 			_ = reject(m.vm.ToValue(err.Error()))
 			return
@@ -93,11 +100,11 @@ func (m *Anime) getAnimeEntry(call goja.FunctionCall) goja.Value {
 
 		// Create a new media entry
 		entry, err := anime.NewEntry(context.Background(), &anime.NewEntryOptions{
-			MediaId:          int(mediaId),
-			LocalFiles:       lfs,
-			AnimeCollection:  animeCollection,
-			Platform:         anilistPlatform,
-			MetadataProvider: metadataProvider,
+			MediaId:             int(mediaId),
+			LocalFiles:          lfs,
+			AnimeCollection:     animeCollection,
+			PlatformRef:         anilistPlatformRef,
+			MetadataProviderRef: metadataProviderRef,
 		})
 		if err != nil {
 			_ = reject(goja_bindings.NewError(m.vm, err))
