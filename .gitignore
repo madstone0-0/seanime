@@ -87,6 +87,8 @@ seanime-web/TODO-priv.md
 seanime-web/CHANGELOG-priv.md
 seanime-desktop/src-tauri/binaries/*
 
+seanime-web/public/test*
+
 codegen/generated/hooks.mdx
 
 
