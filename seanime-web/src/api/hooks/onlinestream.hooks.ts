@@ -31,6 +31,7 @@ export function useGetOnlineStreamEpisodeList(id: Nullish<string | number>, prov
         },
         enabled: !!id,
         muteError: true,
+        gcTime: 0,
     })
 }
 
@@ -52,19 +53,21 @@ export function useGetOnlineStreamEpisodeSource(id: Nullish<string | number>,
         },
         enabled: enabled && !!provider,
         muteError: true,
+        gcTime: 0,
     })
 }
 
 export function useOnlineStreamEmptyCache() {
-    const queryClient = useQueryClient()
+    const qc = useQueryClient()
 
     return useServerMutation<boolean, OnlineStreamEmptyCache_Variables>({
         endpoint: API_ENDPOINTS.ONLINESTREAM.OnlineStreamEmptyCache.endpoint,
         method: API_ENDPOINTS.ONLINESTREAM.OnlineStreamEmptyCache.methods[0],
         mutationKey: [API_ENDPOINTS.ONLINESTREAM.OnlineStreamEmptyCache.key],
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: [API_ENDPOINTS.ONLINESTREAM.GetOnlineStreamEpisodeList.key] })
-            await queryClient.invalidateQueries({ queryKey: [API_ENDPOINTS.ONLINESTREAM.GetOnlineStreamEpisodeSource.key] })
+            await qc.invalidateQueries({ queryKey: [API_ENDPOINTS.ONLINESTREAM.GetOnlinestreamMapping.key] })
+            await qc.invalidateQueries({ queryKey: [API_ENDPOINTS.ONLINESTREAM.GetOnlineStreamEpisodeList.key] })
+            await qc.invalidateQueries({ queryKey: [API_ENDPOINTS.ONLINESTREAM.GetOnlineStreamEpisodeSource.key] })
             toast.info("Stream cache emptied")
         },
     })
