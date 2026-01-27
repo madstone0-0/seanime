@@ -29,17 +29,16 @@ export const ClientProviders: React.FC<ClientProvidersProps> = ({ children }) =>
     const pathname = usePathname()
 
     return (
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme={(pathname === "/docs") ? "light" : "dark"}>
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme={"dark"}>
             <CookiesProvider>
                 <JotaiProvider store={store}>
                     <QueryClientProvider client={queryClient}>
-                        <CustomCSSProvider>
-                            <WebsocketProvider>
-                                {children}
-                                <CustomThemeProvider />
-                                <Toaster />
-                            </WebsocketProvider>
-                        </CustomCSSProvider>
+                        <WebsocketProvider>
+                            {children}
+                            <CustomThemeProvider />
+                            <Toaster />
+                        </WebsocketProvider>
+                        <CustomCSSProvider />
                         {/*{process.env.NODE_ENV === "development" && <React.Suspense fallback={null}>*/}
                         {/*    <ReactQueryDevtools />*/}
                         {/*</React.Suspense>}*/}

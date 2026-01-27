@@ -109,7 +109,7 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 
 	e.GET("/events", h.webSocketEventHandler)
 
-	v1 := e.Group("/api").Group("/v1") // Commented out for now, will be used later
+	v1 := e.Group("/api").Group("/v1")
 
 	//
 	// Auth middleware
@@ -119,6 +119,8 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 
 	imageProxy := &util.ImageProxy{}
 	v1.GET("/image-proxy", imageProxy.ProxyImage)
+
+	v1.GET("/internal/docs", h.HandleGetDocs)
 
 	v1.GET("/proxy", h.VideoProxy)
 	v1.HEAD("/proxy", h.VideoProxy)
@@ -153,6 +155,7 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 
 	// Auto Downloader
 	v1.POST("/auto-downloader/run", h.HandleRunAutoDownloader)
+	v1.POST("/auto-downloader/run/simulation", h.HandleRunAutoDownloaderSimulation)
 	v1.GET("/auto-downloader/rule/:id", h.HandleGetAutoDownloaderRule)
 	v1.GET("/auto-downloader/rule/anime/:id", h.HandleGetAutoDownloaderRulesByAnime)
 	v1.GET("/auto-downloader/rules", h.HandleGetAutoDownloaderRules)
@@ -162,6 +165,12 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 
 	v1.GET("/auto-downloader/items", h.HandleGetAutoDownloaderItems)
 	v1.DELETE("/auto-downloader/item", h.HandleDeleteAutoDownloaderItem)
+
+	v1.GET("/auto-downloader/profiles", h.HandleGetAutoDownloaderProfiles)
+	v1.GET("/auto-downloader/profile/:id", h.HandleGetAutoDownloaderProfile)
+	v1.POST("/auto-downloader/profile", h.HandleCreateAutoDownloaderProfile)
+	v1.PATCH("/auto-downloader/profile", h.HandleUpdateAutoDownloaderProfile)
+	v1.DELETE("/auto-downloader/profile/:id", h.HandleDeleteAutoDownloaderProfile)
 
 	// Other
 	v1.POST("/test-dump", h.HandleTestDump)
@@ -274,6 +283,14 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 	v1.POST("/torrent-client/action", h.HandleTorrentClientAction)
 	v1.POST("/torrent-client/get-files", h.HandleTorrentClientGetFiles)
 	v1.POST("/torrent-client/rule-magnet", h.HandleTorrentClientAddMagnetFromRule)
+
+	//
+	// Auto Select
+	//
+
+	v1.GET("/auto-select/profile", h.HandleGetAutoSelectProfile)
+	v1.POST("/auto-select/profile", h.HandleSaveAutoSelectProfile)
+	v1.DELETE("/auto-select/profile", h.HandleDeleteAutoSelectProfile)
 
 	//
 	// Download

@@ -228,9 +228,16 @@ export function UnauthorizedExtensionPluginCard(props: UnauthorizedExtensionPlug
                         {extension.pluginPermissionDescription?.split("\n").map((line, index) => {
                             line = line.trimEnd()
                             if (line.startsWith("•") && !line.startsWith("*")) {
+                                const l = line.replace("• ", "")
                                 return <span key={index} className="pl-4 mb-1 block">
-                                    <span className="font-bold bg-gray-950 border px-2 py-[0.1rem] rounded-lg inline-block">{line.replace("•", "")
-                                        .split(":")[0].trim()}</span>: {line.split(":")[1]}<br />
+                                    {l.startsWith("Domain:") ? <>
+                                            <span className="font-bold bg-gray-950 border px-2 py-[0.1rem] rounded-lg inline-block">{l
+                                                .split(":")[0].trim()}</span>: {l.substring(l.indexOf(":") + 1)}<br />
+                                        </> :
+                                        <>
+                                            <span className="font-bold bg-gray-950 border px-2 py-[0.1rem] rounded-lg inline-block">{l
+                                                .split(":")[0].trim()}</span>: {l.split(":")[1]}<br />
+                                        </>}
                                 </span>
                             }
                             if (line.startsWith("*")) {
@@ -247,7 +254,7 @@ export function UnauthorizedExtensionPluginCard(props: UnauthorizedExtensionPlug
                     {isUnsafe && <Alert
                         intent="warning"
                         className="!text-[--muted] !bg-gray-800"
-                        description="Due to the use of unsafe flags, Seanime cannot guarantee that this plugin is safe. For security reasons, it will not be updated when using 'Update all'."
+                        description="This plugin relies on unsafe flags to function. Seanime cannot guarantee that it is safe to use."
                         // className="mb-4"
                     />}
 
