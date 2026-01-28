@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.4.2
+
+- 🦺 Auto Downloader: Skip watched episodes (regression)
+
+## v3.4.1
+
+- 🦺 Auto Downloader: Fixed resolution preference causing no results to be returned
+- 🦺 Performance: Removed heavy background blurring and glow effects
+- 🦺 Torrent Search: Reverted 'special' provider inclusion in batch searches
+- 🦺 My Lists: Fixed library badge not showing up
+
 ## v3.4.0
 
 - ✨️ New Auto Downloader
@@ -16,7 +27,7 @@ All notable changes to this project will be documented in this file.
   - Ability to delay downloads in order to fetch better torrents
   - Each profile can have its own set of preferred params (providers, codecs, etc...)
   - Each rule can have a specific profile or inherit global ones
-- ✨️ Auto Select is now fully customizable
+- ✨️ Auto-select is now fully customizable
   - Ability to choose and rank providers/indexers, release groups, codecs, etc. 
   - Ability to prefer/avoid/block specific codecs, sources, languages
   - Ability to exclude terms
