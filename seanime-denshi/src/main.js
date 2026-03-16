@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray, ipcMain, shell, dialog, remote, net, protocol, contextBridge } = require("electron")
+const { app, BrowserWindow, Menu, Tray, ipcMain, shell, dialog, remote, net, protocol, nativeImage } = require("electron")
 const path = require("path")
 const { spawn } = require("child_process")
 const fs = require("fs")
@@ -10,6 +10,45 @@ import("strip-ansi").then(module => {
 const { autoUpdater } = require("electron-updater")
 const log = require("electron-log/main")
 log.initialize()
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Settings
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const DENSHI_SETTINGS_DEFAULTS = {
+    minimizeToTray: true,
+    openInBackground: false,
+    openAtLaunch: false,
+    updateChannel: "github"
+}
+
+function getDenshiSettingsPath() {
+    return path.join(app.getPath("userData"), "denshi-settings.json")
+}
+
+function loadDenshiSettings() {
+    try {
+        const settingsPath = getDenshiSettingsPath()
+        if (fs.existsSync(settingsPath)) {
+            const data = JSON.parse(fs.readFileSync(settingsPath, "utf-8"))
+            return { ...DENSHI_SETTINGS_DEFAULTS, ...data }
+        }
+    } catch (err) {
+        log.error("[Denshi] Failed to load settings:", err)
+    }
+    return { ...DENSHI_SETTINGS_DEFAULTS }
+}
+
+function saveDenshiSettings(settings) {
+    try {
+        const settingsPath = getDenshiSettingsPath()
+        fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), "utf-8")
+    } catch (err) {
+        log.error("[Denshi] Failed to save settings:", err)
+    }
+}
+
+let denshiSettings = DENSHI_SETTINGS_DEFAULTS
 
 const _isRsbuildFrontend = true
 
@@ -53,7 +92,6 @@ function setupChromiumFlags() {
         "ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes",
         "CanvasOopRasterization",
         "UseSkiaRenderer",
-        "RawDraw",
         "PlatformEncryptedDolbyVision",
     ].join(","))
 
@@ -324,9 +362,7 @@ function logEnvironmentInfo() {
         // logStartupEvent('App directory contents', JSON.stringify(fs.readdirSync(appPath)));
 
         const webPath = path.join(appPath, "web-denshi")
-        if (fs.existsSync(webPath)) {
-            // logStartupEvent("Web directory contents", JSON.stringify(fs.readdirSync(webPath)))
-        } else {
+        if (!fs.existsSync(webPath)) {
             logStartupEvent("ERROR", "web-denshi directory not found in app path")
         }
     } catch (err) {
@@ -334,34 +370,6 @@ function logEnvironmentInfo() {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updater
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const updateConfig = {
-    provider: "generic",
-    url: "https://github.com/5rahim/seanime/releases/latest/download",
-    channel: "latest",
-    allowPrerelease: false,
-    verifyUpdateCodeSignature: false,
-}
-
-// Override with environment variable if set (for testing)
-if (process.env.UPDATES_URL) {
-    updateConfig.url = process.env.UPDATES_URL
-}
-
-// Configure the updater
-autoUpdater.setFeedURL(updateConfig)
-
-// Enable automatic download
-autoUpdater.autoDownload = true
-autoUpdater.autoInstallOnAppQuit = true
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// App state
 let mainWindow = null
 let splashScreen = null
 let crashScreen = null
@@ -421,7 +429,7 @@ autoUpdater.on("error", (err) => {
 // Single instance
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const gotTheLock = app.requestSingleInstanceLock({ development: _development })
+const gotTheLock = _development ? true : app.requestSingleInstanceLock({ development: _development })
 
 /**
  * Force single instance
@@ -433,10 +441,12 @@ if (!gotTheLock) {
 } else {
     app.on("second-instance", (event, commandLine, workingDirectory, additionalData) => {
         if (additionalData && additionalData.development) return
+        if (!serverStarted) return
         // tried to run a second instance, focus the window.
         if (mainWindow && !mainWindow.isDestroyed()) {
             if (mainWindow.isMinimized()) mainWindow.restore()
             if (!mainWindow.isVisible()) {
+                if (!mainWindow.isMaximized()) mainWindow.maximize()
                 mainWindow.show()
                 if (process.platform === "darwin") {
                     app.dock.show()
@@ -452,20 +462,25 @@ if (!gotTheLock) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function createTray() {
-    let iconPath = path.join(__dirname, "../assets/icon.png")
-    if (process.platform === "darwin") {
-        iconPath = path.join(__dirname, "../assets/18x18.png")
+    const iconName = process.platform === "darwin" ? "18x18.png" : "icon.png"
+
+    let iconPath = path.join(__dirname, "../assets", iconName)
+    if (_development) {
+        iconPath = path.join(app.getAppPath(), "assets", iconName)
     }
-    tray = new Tray(iconPath)
+    const icon = nativeImage.createFromPath(iconPath)
+    tray = new Tray(icon)
 
     const contextMenu = Menu.buildFromTemplate([{
-        id: "toggle_visibility", label: "Toggle visibility", click: () => {
+        id: "toggle_visibility", label: "Toggle Visibility", click: () => {
+            if (!serverStarted) return
             if (mainWindow.isVisible()) {
                 mainWindow.hide()
                 if (process.platform === "darwin") {
                     app.dock.hide()
                 }
             } else {
+                if (!mainWindow.isMaximized()) mainWindow.maximize()
                 mainWindow.show()
                 mainWindow.focus()
                 if (process.platform === "darwin") {
@@ -474,7 +489,7 @@ function createTray() {
             }
         }
     }, ...(process.platform === "darwin" ? [{
-        id: "accessory_mode", label: "Remove from dock", click: () => {
+        id: "accessory_mode", label: "Remove from Dock", click: () => {
             app.dock.hide()
         }
     }
@@ -492,12 +507,14 @@ function createTray() {
     }
 
     tray.on("click", () => {
+        if (!serverStarted) return
         if (mainWindow.isVisible()) {
             mainWindow.hide()
             if (process.platform === "darwin") {
                 app.dock.hide()
             }
         } else {
+            if (!mainWindow.isMaximized()) mainWindow.maximize()
             mainWindow.show()
             mainWindow.focus()
             if (process.platform === "darwin") {
@@ -529,7 +546,7 @@ async function launchSeanimeServer(isRestart) {
                 splashScreen.close()
                 splashScreen = null
             }
-            if (mainWindow && !mainWindow.isDestroyed()) {
+            if (mainWindow && !mainWindow.isDestroyed() && !denshiSettings.openInBackground) {
                 mainWindow.maximize()
                 mainWindow.show()
             }
@@ -581,9 +598,15 @@ async function launchSeanimeServer(isRestart) {
         const args = []
 
         // Development mode
-        if (_development && process.env.TEST_DATADIR) {
-            console.log("[Main] TEST_DATADIR", process.env.TEST_DATADIR)
-            args.push("-datadir", process.env.TEST_DATADIR)
+        if (_development) {
+            args.push("-port", "43000")
+            if (process.env.TEST_DATADIR) {
+                console.log("[Main] TEST_DATADIR", process.env.TEST_DATADIR)
+                args.push("-datadir", process.env.TEST_DATADIR)
+            } else {
+                const devDataDir = path.join(app.getPath("appData"), "Seanime-dev")
+                args.push("-datadir", devDataDir)
+            }
         }
 
         args.push("-desktop-sidecar", "true")
@@ -620,8 +643,13 @@ async function launchSeanimeServer(isRestart) {
                     console.log("[Main] Server started close splash screen")
                     setTimeout(() => {
                         if (mainWindow && !mainWindow.isDestroyed()) {
-                            mainWindow.maximize()
-                            mainWindow.show()
+                            if (denshiSettings.openInBackground) {
+                                // Don't maximize or show
+                                log.info("[Denshi] Opened in background")
+                            } else {
+                                mainWindow.maximize()
+                                mainWindow.show()
+                            }
                         }
                     }, 1000)
                     resolve()
@@ -766,10 +794,15 @@ function createMainWindow() {
 
     mainWindow.on("close", (event) => {
         if (!isShutdown) {
-            event.preventDefault()
-            mainWindow.hide()
-            if (process.platform === "darwin") {
-                app.dock.hide()
+            if (denshiSettings.minimizeToTray) {
+                event.preventDefault()
+                mainWindow.hide()
+                if (process.platform === "darwin") {
+                    app.dock.hide()
+                }
+            } else {
+                // Close the app completely
+                cleanupAndExit()
             }
         }
     })
@@ -782,7 +815,7 @@ function createMainWindow() {
 function createSplashScreen() {
     logStartupEvent("Creating splash screen")
     splashScreen = new BrowserWindow({
-        width: 800, height: 600, frame: false, resizable: false, backgroundColor: "#0c0c0c", webPreferences: {
+        width: 800, height: 600, frame: false, resizable: false, show: !denshiSettings.openInBackground, backgroundColor: "#0c0c0c", webPreferences: {
             nodeIntegration: false, contextIsolation: true, preload: path.join(__dirname, "preload.js")
         }
     })
@@ -844,41 +877,90 @@ function cleanupAndExit() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// app.on("web-contents-created", (event, contents) => {
-//     console.log("[WCC] created id=", contents.id, "type=", contents.getType())
-//
-//     contents.on("did-start-navigation", (e, url, isInPlace, isMainFrame) => {
-//         console.log("[WCC] did-start-navigation", contents.id, { url, isMainFrame, isInPlace })
-//     })
-//
-//     contents.on("did-navigate", (e, url) => {
-//         console.log("[WCC] did-navigate", contents.id, url)
-//     })
-//
-//     contents.on("did-frame-finish-load", () => {
-//         try {
-//             console.log("[WCC] URL after load", contents.id, contents.getURL())
-//         } catch (e) {
-//         }
-//     })
-//
-//     contents.on("destroyed", () => console.log("[WCC] destroyed", contents.id))
-//
-//     try {
-//         const owner = contents.getOwnerBrowserWindow && contents.getOwnerBrowserWindow()
-//         if (owner) console.log("[WCC] owner window id=", owner.id, "title=", owner.getTitle && owner.getTitle())
-//     } catch (e) {
-//     }
-// })
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Initialization
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// returns true if github is ok OR url is unreachable
+// returns false if github is down and fallback should be used
+async function fetchGithubStatus() {
+    try {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 5000)
+
+        const response = await net.fetch("https://seanime.app/api/github-status", {
+            signal: controller.signal
+        })
+        clearTimeout(timeoutId)
+
+        if (!response.ok) {
+            return { ok: true, fallback: "" }
+        }
+
+        const data = await response.json()
+
+        // url is reachable, status is "down"
+        if (data.status === "down") {
+            log.warn(`[Denshi] App: Changing update channel to ${data.fallback}, reason: ${data.description}`)
+            return { ok: false, fallback: data.fallback || "seanime" }
+        }
+
+        return { ok: true, fallback: "" }
+    } catch (err) {
+        return { ok: true, fallback: "" }
+    }
+}
 
 // Initialize the app
 app.whenReady().then(async () => {
     logStartupEvent("App ready")
+
+    // Load denshi settings early
+    denshiSettings = loadDenshiSettings()
+    if (_development) {
+        denshiSettings.openInBackground = false
+    }
+    // Disregard openInBackground on Linux
+    if (process.platform === "linux") {
+        denshiSettings.openInBackground = false
+    }
+    log.info("[Denshi] Loaded settings:", JSON.stringify(denshiSettings))
+
+    let currentUpdateChannel = denshiSettings.updateChannel
+    const { ok, fallback } = await fetchGithubStatus()
+    // if github is down, use fallback channel
+    if (!ok) {
+        currentUpdateChannel = fallback
+    }
+
+    const updateConfig = {
+        provider: "generic",
+        url: "https://github.com/5rahim/seanime/releases/latest/download",
+        channel: "latest",
+        allowPrerelease: false,
+        verifyUpdateCodeSignature: false,
+    }
+
+    if (currentUpdateChannel === "seanime_nightly") {
+        updateConfig.url = "https://seanime.app/api/updates/nightly/"
+        updateConfig.allowPrerelease = true
+    } else if (currentUpdateChannel === "seanime") {
+        updateConfig.url = "https://seanime.app/api/updates/stable/"
+        updateConfig.allowPrerelease = false
+    }
+
+    if (process.env.UPDATES_URL) {
+        updateConfig.url = process.env.UPDATES_URL
+    }
+
+    autoUpdater.setFeedURL(updateConfig)
+    autoUpdater.autoDownload = true
+    autoUpdater.autoInstallOnAppQuit = true
+
+    if (!_development && (process.platform === "darwin" || process.platform === "win32")) {
+        app.setLoginItemSettings({
+            openAtLogin: denshiSettings.openAtLaunch,
+        })
+    }
 
     // Set up Chromium flags for better video playback
     setupChromiumFlags()
@@ -898,7 +980,7 @@ app.whenReady().then(async () => {
             }
         } catch (error) {
             console.error("[Main] Error checking for updates:", error)
-            throw error // Let the renderer handle the error
+            throw error
         }
     })
 
@@ -1131,6 +1213,26 @@ app.whenReady().then(async () => {
     })
 
     ipcMain.handle("get-local-server-port", () => localServerPort)
+
+    // Denshi settings IPC handlers
+    ipcMain.handle("denshi:getSettings", () => {
+        return { ...denshiSettings }
+    })
+
+    ipcMain.handle("denshi:setSettings", (_, newSettings) => {
+        denshiSettings = { ...DENSHI_SETTINGS_DEFAULTS, ...newSettings }
+        saveDenshiSettings(denshiSettings)
+        log.info("[Denshi] Settings updated:", JSON.stringify(denshiSettings))
+
+        // Apply openAtLaunch immediately (only supported on macOS and Windows)
+        if (!_development && (process.platform === "darwin" || process.platform === "win32")) {
+            app.setLoginItemSettings({
+                openAtLogin: denshiSettings.openAtLaunch,
+            })
+        }
+
+        return { ...denshiSettings }
+    })
 
     app.on("window-all-closed", () => {
         if (process.platform !== "darwin") {

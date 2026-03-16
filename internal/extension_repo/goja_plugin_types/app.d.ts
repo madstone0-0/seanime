@@ -553,8 +553,7 @@ declare namespace $app {
      * @file internal/continuity/hook_events.go
      * @description
      * WatchHistoryItemRequestedEvent is triggered when a watch history item is requested.
-     * Prevent default to skip getting the watch history item from the file cache, in this case the event should have a valid WatchHistoryItem object
-     *     or set it to nil to indicate that the watch history item was not found.
+     * Prevent default to skip getting the watch history item from the file cache, in this case the event should have a valid WatchHistoryItem object or set it to nil to indicate that the watch history item was not found.
      */
     function onWatchHistoryItemRequested(cb: (event: WatchHistoryItemRequestedEvent) => void): void;
 
@@ -701,10 +700,10 @@ declare namespace $app {
      * @event DiscordPresenceAnimeActivityRequestedEvent
      * @file internal/discordrpc/presence/hook_events.go
      * @description
-     * DiscordPresenceAnimeActivityRequestedEvent is triggered when anime activity is requested, after the [animeActivity] is processed, and right
-     *     before the activity is sent to queue. There is no guarantee as to when or if the activity will be successfully sent to discord. Note that
-     *     this event is triggered every 6 seconds or so, avoid heavy processing or perform it only when the activity is changed. Prevent default to
-     *     stop the activity from being sent to discord.
+     * DiscordPresenceAnimeActivityRequestedEvent is triggered when anime activity is requested, after the [animeActivity] is processed, and right before the activity is sent to queue.
+     * There is no guarantee as to when or if the activity will be successfully sent to discord.
+     * Note that this event is triggered every 6 seconds or so, avoid heavy processing or perform it only when the activity is changed.
+     * Prevent default to stop the activity from being sent to discord.
      */
     function onDiscordPresenceAnimeActivityRequested(cb: (event: DiscordPresenceAnimeActivityRequestedEvent) => void): void;
 
@@ -742,10 +741,10 @@ declare namespace $app {
      * @event DiscordPresenceMangaActivityRequestedEvent
      * @file internal/discordrpc/presence/hook_events.go
      * @description
-     * DiscordPresenceMangaActivityRequestedEvent is triggered when manga activity is requested, after the [mangaActivity] is processed, and right
-     *     before the activity is sent to queue. There is no guarantee as to when or if the activity will be successfully sent to discord. Note that
-     *     this event is triggered every 6 seconds or so, avoid heavy processing or perform it only when the activity is changed. Prevent default to
-     *     stop the activity from being sent to discord.
+     * DiscordPresenceMangaActivityRequestedEvent is triggered when manga activity is requested, after the [mangaActivity] is processed, and right before the activity is sent to queue.
+     * There is no guarantee as to when or if the activity will be successfully sent to discord.
+     * Note that this event is triggered every 6 seconds or so, avoid heavy processing or perform it only when the activity is changed.
+     * Prevent default to stop the activity from being sent to discord.
      */
     function onDiscordPresenceMangaActivityRequested(cb: (event: DiscordPresenceMangaActivityRequestedEvent) => void): void;
 
@@ -819,8 +818,9 @@ declare namespace $app {
      * @event HydrateOnlinestreamFillerDataRequestedEvent
      * @file internal/library/fillermanager/hook_events.go
      * @description
-     * HydrateOnlinestreamFillerDataRequestedEvent is triggered when the filler manager requests to hydrate the filler data for online streaming
-     *     episodes. This is used by the online streaming episode list. Prevent default to skip the default behavior and return your own data.
+     * HydrateOnlinestreamFillerDataRequestedEvent is triggered when the filler manager requests to hydrate the filler data for online streaming episodes.
+     * This is used by the online streaming episode list.
+     * Prevent default to skip the default behavior and return your own data.
      */
     function onHydrateOnlinestreamFillerDataRequested(cb: (event: HydrateOnlinestreamFillerDataRequestedEvent) => void): void;
 
@@ -1131,9 +1131,9 @@ declare namespace $app {
      * @file internal/api/metadata/hook_events.go
      * @description
      * AnimeEpisodeMetadataEvent is triggered when anime episode metadata is available and is about to be returned.
-     * In the current implementation, episode metadata is requested for display purposes. It is used to get a more complete metadata object since the
-     *     original AnimeMetadata object is not complete. This event is triggered after [AnimeEpisodeMetadataRequestedEvent]. If the modified episode
-     *     metadata is nil, an empty EpisodeMetadata object will be returned.
+     * In the current implementation, episode metadata is requested for display purposes. It is used to get a more complete metadata object since the original AnimeMetadata object is not complete.
+     * This event is triggered after [AnimeEpisodeMetadataRequestedEvent].
+     * If the modified episode metadata is nil, an empty EpisodeMetadata object will be returned.
      */
     function onAnimeEpisodeMetadata(cb: (event: AnimeEpisodeMetadataEvent) => void): void;
 
@@ -1500,8 +1500,8 @@ declare namespace $app {
      * PlaybackLocalFileDetailsRequestedEvent is triggered when the local files details for a specific path are requested.
      * This event is triggered right after the media player loads an episode.
      * The playback manager uses the local files details to track the progress, propose next episodes, etc.
-     * In the current implementation, the details are fetched by selecting the local file from the database and making requests to retrieve the media
-     *     and anime list entry. Prevent default to skip the default fetching and override the details.
+     * In the current implementation, the details are fetched by selecting the local file from the database and making requests to retrieve the media and anime list entry.
+     * Prevent default to skip the default fetching and override the details.
      */
     function onPlaybackLocalFileDetailsRequested(cb: (event: PlaybackLocalFileDetailsRequestedEvent) => void): void;
 
@@ -1523,8 +1523,7 @@ declare namespace $app {
      * @description
      * PlaybackStreamDetailsRequestedEvent is triggered when the stream details are requested.
      * Prevent default to skip the default fetching and override the details.
-     * In the current implementation, the details are fetched by selecting the anime from the anime collection. If nothing is found, the stream is
-     *     still tracked.
+     * In the current implementation, the details are fetched by selecting the anime from the anime collection. If nothing is found, the stream is still tracked.
      */
     function onPlaybackStreamDetailsRequested(cb: (event: PlaybackStreamDetailsRequestedEvent) => void): void;
 
@@ -1826,44 +1825,44 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollectionWithRelations_MediaListCollection_Lists {
-        status?: AL_MediaListStatus;
-        name?: string;
-        isCustomList?: boolean;
         entries?: Array<AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries>;
+        isCustomList?: boolean;
+        name?: string;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries {
-        id: number;
-        score?: number;
-        progress?: number;
-        status?: AL_MediaListStatus;
-        notes?: string;
-        repeat?: number;
-        private?: boolean;
-        startedAt?: AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries_StartedAt;
         completedAt?: AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries_CompletedAt;
+        id: number;
         media?: AL_CompleteAnime;
+        notes?: string;
+        private?: boolean;
+        progress?: number;
+        repeat?: number;
+        score?: number;
+        startedAt?: AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries_StartedAt;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries_CompletedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollectionWithRelations_MediaListCollection_Lists_Entries_StartedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
@@ -1877,67 +1876,67 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollection_MediaListCollection_Lists {
-        status?: AL_MediaListStatus;
-        name?: string;
-        isCustomList?: boolean;
         entries?: Array<AL_AnimeCollection_MediaListCollection_Lists_Entries>;
+        isCustomList?: boolean;
+        name?: string;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollection_MediaListCollection_Lists_Entries {
-        id: number;
-        score?: number;
-        progress?: number;
-        status?: AL_MediaListStatus;
-        notes?: string;
-        repeat?: number;
-        private?: boolean;
-        startedAt?: AL_AnimeCollection_MediaListCollection_Lists_Entries_StartedAt;
         completedAt?: AL_AnimeCollection_MediaListCollection_Lists_Entries_CompletedAt;
+        id: number;
         media?: AL_BaseAnime;
+        notes?: string;
+        private?: boolean;
+        progress?: number;
+        repeat?: number;
+        score?: number;
+        startedAt?: AL_AnimeCollection_MediaListCollection_Lists_Entries_StartedAt;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollection_MediaListCollection_Lists_Entries_CompletedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeCollection_MediaListCollection_Lists_Entries_StartedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media {
-        siteUrl?: string;
-        id: number;
-        duration?: number;
-        genres?: Array<string>;
         averageScore?: number;
-        popularity?: number;
-        meanScore?: number;
-        description?: string;
-        trailer?: AL_AnimeDetailsById_Media_Trailer;
-        startDate?: AL_AnimeDetailsById_Media_StartDate;
-        endDate?: AL_AnimeDetailsById_Media_EndDate;
-        studios?: AL_AnimeDetailsById_Media_Studios;
         characters?: AL_AnimeDetailsById_Media_Characters;
-        staff?: AL_AnimeDetailsById_Media_Staff;
+        description?: string;
+        duration?: number;
+        endDate?: AL_AnimeDetailsById_Media_EndDate;
+        genres?: Array<string>;
+        id: number;
+        meanScore?: number;
+        popularity?: number;
         rankings?: Array<AL_AnimeDetailsById_Media_Rankings>;
         recommendations?: AL_AnimeDetailsById_Media_Recommendations;
         relations?: AL_AnimeDetailsById_Media_Relations;
+        siteUrl?: string;
+        staff?: AL_AnimeDetailsById_Media_Staff;
+        startDate?: AL_AnimeDetailsById_Media_StartDate;
+        studios?: AL_AnimeDetailsById_Media_Studios;
+        trailer?: AL_AnimeDetailsById_Media_Trailer;
     }
 
     /**
@@ -1952,31 +1951,31 @@ declare namespace $app {
      */
     interface AL_AnimeDetailsById_Media_Characters_Edges {
         id?: number;
-        role?: AL_CharacterRole;
         name?: string;
         node?: AL_BaseCharacter;
+        role?: AL_CharacterRole;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_EndDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Rankings {
-        context: string;
-        type: AL_MediaRankType;
-        rank: number;
-        year?: number;
-        format: AL_MediaFormat;
         allTime?: boolean;
+        context: string;
+        format: AL_MediaFormat;
+        rank: number;
         season?: AL_MediaSeason;
+        type: AL_MediaRankType;
+        year?: number;
     }
 
     /**
@@ -2004,50 +2003,50 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation {
-        id: number;
-        idMal?: number;
-        siteUrl?: string;
-        status?: AL_MediaStatus;
-        isAdult?: boolean;
-        season?: AL_MediaSeason;
-        type?: AL_MediaType;
-        format?: AL_MediaFormat;
-        meanScore?: number;
+        bannerImage?: string;
+        coverImage?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_CoverImage;
         description?: string;
         episodes?: number;
-        trailer?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Trailer;
+        format?: AL_MediaFormat;
+        id: number;
+        idMal?: number;
+        isAdult?: boolean;
+        meanScore?: number;
+        season?: AL_MediaSeason;
+        siteUrl?: string;
         startDate?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_StartDate;
-        coverImage?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_CoverImage;
-        bannerImage?: string;
+        status?: AL_MediaStatus;
         title?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Title;
+        trailer?: AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Trailer;
+        type?: AL_MediaType;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_CoverImage {
+        color?: string;
         extraLarge?: string;
         large?: string;
         medium?: string;
-        color?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Title {
-        romaji?: string;
         english?: string;
         native?: string;
+        romaji?: string;
         userPreferred?: string;
     }
 
@@ -2071,8 +2070,8 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Relations_Edges {
-        relationType?: AL_MediaRelation;
         node?: AL_BaseAnime;
+        relationType?: AL_MediaRelation;
     }
 
     /**
@@ -2086,16 +2085,16 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Staff_Edges {
-        role?: string;
         node?: AL_AnimeDetailsById_Media_Staff_Edges_Node;
+        role?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Staff_Edges_Node {
-        name?: AL_AnimeDetailsById_Media_Staff_Edges_Node_Name;
         id: number;
+        name?: AL_AnimeDetailsById_Media_Staff_Edges_Node_Name;
     }
 
     /**
@@ -2109,9 +2108,9 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
@@ -2125,8 +2124,8 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_AnimeDetailsById_Media_Studios_Nodes {
-        name: string;
         id: number;
+        name: string;
     }
 
     /**
@@ -2176,19 +2175,19 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseAnime_CoverImage {
+        color?: string;
         extraLarge?: string;
         large?: string;
         medium?: string;
-        color?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseAnime_EndDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
@@ -2196,27 +2195,27 @@ declare namespace $app {
      */
     interface AL_BaseAnime_NextAiringEpisode {
         airingAt: number;
-        timeUntilAiring: number;
         episode: number;
+        timeUntilAiring: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseAnime_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseAnime_Title {
-        userPreferred?: string;
-        romaji?: string;
         english?: string;
         native?: string;
+        romaji?: string;
+        userPreferred?: string;
     }
 
     /**
@@ -2247,9 +2246,9 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseCharacter_DateOfBirth {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
@@ -2263,9 +2262,9 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseCharacter_Name {
+        alternative?: Array<string>;
         full?: string;
         native?: string;
-        alternative?: Array<string>;
     }
 
     /**
@@ -2298,38 +2297,38 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseManga_CoverImage {
+        color?: string;
         extraLarge?: string;
         large?: string;
         medium?: string;
-        color?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseManga_EndDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseManga_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_BaseManga_Title {
-        userPreferred?: string;
-        romaji?: string;
         english?: string;
         native?: string;
+        romaji?: string;
+        userPreferred?: string;
     }
 
     /**
@@ -2373,19 +2372,19 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_CompleteAnime_CoverImage {
+        color?: string;
         extraLarge?: string;
         large?: string;
         medium?: string;
-        color?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_CompleteAnime_EndDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
@@ -2393,8 +2392,8 @@ declare namespace $app {
      */
     interface AL_CompleteAnime_NextAiringEpisode {
         airingAt: number;
-        timeUntilAiring: number;
         episode: number;
+        timeUntilAiring: number;
     }
 
     /**
@@ -2408,27 +2407,27 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_CompleteAnime_Relations_Edges {
-        relationType?: AL_MediaRelation;
         node?: AL_BaseAnime;
+        relationType?: AL_MediaRelation;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_CompleteAnime_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_CompleteAnime_Title {
-        userPreferred?: string;
-        romaji?: string;
         english?: string;
         native?: string;
+        romaji?: string;
+        userPreferred?: string;
     }
 
     /**
@@ -2462,19 +2461,19 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListAnime_Page {
-        pageInfo?: AL_ListAnime_Page_PageInfo;
         media?: Array<AL_BaseAnime>;
+        pageInfo?: AL_ListAnime_Page_PageInfo;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListAnime_Page_PageInfo {
-        hasNextPage?: boolean;
-        total?: number;
-        perPage?: number;
         currentPage?: number;
+        hasNextPage?: boolean;
         lastPage?: number;
+        perPage?: number;
+        total?: number;
     }
 
     /**
@@ -2488,19 +2487,19 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListManga_Page {
-        pageInfo?: AL_ListManga_Page_PageInfo;
         media?: Array<AL_BaseManga>;
+        pageInfo?: AL_ListManga_Page_PageInfo;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListManga_Page_PageInfo {
-        hasNextPage?: boolean;
-        total?: number;
-        perPage?: number;
         currentPage?: number;
+        hasNextPage?: boolean;
         lastPage?: number;
+        perPage?: number;
+        total?: number;
     }
 
     /**
@@ -2514,30 +2513,30 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListRecentAnime_Page {
-        pageInfo?: AL_ListRecentAnime_Page_PageInfo;
         airingSchedules?: Array<AL_ListRecentAnime_Page_AiringSchedules>;
+        pageInfo?: AL_ListRecentAnime_Page_PageInfo;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListRecentAnime_Page_AiringSchedules {
-        id: number;
         airingAt: number;
         episode: number;
-        timeUntilAiring: number;
+        id: number;
         media?: AL_BaseAnime;
+        timeUntilAiring: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_ListRecentAnime_Page_PageInfo {
-        hasNextPage?: boolean;
-        total?: number;
-        perPage?: number;
         currentPage?: number;
+        hasNextPage?: boolean;
         lastPage?: number;
+        perPage?: number;
+        total?: number;
     }
 
     /**
@@ -2558,58 +2557,58 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaCollection_MediaListCollection_Lists {
-        status?: AL_MediaListStatus;
-        name?: string;
-        isCustomList?: boolean;
         entries?: Array<AL_MangaCollection_MediaListCollection_Lists_Entries>;
+        isCustomList?: boolean;
+        name?: string;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaCollection_MediaListCollection_Lists_Entries {
-        id: number;
-        score?: number;
-        progress?: number;
-        status?: AL_MediaListStatus;
-        notes?: string;
-        repeat?: number;
-        private?: boolean;
-        startedAt?: AL_MangaCollection_MediaListCollection_Lists_Entries_StartedAt;
         completedAt?: AL_MangaCollection_MediaListCollection_Lists_Entries_CompletedAt;
+        id: number;
         media?: AL_BaseManga;
+        notes?: string;
+        private?: boolean;
+        progress?: number;
+        repeat?: number;
+        score?: number;
+        startedAt?: AL_MangaCollection_MediaListCollection_Lists_Entries_StartedAt;
+        status?: AL_MediaListStatus;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaCollection_MediaListCollection_Lists_Entries_CompletedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaCollection_MediaListCollection_Lists_Entries_StartedAt {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media {
-        siteUrl?: string;
-        id: number;
+        characters?: AL_MangaDetailsById_Media_Characters;
         duration?: number;
         genres?: Array<string>;
+        id: number;
         rankings?: Array<AL_MangaDetailsById_Media_Rankings>;
-        characters?: AL_MangaDetailsById_Media_Characters;
         recommendations?: AL_MangaDetailsById_Media_Recommendations;
         relations?: AL_MangaDetailsById_Media_Relations;
+        siteUrl?: string;
     }
 
     /**
@@ -2624,22 +2623,22 @@ declare namespace $app {
      */
     interface AL_MangaDetailsById_Media_Characters_Edges {
         id?: number;
-        role?: AL_CharacterRole;
         name?: string;
         node?: AL_BaseCharacter;
+        role?: AL_CharacterRole;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Rankings {
-        context: string;
-        type: AL_MediaRankType;
-        rank: number;
-        year?: number;
-        format: AL_MediaFormat;
         allTime?: boolean;
+        context: string;
+        format: AL_MediaFormat;
+        rank: number;
         season?: AL_MediaSeason;
+        type: AL_MediaRankType;
+        year?: number;
     }
 
     /**
@@ -2667,63 +2666,63 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation {
-        id: number;
-        idMal?: number;
-        siteUrl?: string;
-        status?: AL_MediaStatus;
-        season?: AL_MediaSeason;
-        type?: AL_MediaType;
-        format?: AL_MediaFormat;
         bannerImage?: string;
         chapters?: number;
-        volumes?: number;
-        synonyms?: Array<string>;
-        isAdult?: boolean;
         countryOfOrigin?: string;
-        meanScore?: number;
-        description?: string;
-        title?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Title;
         coverImage?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_CoverImage;
-        startDate?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_StartDate;
+        description?: string;
         endDate?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_EndDate;
+        format?: AL_MediaFormat;
+        id: number;
+        idMal?: number;
+        isAdult?: boolean;
+        meanScore?: number;
+        season?: AL_MediaSeason;
+        siteUrl?: string;
+        startDate?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_StartDate;
+        status?: AL_MediaStatus;
+        synonyms?: Array<string>;
+        title?: AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Title;
+        type?: AL_MediaType;
+        volumes?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_CoverImage {
+        color?: string;
         extraLarge?: string;
         large?: string;
         medium?: string;
-        color?: string;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_EndDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_StartDate {
-        year?: number;
-        month?: number;
         day?: number;
+        month?: number;
+        year?: number;
     }
 
     /**
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Recommendations_Edges_Node_MediaRecommendation_Title {
-        userPreferred?: string;
-        romaji?: string;
         english?: string;
         native?: string;
+        romaji?: string;
+        userPreferred?: string;
     }
 
     /**
@@ -2737,8 +2736,8 @@ declare namespace $app {
      * - Filepath: internal/api/anilist/client_gen.go
      */
     interface AL_MangaDetailsById_Media_Relations_Edges {
-        relationType?: AL_MediaRelation;
         node?: AL_BaseManga;
+        relationType?: AL_MediaRelation;
     }
 
     /**
@@ -2870,8 +2869,8 @@ declare namespace $app {
     interface AL_StudioDetails_Studio {
         id: number;
         isAnimationStudio: boolean;
-        name: string;
         media?: AL_StudioDetails_Studio_Media;
+        name: string;
     }
 
     /**

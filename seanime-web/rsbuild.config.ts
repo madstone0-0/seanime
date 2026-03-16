@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv, RsbuildPluginAPI } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
+import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill"
 import { pluginReact } from "@rsbuild/plugin-react"
 import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin"
 import { TanStackRouterRspack } from "@tanstack/router-plugin/rspack"
@@ -15,6 +16,9 @@ const distPath = isElectronDesktop ? "out-denshi" : "out"
 export default defineConfig({
     plugins: [
         pluginReact(),
+        pluginNodePolyfill({
+            include: ["buffer", "crypto"],
+        }),
         { // run stuff before build
             name: "before-build",
             setup(api: RsbuildPluginAPI) {
@@ -84,8 +88,8 @@ export default defineConfig({
             root: distPath,
         },
         filename: {
-            js: "[name].[contenthash:8].js",
-            css: "[name].[contenthash:8].css",
+            js: process.env.NODE_ENV === "production" ? "[name].[contenthash:8].js" : "[name].js",
+            css: process.env.NODE_ENV === "production" ? "[name].[contenthash:8].css" : "[name].css",
         },
     },
     html: {
@@ -96,7 +100,7 @@ export default defineConfig({
         chunkSplit: {
             forceSplitting: {
                 "hls": /hls\.js/,
-                "rrweb": /rrweb/,
+                "recorder": /rrweb/,
             },
         },
     },
@@ -110,7 +114,7 @@ export default defineConfig({
                 // outputModule: true,
             },
             output: { // redundant?
-                chunkFilename: "static/js/async/[name].[contenthash:8].js",
+                chunkFilename: process.env.NODE_ENV === "production" ? "static/js/async/[name].[contenthash:8].js" : "static/js/async/[name].js",
             },
             optimization: {
                 chunkIds: !!process.env.RSDOCTOR ? "named" : undefined,

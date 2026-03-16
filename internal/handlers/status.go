@@ -113,16 +113,13 @@ func (h *Handler) NewStatus(c echo.Context) *Status {
 	}
 
 	if c.Get("unauthenticated") != nil && c.Get("unauthenticated").(bool) {
-		// If the user is unauthenticated, return a status with no user data
-		status.OS = ""
-		status.DataDir = ""
-		status.User = user.NewSimulatedUser()
-		status.ThemeSettings = nil
-		status.MediastreamSettings = nil
-		status.TorrentstreamSettings = nil
-		status.Settings = &models.Settings{}
-		status.DebridSettings = nil
-		status.FeatureFlags = core.FeatureFlags{}
+		// unauthenticated -> return bare minimum
+		status = &Status{
+			User:              user.NewSimulatedUser(),
+			ServerReady:       h.App.ServerReady,
+			ServerHasPassword: h.App.Config.Server.Password != "",
+			Settings:          &models.Settings{},
+		}
 	}
 
 	return status
@@ -178,6 +175,7 @@ func (h *Handler) HandleGetLogContent(c echo.Context) error {
 		Content:        contentB,
 		Settings:       h.App.Settings,
 		DebridSettings: h.App.SecondarySettings.Debrid,
+		Username:       h.App.GetUsername(),
 	})
 
 	return h.RespondWithData(c, content)
@@ -329,6 +327,7 @@ func (h *Handler) HandleGetLatestLogContent(c echo.Context) error {
 		Content:        contentB,
 		Settings:       h.App.Settings,
 		DebridSettings: h.App.SecondarySettings.Debrid,
+		Username:       h.App.GetUsername(),
 	})
 
 	return h.RespondWithData(c, content)

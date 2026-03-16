@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.5.2
+
+- ⚡️ Built-in Player: Improved performance
+  - Reduced lag caused by animations and subtitle streaming
+- ⚡️ Added "Check for updates" button
+- ⚡️ Added Update Channels (Experimental)
+  - Github (Default), Seanime (GitHub alternative), Seanime Canary (Alpha/Beta releases)
+- ⚡️ Issue Recorder: Reduced final size by deduplicating content
+- ⚡️ Qbittorrent: Added re-authentication mechanism
+- 🔒 Server: Fixed various security issues
+- 🦺 MKV Parser: Fixed handling of chapters from multiple editions
+  - Fixes out-of-sync seekbar
+- 🦺 Rsbuild: Added missing node polyfills
+  - Fixes "Copy stream URL" (regression)
+- 🦺 UI: Fixed PageWrapper forward ref
+  - Fixes home carousel items not loading
+- 🦺 Library: Fixed missing episodes not refreshing after toggling notifications
+- 🦺 Anime: Fixed entry list and library data not showing up in carousels
+- 🏗️ Server: Added update channel fallback
+
+## v3.5.1
+
+- ✨ Denshi: Added desktop app settings
+  - Close to tray, Open in background, Open at login
+- ⚡️ Scanner: Improved handling of batch folder titles
+  - Fixed cases where generic batch folder titles could cause incorrect matches downstream
+- ⚡️ Extensions: Added $scannerUtils helper API
+  - Provides utility functions manipulating media titles and building search queries
+- ⚡️ VideoCore: Custom subtitle delay controls #628
+- ⚡️ Server: Automatically log out of AniList when token is invalid
+- 🦺 Server: Fixed incorrect "Completed" status on progress update for unauthenticated users
+- 🦺 Server: Don't count AniList 404 errors as API failures
+- 🦺 Scanner: Fixed hydration rules runtime error #632
+- 🦺 VideoCore: Fixed potential layout thrashing
+- 🏗️ Server: Redact username in logs and issue reports
+- 🏗️ DX: Fixed Tailwind HMR
+
 ## v3.5.0
 
 - ✨ New Library Scanner

@@ -663,14 +663,15 @@ func (fh *FileHydrator) normalizeEpisodeNumberAndHydrate(
 }
 
 func (fh *FileHydrator) precompileRules() {
-	defer util.HandlePanicInModuleThenS("scanner/matcher/precompileRules", func(stackTrace string) {
+	defer util.HandlePanicInModuleThenS("scanner/hydration/precompileRules", func(stackTrace string) {
 		if fh.ScanLogger != nil {
 			fh.ScanLogger.LogMatcher(zerolog.ErrorLevel).
-				Msg("Panic occurred, when compiling matching rules")
+				Msg("Panic occurred, when compiling hydration rules")
 		}
 	})
 
-	if fh.Config == nil || len(fh.Config.Matching.Rules) == 0 {
+	if fh.Config == nil || len(fh.Config.Hydration.Rules) == 0 {
+		fh.ScanLogger.LogMatcher(zerolog.DebugLevel).Msg("Zero config")
 		return
 	}
 
@@ -723,6 +724,10 @@ func (fh *FileHydrator) precompileRules() {
 					rule:  fr,
 				}
 			}
+		}
+
+		if fh.hydrationRules == nil {
+			fh.hydrationRules = make(map[string]*compiledHydrationRule)
 		}
 
 		fh.hydrationRules[rule.Pattern] = r
