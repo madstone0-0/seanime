@@ -39,6 +39,8 @@ type UI struct {
 	wsEventManager events.WSEventManagerInterface
 	appContext     plugin.AppContext
 	scheduler      *gojautil.Scheduler
+	store          *plugin.Store[string, any]
+	storage        *plugin.Storage
 
 	onCrash func(reason string)
 
@@ -56,6 +58,8 @@ type NewUIOptions struct {
 	WSManager events.WSEventManagerInterface
 	Database  *db.Database
 	Scheduler *gojautil.Scheduler
+	Store     *plugin.Store[string, any]
+	Storage   *plugin.Storage
 	Extension *extension.Extension
 	OnCrash   func(reason string)
 }
@@ -68,6 +72,8 @@ func NewUI(options NewUIOptions) *UI {
 		wsEventManager: options.WSManager,
 		appContext:     plugin.GlobalAppContext, // Get the app context from the global hook manager
 		scheduler:      options.Scheduler,
+		store:          options.Store,
+		storage:        options.Storage,
 		destroyedCh:    make(chan struct{}),
 		onCrash:        options.OnCrash,
 	}
@@ -196,6 +202,7 @@ func (u *UI) Register(callback string) error {
 	//u.context.webviewManager.renderWebviewScheduled()
 	u.context.webviewManager.renderWebviewIframe()
 	u.context.webviewManager.renderWebviewSidebar()
+	u.context.episodeTabManager.renderTabs()
 
 	u.wsEventManager.SendEvent(events.PluginLoaded, u.ext.ID)
 
@@ -279,6 +286,12 @@ func (u *UI) dispatchClientEvent(clientEvent *ClientPluginEvent) {
 
 	case ClientActionRenderEpisodeGridItemMenuItemsEvent: // Client wants to update the episode grid item menu items
 		u.context.actionManager.renderEpisodeGridItemMenuItems()
+
+	case ClientDOMEventTriggeredEvent: // A DOM event was triggered on the client
+		var payload ClientDOMEventTriggeredEventPayload
+		if clientEvent.ParsePayloadAs(ClientDOMEventTriggeredEvent, &payload) {
+			u.context.domManager.HandleDOMEvent(payload.ElementId, payload.EventType, payload.Event)
+		}
 
 	case ClientRenderCommandPaletteEvent: // Client wants to render the command palette
 		u.context.commandPaletteManager.renderCommandPaletteScheduled()

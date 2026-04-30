@@ -3,9 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"os"
 	"path/filepath"
-	"runtime"
 	"seanime/internal/api/anilist"
 	"seanime/internal/customsource"
 	"seanime/internal/database/db_bridge"
@@ -13,13 +11,11 @@ import (
 	"seanime/internal/library/anime"
 	"seanime/internal/library/scanner"
 	"seanime/internal/library/summary"
-	"seanime/internal/platforms/shared_platform"
 	"seanime/internal/util"
 	"seanime/internal/util/limiter"
 	"seanime/internal/util/result"
 	"slices"
 	"strconv"
-	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/samber/lo"
@@ -216,6 +212,10 @@ func (h *Handler) HandleOpenAnimeEntryInExplorer(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
+	if err := h.guardPrivilegedLocalExecution(c); err != nil {
+		return err
+	}
+
 	// Get all the local files
 	lfs, _, err := db_bridge.GetLocalFiles(h.App.Database)
 	if err != nil {
@@ -230,27 +230,7 @@ func (h *Handler) HandleOpenAnimeEntryInExplorer(c echo.Context) error {
 	}
 
 	dir := filepath.Dir(lf.GetNormalizedPath())
-	cmd := ""
-	var args []string
-
-	switch runtime.GOOS {
-	case "windows":
-		cmd = "explorer"
-		wPath := strings.ReplaceAll(strings.ToLower(dir), "/", "\\")
-		args = []string{wPath}
-	case "darwin":
-		cmd = "open"
-		args = []string{dir}
-	case "linux":
-		cmd = "xdg-open"
-		args = []string{dir}
-	default:
-		return fmt.Errorf("unsupported operating system: %s", runtime.GOOS)
-	}
-	cmdObj := util.NewCmd(cmd, args...)
-	cmdObj.Stdout = os.Stdout
-	cmdObj.Stderr = os.Stderr
-	_ = cmdObj.Run()
+	OpenDirInExplorer(dir)
 
 	return h.RespondWithData(c, true)
 
@@ -313,12 +293,13 @@ func (h *Handler) HandleFetchAnimeEntrySuggestions(c echo.Context) error {
 	h.App.Logger.Info().Str("title", title).Msg("handlers: Fetching anime suggestions")
 
 	res, err := anilist.ListAnimeM(
-		shared_platform.NewCacheLayer(h.App.AnilistClientRef),
+		h.App.AnilistPlatformRef.Get().GetAnilistClient(),
 		new(1),
 		&title,
 		new(8),
 		nil,
 		[]*anilist.MediaStatus{new(anilist.MediaStatusFinished), new(anilist.MediaStatusReleasing), new(anilist.MediaStatusCancelled), new(anilist.MediaStatusHiatus)},
+		nil,
 		nil,
 		nil,
 		nil,
@@ -472,8 +453,6 @@ func (h *Handler) HandleAnimeEntryManualMatch(c echo.Context) error {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-var missingEpisodesCache *anime.MissingEpisodes
-
 // HandleGetMissingEpisodes
 //
 //	@summary returns a list of episodes missing from the user's library collection
@@ -483,10 +462,10 @@ var missingEpisodesCache *anime.MissingEpisodes
 //	@returns anime.MissingEpisodes
 func (h *Handler) HandleGetMissingEpisodes(c echo.Context) error {
 	h.App.AddOnRefreshAnilistCollectionFunc("HandleGetMissingEpisodes", func() {
-		missingEpisodesCache = nil
+		anime.ClearMissingEpisodesCache()
 	})
 
-	if missingEpisodesCache != nil {
+	if missingEpisodesCache, ok := anime.GetMissingEpisodesCache(); ok {
 		return h.RespondWithData(c, missingEpisodesCache)
 	}
 
@@ -520,7 +499,7 @@ func (h *Handler) HandleGetMissingEpisodes(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
-	missingEpisodesCache = event.MissingEpisodes
+	anime.SetMissingEpisodesCache(event.MissingEpisodes)
 
 	return h.RespondWithData(c, event.MissingEpisodes)
 }
@@ -610,7 +589,7 @@ func (h *Handler) HandleToggleAnimeEntrySilenceStatus(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
-	missingEpisodesCache = nil
+	anime.ClearMissingEpisodesCache()
 
 	animeEntry, err := h.App.Database.GetSilencedMediaEntry(uint(b.MediaId))
 	if err != nil {

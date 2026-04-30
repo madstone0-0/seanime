@@ -8,6 +8,7 @@ import (
 	"seanime/internal/database/models"
 	"seanime/internal/torrents/torrent"
 	"seanime/internal/util"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -59,6 +60,14 @@ func (h *Handler) HandleGettingStarted(c echo.Context) error {
 
 	if err := c.Bind(&b); err != nil {
 		return h.RespondWithError(c, err)
+	}
+
+	prevSettings, _ := h.App.Database.GetSettings()
+	if err := h.guardStrictSettingsMutation(c, prevSettings, &b.Library, &b.Manga); err != nil {
+		return err
+	}
+	if err := h.guardPrivilegedSettingsMutation(c, prevSettings, &b.MediaPlayer, &b.Torrent); err != nil {
+		return err
 	}
 
 	// Check settings
@@ -167,6 +176,22 @@ func (h *Handler) HandleSaveSettings(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
+	prevSettings, _ := h.App.Database.GetSettings()
+	if err := h.guardStrictSettingsMutation(c, prevSettings, &b.Library, &b.Manga); err != nil {
+		return err
+	}
+	if err := h.guardPrivilegedSettingsMutation(c, prevSettings, &b.MediaPlayer, &b.Torrent); err != nil {
+		return err
+	}
+
+	b.MediaPlayer.VlcPath = strings.TrimSpace(strings.Trim(b.MediaPlayer.VlcPath, "\""))
+	b.MediaPlayer.MpcPath = strings.TrimSpace(strings.Trim(b.MediaPlayer.MpcPath, "\""))
+	b.MediaPlayer.MpvPath = strings.TrimSpace(strings.Trim(b.MediaPlayer.MpvPath, "\""))
+	b.MediaPlayer.IinaPath = strings.TrimSpace(strings.Trim(b.MediaPlayer.IinaPath, "\""))
+
+	b.Torrent.QBittorrentPath = strings.TrimSpace(strings.Trim(b.Torrent.QBittorrentPath, "\""))
+	b.Torrent.TransmissionPath = strings.TrimSpace(strings.Trim(b.Torrent.TransmissionPath, "\""))
+
 	if b.Library.LibraryPath != "" {
 		b.Library.LibraryPath = filepath.ToSlash(filepath.Clean(b.Library.LibraryPath))
 	}
@@ -203,8 +228,7 @@ func (h *Handler) HandleSaveSettings(c echo.Context) error {
 	}
 
 	autoDownloaderSettings := models.AutoDownloaderSettings{}
-	prevSettings, err := h.App.Database.GetSettings()
-	if err == nil && prevSettings.AutoDownloader != nil {
+	if prevSettings != nil && prevSettings.AutoDownloader != nil {
 		autoDownloaderSettings = *prevSettings.AutoDownloader
 	}
 	// Disable auto-downloader if the torrent provider is set to none
@@ -323,6 +347,10 @@ func (h *Handler) HandleSaveMediaPlayerSettings(c echo.Context) error {
 	currSettings, err := h.App.Database.GetSettings()
 	if err != nil {
 		return h.RespondWithError(c, err)
+	}
+
+	if err := h.guardPrivilegedSettingsMutation(c, currSettings, b.MediaPlayer, nil); err != nil {
+		return err
 	}
 
 	currSettings.MediaPlayer = b.MediaPlayer

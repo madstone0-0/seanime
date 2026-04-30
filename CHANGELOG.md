@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.7.1
+
+- ⚡️ Cache mode: Ability to update entries in the cache (Experimental)
+  - You can now update progress while AniList is down. Data will be auto-synced when AniList is back online.
+- ⚡️ VideoCore: Ability to save screenshots to disk
+- ⚡️ Plugin: Added more APIs
+  - Added '$shared' API for sharing pure functions between hooks and runtimes
+  - Added 'ctx.jobs', 'ctx.settings', 'ctx.cache' for less boilerplate
+  - Added '$debug' API for looking at plugin logs on the client
+- 🦺 Cache mode: Fixed certain queries bypassing the cache layer
+- 🦺 Home: Fixed 'not authenticated' errors for local accounts
+- 🦺 Torrentstream: Fixed 'Disable IPV6' option not working
+- 🦺 Plugin: Fixed potential crash caused by concurrent shared map writes
+- 🦺 Torrentstream: Fixed HEAD requests
+- 🦺 MPV: Fixed player launch when using '--terminal=no --really-quiet'
+- 🦺 Auto-select: Fixed form fields showing empty values after saving
+- 🦺 Settings: Fixed form fields showing empty values after saving
+- 🦺 UI: Fixed some UI issues
+
+## v3.7.0
+
+- 🔒 BREAKING: Non-local instances now require a server password (Read the docs for more info).
+- ⚡️ Search: Support for tags #614
+- ⚡️ Plugins: New APIs and Hooks
+  - Added VideoCore play methods (#699) and skip data manipulation
+  - Added API to register an episode tab
+  - Added Auto Downloader, Torrent search hooks
+  - Added Playback, Scanner, Debrid, Torrent streaming, Torrent search, Auto-select API methods
+- ⚡️ Home Screen: Added 'Repeating' filter for 'My lists'
+- ⚡️ Windows: Use user-default explorer application
+- ⚡️ Denshi: Right-click context menu for inputs
+- ⚡️ VideoCore: Increased subtitle parsing speed for local files
+- ⚡️ Denshi Player: Fullscreen with double click instead of double right-click
+- ⚡️ Search: Global search no longer filters out adult entries
+- 🦺 Denshi: Fixed blank screen after server reconnection
+- 🦺 Playback: Fixed stale data being used for events
+- 🦺 Transcoder: Potential fix for 10bit issues with NVENC (?)
+- 🦺 Continuity: Fixed potential progress being ignored
+- 🦺 Scanner: Fixed unrelated roman numerals being treated as seasons
+- 🦺 Video Proxy: Fixed slow non-HLS video proxy #710
+- 🦺 Plugin: Fixed $storage API returning stale data
+- 🦺 VideoCore: Fixed screenshots with Anime4K
+- 🔒 Security overhaul
+  - Added `securemode = "strict"` which disables certain actions and plugin capabilities
+  - Config: Added `server.accessAllowlist` `server.trustedProxies` and `server.externalUrl` (Experimental)
+  - Improved Electron security for renderers
+  - Added security checks for server-side Electron macOS updater
+  - Improved client identity security checks
+- 🏗️ Denshi: App startup no longer relies on websocket connection
+
+## v3.6.1
+
+- 🦺 In-App Player: Fixed deadlock caused by stream cancellation
+  - Cancelling a stream no longer cause future stream requests to hang (regression)
+  - It is now possible to cancel a stream while metadata is being loaded
+- 🏗️ VideoCore: Refactored stream cancellation logic
+
 ## v3.6.0
 
 - ⚡️ Anime: Paste magnet link anywhere to stream or download

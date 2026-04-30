@@ -11,6 +11,7 @@ import (
 	"seanime/internal/hook"
 	"seanime/internal/plugin"
 	plugin_ui "seanime/internal/plugin/ui"
+	"seanime/internal/security"
 	"seanime/internal/util"
 	gojautil "seanime/internal/util/goja"
 	"slices"
@@ -53,6 +54,7 @@ type GojaPlugin struct {
 	logger          *zerolog.Logger
 	pool            *goja_runtime.Pool
 	runtimeManager  *goja_runtime.Manager
+	sharedModules   *sharedModules
 	store           *plugin.Store[string, any]
 	storage         *plugin.Storage
 	ui              *plugin_ui.UI
@@ -133,6 +135,7 @@ func NewGojaPlugin(
 		ext:             ext,
 		logger:          logger,
 		runtimeManager:  runtimeManager,
+		sharedModules:   newSharedModules(),
 		store:           plugin.NewStore[string, any](nil), // Create a store (must be stopped when unloading)
 		scheduler:       gojautil.NewScheduler(),           // Create a scheduler (must be stopped when unloading)
 		ui:              nil,                               // To be initialized
@@ -145,6 +148,7 @@ func NewGojaPlugin(
 	// Bind shared APIs to the loader
 	ShareBinds(p.loader, logger, ext, wsEventManager)
 	BindUserConfig(p.loader, ext, logger)
+	p.sharedModules.Bind(p.loader, true)
 	// Bind hooks to the loader
 	p.bindHooks()
 
@@ -166,6 +170,7 @@ func NewGojaPlugin(
 		ShareBinds(runtime, logger, ext, wsEventManager)
 		goja_bindings.BindFetch(ext.ID, runtime, ext.Plugin.Permissions.GetNetworkAccessAllowedDomains())
 		BindUserConfig(runtime, ext, logger)
+		p.sharedModules.Bind(runtime, false)
 		p.BindPluginAPIs(runtime, logger)
 		return runtime
 	})
@@ -183,6 +188,7 @@ func NewGojaPlugin(
 	ShareBinds(uiVM, logger, ext, wsEventManager)
 	goja_bindings.BindFetch(ext.ID, uiVM, ext.Plugin.Permissions.GetNetworkAccessAllowedDomains())
 	BindUserConfig(uiVM, ext, logger)
+	p.sharedModules.Bind(uiVM, false)
 	// Bind the store to the UI VM
 	p.BindPluginAPIs(uiVM, logger)
 	// Create a new UI instance
@@ -192,6 +198,8 @@ func NewGojaPlugin(
 		VM:        uiVM,
 		WSManager: wsEventManager,
 		Scheduler: p.scheduler,
+		Store:     p.store,
+		Storage:   p.storage,
 		OnCrash:   onCrash,
 	})
 
@@ -245,6 +253,7 @@ func (p *GojaPlugin) BindPluginAPIs(vm *goja.Runtime, logger *zerolog.Logger) {
 	gojautil.BindAwait(vm)
 	// Bind console bindings
 	_ = goja_bindings.BindConsoleWithWS(p.ext, vm, logger, p.wsEventManager)
+	plugin_ui.BindDebug(vm, p.ext, p.wsEventManager)
 
 	// Bind the app context
 	plugin.GlobalAppContext.BindApp(vm, logger, p.ext)
@@ -263,7 +272,9 @@ func (p *GojaPlugin) BindPluginAPIs(vm *goja.Runtime, logger *zerolog.Logger) {
 				plugin.GlobalAppContext.BindDatabase(vm, logger, p.ext)
 
 			case extension.PluginPermissionSystem: // System
-				plugin.GlobalAppContext.BindSystem(vm, logger, p.ext, p.scheduler)
+				if !security.IsStrict() {
+					plugin.GlobalAppContext.BindSystem(vm, logger, p.ext, p.scheduler)
+				}
 			}
 		}
 	}
@@ -424,26 +435,11 @@ func normalizeException(err error) error {
 
 // handlePromiseResult waits for a promise to resolve and returns the appropriate error
 func (p *GojaPlugin) handlePromiseResult(promise *goja.Promise) error {
-	doneCh := make(chan struct{})
-
-	// Wait for the promise to resolve with a timeout
-	go func() {
-		for promise.State() == goja.PromiseStatePending {
-			time.Sleep(10 * time.Millisecond)
-		}
-		close(doneCh)
-	}()
-
 	// force stop after 30 seconds
-	timeout := time.NewTimer(30 * time.Second)
-	defer timeout.Stop()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 
-	select {
-	case <-doneCh:
-		break
-	case <-timeout.C:
-		break
-	}
+	_ = gojautil.WaitForPromise(ctx, promise)
 
 	return nil
 }

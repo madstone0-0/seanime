@@ -5,10 +5,10 @@ import (
 	"io"
 	"net/http"
 	url2 "net/url"
+	"seanime/internal/security"
 	"seanime/internal/util"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/5rahim/hls-m3u8/m3u8"
 	"github.com/goccy/go-json"
@@ -18,8 +18,27 @@ import (
 )
 
 var videoProxyClient2 = req.C().
-	SetTimeout(60 * time.Second).
+	DisableAutoReadResponse().
+	DisableCompression().
 	EnableInsecureSkipVerify().
+	ImpersonateChrome()
+
+var videoProxyClientSecure = req.C().
+	DisableAutoReadResponse().
+	DisableCompression().
+	ImpersonateChrome()
+
+var videoProxyClient2Http1 = req.C().
+	DisableAutoReadResponse().
+	DisableCompression().
+	EnableInsecureSkipVerify().
+	EnableForceHTTP1().
+	ImpersonateChrome()
+
+var videoProxyClientSecureHttp1 = req.C().
+	DisableAutoReadResponse().
+	DisableCompression().
+	EnableForceHTTP1().
 	ImpersonateChrome()
 
 func (h *Handler) VideoProxy(c echo.Context) (err error) {
@@ -29,7 +48,28 @@ func (h *Handler) VideoProxy(c echo.Context) (err error) {
 	headers := c.QueryParam("headers")
 	authToken := c.QueryParam("token")
 
-	r := videoProxyClient2.R()
+	if err := security.ValidateOutboundUrl(url); err != nil {
+		return h.RespondWithStatusError(c, http.StatusForbidden, err)
+	}
+
+	client := videoProxyClient2
+	if security.IsStrict() {
+		client = videoProxyClientSecure
+	}
+
+	parsedUrl, err := url2.Parse(url)
+	if err == nil && parsedUrl != nil {
+		host := strings.ToLower(parsedUrl.Host)
+		if strings.Contains(host, "googleapis.com") || strings.Contains(host, "googleusercontent.com") || strings.Contains(host, "drive.google.com") {
+			if security.IsStrict() {
+				client = videoProxyClientSecureHttp1
+			} else {
+				client = videoProxyClient2Http1
+			}
+		}
+	}
+
+	r := client.R()
 
 	var headerMap map[string]string
 	if headers != "" {

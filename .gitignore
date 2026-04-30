@@ -80,13 +80,14 @@ seanime-webapp/public/test*
 codegen/generated/hooks.mdx
 
 
-internal/extension_repo/**/test*.ts
+internal/extension_repo/**/test*.*
 internal/extension_repo/goja_plugin_test
 
 *.sh
 
 seanime-web-tr/
 codegen/nonext/
+docs/support-skills
 
 local_testing
 dist-server

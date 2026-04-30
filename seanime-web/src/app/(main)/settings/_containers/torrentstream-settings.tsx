@@ -4,6 +4,7 @@ import { AutoSelectProfileButton } from "@/app/(main)/settings/_components/autos
 import { SettingsCard } from "@/app/(main)/settings/_components/settings-card"
 import { SettingsIsDirty, SettingsSubmitButton } from "@/app/(main)/settings/_components/settings-submit-button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { defineSchema, Field, Form } from "@/components/ui/form"
 import React from "react"
@@ -16,7 +17,7 @@ const torrentstreamSchema = defineSchema(({ z }) => z.object({
     enabled: z.boolean(),
     downloadDir: z.string(),
     autoSelect: z.boolean(),
-    disableIPv6: z.boolean(),
+    disableIPV6: z.boolean(),
     addToLibrary: z.boolean(),
     // streamingServerPort: z.number(),
     // streamingServerHost: z.string(),
@@ -78,7 +79,7 @@ export function TorrentstreamSettings(props: TorrentstreamSettingsProps) {
                     enabled: settings.enabled,
                     autoSelect: settings.autoSelect,
                     downloadDir: settings.downloadDir || "",
-                    disableIPv6: settings.disableIPV6,
+                    disableIPV6: settings.disableIPV6,
                     addToLibrary: settings.addToLibrary,
                     // streamingServerPort: settings.streamingServerPort,
                     // streamingServerHost: settings.streamingServerHost || "",
@@ -230,6 +231,10 @@ export function TorrentstreamSettings(props: TorrentstreamSettingsProps) {
                                         leftIcon={<FcFolder />}
                                         help="Where the torrents will be downloaded to while streaming. Leave empty to use the default cache directory."
                                         shouldExist
+                                    />
+                                    <Alert
+                                        intent="warning"
+                                        description="Choose an empty directory to avoid losing data."
                                     />
                                 </AccordionContent>
                             </AccordionItem>

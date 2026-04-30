@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"seanime/internal/database/models"
 	"seanime/internal/mediastream"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -40,6 +41,17 @@ func (h *Handler) HandleSaveMediastreamSettings(c echo.Context) error {
 		return h.RespondWithError(c, err)
 	}
 
+	prevSettings, _ := h.App.Database.GetMediastreamSettings()
+	if err := h.guardStrictMediastreamRootMutation(c, prevSettings, &b.Settings); err != nil {
+		return err
+	}
+	if err := h.guardPrivilegedMediastreamSettingsMutation(c, prevSettings, &b.Settings); err != nil {
+		return err
+	}
+
+	b.Settings.FfmpegPath = strings.TrimSpace(strings.Trim(b.Settings.FfmpegPath, "\""))
+	b.Settings.FfprobePath = strings.TrimSpace(strings.Trim(b.Settings.FfprobePath, "\""))
+
 	settings, err := h.App.Database.UpsertMediastreamSettings(&b.Settings)
 	if err != nil {
 		return h.RespondWithError(c, err)
@@ -57,6 +69,9 @@ func (h *Handler) HandleSaveMediastreamSettings(c echo.Context) error {
 //	@returns mediastream.MediaContainer
 //	@route /api/v1/mediastream/request [POST]
 func (h *Handler) HandleRequestMediastreamMediaContainer(c echo.Context) error {
+	if err := h.guardMediaConsumption(c); err != nil {
+		return err
+	}
 
 	type body struct {
 		Path             string                 `json:"path"`             // The path of the file.
@@ -68,6 +83,16 @@ func (h *Handler) HandleRequestMediastreamMediaContainer(c echo.Context) error {
 	var b body
 	if err := c.Bind(&b); err != nil {
 		return h.RespondWithError(c, err)
+	}
+
+	b.ClientId = getRequestClientId(c, b.ClientId)
+
+	if err := h.guardStrictFilesystemPath(c, b.Path); err != nil {
+		return err
+	}
+
+	if err := h.guardPrivilegedMediastream(c, h.App.SecondarySettings.Mediastream); err != nil {
+		return err
 	}
 
 	var mediaContainer *mediastream.MediaContainer
@@ -98,6 +123,9 @@ func (h *Handler) HandleRequestMediastreamMediaContainer(c echo.Context) error {
 //	@returns bool
 //	@route /api/v1/mediastream/preload [POST]
 func (h *Handler) HandlePreloadMediastreamMediaContainer(c echo.Context) error {
+	if err := h.guardMediaConsumption(c); err != nil {
+		return err
+	}
 
 	type body struct {
 		Path             string                 `json:"path"`             // The path of the file.
@@ -108,6 +136,14 @@ func (h *Handler) HandlePreloadMediastreamMediaContainer(c echo.Context) error {
 	var b body
 	if err := c.Bind(&b); err != nil {
 		return h.RespondWithError(c, err)
+	}
+
+	if err := h.guardStrictFilesystemPath(c, b.Path); err != nil {
+		return err
+	}
+
+	if err := h.guardPrivilegedMediastream(c, h.App.SecondarySettings.Mediastream); err != nil {
+		return err
 	}
 
 	var err error

@@ -9,6 +9,7 @@ import (
 	"seanime/internal/debrid/debrid"
 	"seanime/internal/extension"
 	hibiketorrent "seanime/internal/extension/hibike/torrent"
+	"seanime/internal/hook"
 	"seanime/internal/library/anime"
 	"seanime/internal/util"
 	"seanime/internal/util/comparison"
@@ -36,18 +37,18 @@ type (
 
 	AnimeSearchOptions struct {
 		// Provider extension ID
-		Provider string
-		Type     AnimeSearchType
-		Media    *anilist.BaseAnime
+		Provider string             `json:"provider"`
+		Type     AnimeSearchType    `json:"type,omitempty"`
+		Media    *anilist.BaseAnime `json:"media,omitempty"`
 		// Search options
-		Query string
+		Query string `json:"query,omitempty"`
 		// Filter options
-		Batch                   bool
-		EpisodeNumber           int
-		BestReleases            bool
-		Resolution              string
-		IncludeSpecialProviders bool
-		SkipPreviews            bool
+		Batch                   bool   `json:"batch,omitempty"`
+		EpisodeNumber           int    `json:"episodeNumber,omitempty"`
+		BestReleases            bool   `json:"bestReleases,omitempty"`
+		Resolution              string `json:"resolution,omitempty"`
+		IncludeSpecialProviders bool   `json:"includeSpecialProviders,omitempty"`
+		SkipPreviews            bool   `json:"skipPreviews,omitempty"`
 	}
 
 	// Preview contains the torrent and episode information
@@ -75,6 +76,16 @@ type (
 func (r *Repository) SearchAnime(ctx context.Context, opts AnimeSearchOptions) (ret *SearchData, retErr error) {
 	defer util.HandlePanicInModuleWithError("torrents/torrent/SearchAnime", &retErr)
 	var torrents []*hibiketorrent.AnimeTorrent
+
+	requestedEvent := &TorrentSearchRequestedEvent{Options: opts}
+	_ = hook.GlobalHookManager.OnTorrentSearchRequested().Trigger(requestedEvent)
+	opts = requestedEvent.Options
+	if requestedEvent.DefaultPrevented {
+		if requestedEvent.SearchData == nil {
+			return &SearchData{}, nil
+		}
+		return requestedEvent.SearchData, nil
+	}
 
 	// Find the provider by ID
 	providerExtension, ok := extension.GetExtension[extension.AnimeTorrentProviderExtension](r.extensionBankRef.Get(), opts.Provider)
@@ -410,6 +421,16 @@ func (r *Repository) SearchAnime(ctx context.Context, opts AnimeSearchOptions) (
 		ret.AnimeMetadata = animeMetadata.MustGet()
 	}
 
+	searchEvent := &TorrentSearchEvent{
+		Options:    opts,
+		SearchData: ret,
+	}
+	_ = hook.GlobalHookManager.OnTorrentSearch().Trigger(searchEvent)
+	if searchEvent.SearchData != nil {
+		ret = searchEvent.SearchData
+	}
+	sortSearchData(ret)
+
 	// Store the data in the cache
 	switch opts.Type {
 	case AnimeSearchTypeSmart:
@@ -423,6 +444,35 @@ func (r *Repository) SearchAnime(ctx context.Context, opts AnimeSearchOptions) (
 	}
 
 	return
+}
+
+func sortSearchData(data *SearchData) {
+	if data == nil {
+		return
+	}
+
+	slices.SortFunc(data.Torrents, func(i, j *hibiketorrent.AnimeTorrent) int {
+		if i.IsBestRelease != j.IsBestRelease {
+			if i.IsBestRelease {
+				return -1
+			}
+			return 1
+		}
+		return cmp.Compare(j.Seeders, i.Seeders)
+	})
+
+	data.Previews = lo.Filter(data.Previews, func(p *Preview, _ int) bool {
+		return p != nil && p.Torrent != nil
+	})
+	slices.SortFunc(data.Previews, func(i, j *Preview) int {
+		if i.Torrent.IsBestRelease != j.Torrent.IsBestRelease {
+			if i.Torrent.IsBestRelease {
+				return -1
+			}
+			return 1
+		}
+		return cmp.Compare(j.Torrent.Seeders, i.Torrent.Seeders)
+	})
 }
 
 type createAnimeTorrentPreviewOptions struct {
