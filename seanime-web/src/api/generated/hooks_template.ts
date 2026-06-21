@@ -2471,6 +2471,17 @@
 //     })
 // }
 
+// export function usePatchSetting() {
+//     return useServerMutation<Status, PatchSetting_Variables>({
+//         endpoint: API_ENDPOINTS.SETTINGS.PatchSetting.endpoint,
+//         method: API_ENDPOINTS.SETTINGS.PatchSetting.methods[0],
+//         mutationKey: [API_ENDPOINTS.SETTINGS.PatchSetting.key],
+//         onSuccess: async () => {
+// 
+//         },
+//     })
+// }
+
 // export function useSaveAutoDownloaderSettings() {
 //     return useServerMutation<boolean, SaveAutoDownloaderSettings_Variables>({
 //         endpoint: API_ENDPOINTS.SETTINGS.SaveAutoDownloaderSettings.endpoint,
@@ -2658,6 +2669,15 @@
 //         onSuccess: async () => {
 // 
 //         },
+//     })
+// }
+
+// export function useGetBuiltInTorrentDetails() {
+//     return useServerQuery<TorrentDetails>({
+//         endpoint: API_ENDPOINTS.TORRENT_CLIENT.GetBuiltInTorrentDetails.endpoint,
+//         method: API_ENDPOINTS.TORRENT_CLIENT.GetBuiltInTorrentDetails.methods[0],
+//         queryKey: [API_ENDPOINTS.TORRENT_CLIENT.GetBuiltInTorrentDetails.key],
+//         enabled: true,
 //     })
 // }
 

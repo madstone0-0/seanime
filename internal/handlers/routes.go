@@ -116,8 +116,6 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 	})
 
 	e.Use(headMethodMiddleware)
-	// e.Use(h.controlPlaneBodyLimitMiddleware)
-	e.Use(h.controlPlaneMutationRateLimitMiddleware)
 
 	e.GET("/events", h.webSocketEventHandler)
 
@@ -161,6 +159,7 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 	// Settings
 	v1.GET("/settings", h.HandleGetSettings)
 	v1.PATCH("/settings", h.HandleSaveSettings)
+	v1.PATCH("/settings/path", h.HandlePatchSetting)
 	v1.POST("/start", h.HandleGettingStarted)
 	v1.PATCH("/settings/auto-downloader", h.HandleSaveAutoDownloaderSettings)
 	v1.PATCH("/settings/media-player", h.HandleSaveMediaPlayerSettings)
@@ -294,6 +293,7 @@ func InitRoutes(app *core.App, e *echo.Echo) {
 	v1.POST("/torrent/search", h.HandleSearchTorrent)
 	v1.POST("/torrent-client/download", h.HandleTorrentClientDownload)
 	v1.GET("/torrent-client/list", h.HandleGetActiveTorrentList)
+	v1.GET("/torrent-client/details", h.HandleGetBuiltInTorrentDetails)
 	v1.POST("/torrent-client/action", h.HandleTorrentClientAction)
 	v1.POST("/torrent-client/get-files", h.HandleTorrentClientGetFiles)
 	v1.POST("/torrent-client/rule-magnet", h.HandleTorrentClientAddMagnetFromRule)

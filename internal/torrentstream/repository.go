@@ -22,6 +22,7 @@ import (
 	"seanime/internal/torrents/torrent"
 	"seanime/internal/util"
 	"seanime/internal/util/result"
+	"sync"
 	"sync/atomic"
 
 	itorrent "github.com/anacrolix/torrent"
@@ -59,6 +60,11 @@ type (
 
 		previousStreamOptions mo.Option[*StartStreamOptions]
 		preloadedStream       mo.Option[*preloadedStream]
+		streamActionMu        sync.Mutex
+		startRequestId        atomic.Uint64
+		startCancelMu         sync.Mutex
+		startCancel           context.CancelFunc
+		startCancelId         uint64
 		shouldPreloadStream   atomic.Bool // Flag on whether the client should prepare a stream
 	}
 
@@ -131,6 +137,9 @@ func (r *Repository) IsEnabled() bool {
 }
 
 func (r *Repository) GetPreviousStreamOptions() (*StartStreamOptions, bool) {
+	r.streamActionMu.Lock()
+	defer r.streamActionMu.Unlock()
+
 	return r.previousStreamOptions.OrElse(nil), r.previousStreamOptions.IsPresent()
 }
 
@@ -172,8 +181,10 @@ func (r *Repository) InitModules(settings *models.TorrentstreamSettings, host st
 	// Set default download directory, which is a temporary directory
 	if s.DownloadDir == "" {
 		s.DownloadDir = r.getDefaultDownloadPath()
-		_ = os.MkdirAll(s.DownloadDir, os.ModePerm) // Create the directory if it doesn't exist
+	} else {
+		s.DownloadDir = util.ResolvePhysicalPath(s.DownloadDir)
 	}
+	_ = os.MkdirAll(s.DownloadDir, os.ModePerm) // Create the directory if it doesn't exist
 
 	// DEVNOTE: Commented code below causes error log after initializing the client
 	//// Empty the download directory

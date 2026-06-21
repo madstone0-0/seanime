@@ -2002,6 +2002,16 @@ export const API_ENDPOINTS = {
             methods: ["PATCH"],
             endpoint: "/api/v1/settings",
         },
+        /**
+         *  @description
+         *  Route patches a specific app setting.
+         *  This updates a single setting path and refreshes the server status.
+         */
+        PatchSetting: {
+            key: "SETTINGS-patch-setting",
+            methods: ["PATCH"],
+            endpoint: "/api/v1/settings/path",
+        },
         SaveAutoDownloaderSettings: {
             key: "SETTINGS-save-auto-downloader-settings",
             methods: ["PATCH"],
@@ -2167,6 +2177,11 @@ export const API_ENDPOINTS = {
             key: "TORRENT-CLIENT-torrent-client-action",
             methods: ["POST"],
             endpoint: "/api/v1/torrent-client/action",
+        },
+        GetBuiltInTorrentDetails: {
+            key: "TORRENT-CLIENT-get-built-in-torrent-details",
+            methods: ["GET"],
+            endpoint: "/api/v1/torrent-client/details",
         },
         /**
          *  @description

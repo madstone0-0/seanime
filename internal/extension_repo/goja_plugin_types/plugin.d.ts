@@ -373,6 +373,8 @@ declare namespace $ui {
         body?: any
         /** Whether to bypass cloudflare */
         noCloudflareBypass?: boolean
+        /** Redirect behavior, defaults to follow */
+        redirect?: "follow" | "manual" | "error"
         /** Timeout in seconds, defaults to 35 */
         timeout?: number
         /** AbortSignal to cancel the request */
@@ -980,6 +982,18 @@ declare namespace $ui {
          * @param props - Button properties
          */
         newMangaPageButton(props: { label: string, intent?: Intent, style?: Record<string, string>, tooltipText?: string }): MangaPageButtonAction
+
+        /**
+         * Creates a new dropdown menu item for the manga page
+         * @param props - Dropdown item properties
+         */
+        newMangaPageDropdownItem(props: { label: string, style?: Record<string, string> }): ActionObject<{ media: $app.AL_BaseManga }>
+
+        /**
+         * Creates a new dropdown menu item for the manga library
+         * @param props - Dropdown item properties
+         */
+        newMangaLibraryDropdownItem(props: { label: string, style?: Record<string, string> }): ActionObject
 
         /**
          * Creates a new context menu item for the episode card
@@ -2558,10 +2572,45 @@ declare namespace $storage {
 }
 
 declare namespace $anilist {
+    type RequestProvider = "official" | (string & {})
+
+    type CustomClientOptions = {
+        /** Display name returned by getRequestProvider. Defaults to "custom". */
+        name?: string
+        /** Absolute GraphQL endpoint for an AniList-compatible API. */
+        endpoint: string
+        /** Optional bearer token convenience field. Custom headers may be used instead. */
+        token?: string
+        /** Headers applied to every GraphQL request. */
+        headers?: Record<string, string>
+        /** Marks the client as authenticated even when no bearer token is provided. */
+        authenticated?: boolean
+    }
+
     /**
      * Deletes all cached data.
      */
     function clearCache(): void
+
+    /**
+     * Get the currently active AniList request provider.
+     * Permissions needed: custom-client
+     */
+    function getRequestProvider(): RequestProvider
+
+    /**
+     * Switch back to the official AniList API at runtime.
+     * Prompts the user before switching.
+     * Permissions needed: custom-client
+     */
+    function useOfficialApi(): Promise<void>
+
+    /**
+     * Switch to a custom AniList-compatible GraphQL API at runtime.
+     * Prompts the user before switching.
+     * Permissions needed: custom-client
+     */
+    function useCustomApi(options: CustomClientOptions): Promise<void>
 
     /**
      * Refresh the anime collection.

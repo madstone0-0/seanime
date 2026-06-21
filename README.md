@@ -7,14 +7,12 @@
 <h1 align="center"><b>Seanime</b></h1>
 
 <p align="center">
-<img src="https://seanime.app/bucket/img-20260508-090521-5fjqklfa--sq.webp" alt="preview" width="100%"/>
+<img src="https://seanime.app/bucket/img-20260508-090529-ioc20pjr--sq2.webp" alt="preview" width="100%"/>
 </p>
 
 <p align="center">
   <a href="https://seanime.app/docs">Documentation</a> |
   <a href="https://github.com/5rahim/seanime/releases">Latest release</a> |
-  <a href="https://www.youtube.com/playlist?list=PLgQO-Ih6JClhFFdEVuNQJejyX_8iH82gl">Tutorials</a> |
-  <a href="https://discord.gg/Sbr7Phzt6m">Discord</a> |
   <a href="https://seanime.app/docs/policies">Copyright</a>
 </p>
 
@@ -99,7 +97,6 @@ The maintenance of this project is made possible by the sponsors.
 
 <p align="center">
 <!-- real-sponsors --><a href="https://github.com/TorBox-App"><img src="https:&#x2F;&#x2F;github.com&#x2F;TorBox-App.png" width="60px" alt="User avatar: TorBox-App" /></a><!-- real-sponsors -->
-<!-- real-sponsors --><a href="https://github.com/Ikyion"><img src="https:&#x2F;&#x2F;github.com&#x2F;Ikyion.png" width="60px" alt="User avatar: Ikyion" /></a><!-- real-sponsors -->
 <!-- real-sponsors --><a href="https://github.com/osayed0001"><img src="https:&#x2F;&#x2F;github.com&#x2F;osayed0001.png" width="60px" alt="User avatar: osayed0001" /></a><!-- real-sponsors -->
 </p>
 

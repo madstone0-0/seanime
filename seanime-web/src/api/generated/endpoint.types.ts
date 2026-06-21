@@ -1843,6 +1843,18 @@ export type SaveSettings_Variables = {
 /**
  * - Filepath: internal/handlers/settings.go
  * - Filename: settings.go
+ * - Endpoint: /api/v1/settings/path
+ * @description
+ * Route patches a specific app setting.
+ */
+export type PatchSetting_Variables = {
+    path: string
+    value: any
+}
+
+/**
+ * - Filepath: internal/handlers/settings.go
+ * - Filename: settings.go
  * - Endpoint: /api/v1/settings/auto-downloader
  * @description
  * Route updates the auto-downloader settings.
@@ -1936,9 +1948,17 @@ export type UpdateTheme_Variables = {
  * Route performs an action on a torrent.
  */
 export type TorrentClientAction_Variables = {
-    hash: string
+    hash?: string
     action: string
-    dir: string
+    dir?: string
+    tracker?: string
+    name?: string
+    value?: boolean
+    index?: number
+    priority?: number
+    downloadLimit?: number
+    uploadLimit?: number
+    magnet?: string
 }
 
 /**
